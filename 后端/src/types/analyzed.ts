@@ -1,0 +1,155 @@
+export type StabilityLevel = 'L1' | 'L2' | 'L3' | 'L4';
+
+export interface SemanticColor {
+  name: string;
+  hex: string;
+  rgb: { r: number; g: number; b: number };
+  role: string;
+  usage: string[];
+  frequency: number;
+  stability?: StabilityLevel;
+}
+
+export interface NeutralScaleColor extends SemanticColor {
+  scalePosition: number;
+}
+
+export interface AnalyzedColorPalette {
+  primary: SemanticColor;
+  accent: SemanticColor;
+  neutralScale: NeutralScaleColor[];
+  surface: SemanticColor[];
+  shadows: SemanticColor[];
+  semanticRoles: Record<string, SemanticColor>;
+}
+
+export interface FontFamilyInfo {
+  name: string;
+  category: 'sans-serif' | 'serif' | 'monospace' | 'display';
+  usage: string[];
+  fallbacks: string[];
+  weights: number[];
+}
+
+export interface TypeHierarchyEntry {
+  role: string;
+  font: string;
+  size: number;
+  weight: number;
+  lineHeight: number;
+  letterSpacing: number;
+  notes: string;
+  sampleText?: string;
+  stability?: StabilityLevel;
+}
+
+export interface AnalyzedTypography {
+  fontFamilies: FontFamilyInfo[];
+  hierarchy: TypeHierarchyEntry[];
+  principles: string[];
+}
+
+export interface SpacingScaleEntry {
+  name: string;
+  value: number;
+  multiplier: number;
+  usage: string[];
+  stability?: StabilityLevel;
+}
+
+export interface GridInfo {
+  type: string;
+  containerMaxWidth: number;
+  containerPadding: number;
+  columns: number;
+}
+
+export interface BorderRadiusEntry {
+  name: string;
+  value: number;
+  usage: string[];
+  stability?: StabilityLevel;
+}
+
+export interface AnalyzedSpacing {
+  baseUnit: number;
+  scale: SpacingScaleEntry[];
+  gridSystem: GridInfo;
+  borderRadiusScale: BorderRadiusEntry[];
+  whitespacePhilosophy: string;
+}
+
+export interface ComponentStyle {
+  type: string;
+  variant: string;
+  styles: {
+    backgroundColor?: string;
+    color?: string;
+    borderColor?: string;
+    borderWidth?: string;
+    borderRadius?: number;
+    padding?: string;
+    fontSize?: number;
+    fontWeight?: number;
+    fontFamily?: string;
+    boxShadow?: string;
+    height?: number;
+    minWidth?: number;
+  };
+  states: {
+    hover?: Record<string, string>;
+    focus?: Record<string, string>;
+  };
+  sampleText?: string;
+}
+
+export interface AnalyzedComponents {
+  buttons: ComponentStyle[];
+  cards: ComponentStyle[];
+  inputs: ComponentStyle[];
+  navigation: ComponentStyle[];
+  other: ComponentStyle[];
+}
+
+export interface ShadowLevel {
+  level: number;
+  name: string;
+  boxShadow: string;
+  usage: string[];
+  stability?: StabilityLevel;
+}
+
+export interface AnalyzedShadows {
+  levels: ShadowLevel[];
+  philosophy: string;
+}
+
+export interface BreakpointEntry {
+  name: string;
+  minWidth: number;
+  maxWidth?: number;
+  description: string;
+}
+
+export interface AnalyzedResponsive {
+  breakpoints: BreakpointEntry[];
+  touchTargets: { minSize: number; recommendedSize: number; minSpacing: number };
+  collapsingStrategy: string;
+}
+
+export interface VisualThemeSummary {
+  philosophy: string;
+  emotionalTone: string[];
+  keyCharacteristics: string[];
+  darkMode: boolean;
+}
+
+export interface AnalyzedPageData {
+  colors: AnalyzedColorPalette;
+  typography: AnalyzedTypography;
+  spacing: AnalyzedSpacing;
+  components: AnalyzedComponents;
+  shadows: AnalyzedShadows;
+  responsive: AnalyzedResponsive;
+  visualTheme: VisualThemeSummary;
+}

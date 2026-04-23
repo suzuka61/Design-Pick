@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sample page for design extraction testing">
+  <meta name="theme-color" content="#0070F3">
+  <style>
+    :root {
+      --primary: #0070F3;
+      --accent: #7928CA;
+      --bg: #ffffff;
+      --text: #171717;
+      --text-secondary: #666666;
+      --surface: #fafafa;
+      --border: #ebebeb;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 9999px;
+      --shadow-border: 0px 0px 0px 1px rgba(0,0,0,0.08);
+      --shadow-card: 0px 0px 0px 1px rgba(0,0,0,0.08), 0px 2px 4px rgba(0,0,0,0.04);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    nav .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+    nav .links {
+      display: flex;
+      gap: 24px;
+      margin-left: auto;
+    }
+    nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: var(--shadow-border);
+    }
+    .hero {
+      text-align: center;
+      padding: 80px 32px;
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+    .badge {
+      display: inline-block;
+      background: #ebf5ff;
+      color: #0068d6;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding: 48px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+    }
+    .card h3 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+    @media (max-width: 768px) {
+      .cards { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 32px; }
+    }
+    @media (min-width: 1024px) {
+      .cards { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Acme</div>
+    <div class="links">
+      <a href="#">Products</a>
+      <a href="#">Docs</a>
+      <a href="#">Blog</a>
+      <button class="btn-primary">Get Started</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <span class="badge">New Release</span>
+    <h1>Build faster with Acme</h1>
+    <p>The modern platform for developers. Ship with confidence.</p>
+    <button class="btn-primary">Start Building</button>
+    <button class="btn-secondary">View Docs</button>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <h3>Fast Deployment</h3>
+      <p>Deploy in seconds with zero configuration required.</p>
+    </div>
+    <div class="card">
+      <h3>Edge Network</h3>
+      <p>Global CDN with automatic optimization built in.</p>
+    </div>
+    <div class="card">
+      <h3>Analytics</h3>
+      <p>Real-time insights into your application performance.</p>
+    </div>
+  </section>
+</body>
+</html>

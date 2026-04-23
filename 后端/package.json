@@ -1,0 +1,46 @@
+{
+  "name": "extract-design-md",
+  "version": "0.1.0",
+  "description": "Extract design system from a webpage URL into a structured DESIGN.md with stability classification",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "extract-design": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli/index.ts",
+    "test": "jest",
+    "lint": "eslint src/"
+  },
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "design-md",
+    "css-extraction",
+    "ai"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
+    "chalk": "^5.3.0",
+    "commander": "^13.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.0",
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
+    "ora": "^8.0.0",
+    "playwright": "^1.52.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^29.5.0",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^22.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
