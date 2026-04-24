@@ -1,5 +1,7 @@
 # DesignPick
 
+[English](README_EN.md)
+
 从任意网页提取设计系统，生成 AI agent 可直接使用的 DESIGN.md。
 
 ## 为什么需要 DESIGN.md？
