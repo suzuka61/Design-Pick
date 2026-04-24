@@ -1,20 +1,61 @@
 # DesignPick
 
-从任意网页中提取设计系统，生成带 Token 命名和稳定性分类的结构化 DESIGN.md 文件。
+从任意网页提取设计系统，生成 AI agent 可直接使用的 DESIGN.md。
 
-## 功能
+## 为什么需要 DESIGN.md？
 
-输入网页 URL → 输出 9 段式 DESIGN.md 设计规范 + 可交互 preview.html 预览页面。
+| | AGENTS.md | DESIGN.md |
+|---|---|---|
+| 目的 | 告诉 AI 如何编写代码 | 告诉 AI 应该写成什么样 |
+| 内容 | 代码规范、PR 流程、测试要求 | 颜色、字体、间距、组件样式、阴影层级 |
+| 价值 | 让 AI 写出正确的行为 | 让 AI 写出正确的视觉 |
 
-**Token 命名系统**：每个设计值自动生成系统性 Token 名（如 `color-primary-500`、`spacing-md`、`radius-lg`），AI agent 可直接引用。
+**awesome-design-md** 手工为 60+ 网站撰写了 DESIGN.md（63.5k stars），但只能手动更新、无法自动提取。DesignPick 补上这一步——任意网页 → 自动 DESIGN.md。
 
-**4 层稳定性分类**：
+| | awesome-design-md | DesignPick |
+|---|---|---|
+| 方式 | 人工定制 | 自动提取 |
+| 输入 | 人工观察 | 网页 URL |
+| Token 命名 | 无 | `color-primary-500`、`spacing-md`、`radius-lg`… |
+| 稳定性分类 | 无 | L1 永久 → L4 易变 |
+| 状态补全 | 无 | 自动推断 hover/focus/disabled |
+| 速度 | 数小时 | 数分钟 |
+
+## 使用
+
+1. 输入网页 URL
+2. Playwright 抓取 → 分析颜色/字体/间距/组件/阴影/响应式
+3. Token 命名 + 稳定性分类 + 状态补全
+4. AI 生成 9 段 DESIGN.md + 可交互 preview.html
+
+## 稳定性分类
+
+每个设计值标注稳定性层级，AI agent 知道哪些值可以放心引用、哪些应忽略：
+
 - **[L1] Infrastructure** — 永久：主色、强调色、字体家族、基础间距单位
 - **[L2] System** — 重设计周期：中性色阶、组件样式、阴影、圆角
 - **[L3] Campaign** — 每次活动：低频强调色、hero 区域色
 - **[L4] Content** — 持续变化：图片衍生色（AI 使用时应忽略）
 
-**组件状态补全**：自动推断组件缺失的 hover/focus/disabled 状态，用 Token 引用表达。
+## Token 命名
+
+```css
+color-primary-500: #5b76fe    /* AI agent 直接引用 */
+spacing-md: 16px               /* 不需要记忆原始值 */
+radius-lg: 12px
+shadow-subtle: 0 1px 2px rgba(0,0,0,0.05)
+type-body: 16px/400/24px
+```
+
+## 状态补全
+
+自动推断组件缺失的交互状态，用 Token shade 偏移表达：
+
+| 状态 | 推断逻辑 |
+|------|----------|
+| Hover | shade +100（`color-primary-500` → `color-primary-600`） |
+| Focus | outline 用主色 token |
+| Disabled | shade -300（`color-primary-500` → `color-primary-200`） |
 
 ## DESIGN.md 九大段落
 
@@ -39,7 +80,7 @@
 ## 项目结构
 
 ```
-提取design项目/
+DesignPick/
 ├── 前端/          # Next.js 前端
 │   └── src/app/
 │       ├── layout.tsx
@@ -110,7 +151,8 @@ npm run dev            # 启动前端，端口 :3000
 | 方法 | 路径 | 说明 |
 |------|------|------|
 | GET | `/api/health` | 健康检查 |
-| POST | `/api/extract/url` | URL 提取 — body: `{ url, model? }` |
+| POST | `/api/extract/url` | URL 提取 — body: `{ url, apiKey?, baseURL?, model? }` |
+| POST | `/api/test-connection` | 测试 AI API 连接 — body: `{ apiKey, baseURL, model? }` |
 
 ## CLI 使用
 
@@ -136,16 +178,6 @@ URL → Playwright 抓取 → computed styles + viewport 截图
    → 输出 DESIGN.md + preview.html
 ```
 
-## 隐私与安全
-
-- **API 密钥不会存储在服务器上** — 用户提供的密钥仅在请求生命周期内传递
-- **前端 API 配置**仅保存在浏览器 `localStorage`，不会发送到任何第三方
-- **`.env` 文件已通过 `.gitignore` 排除**
-
-## 开源协议
-
-[MIT](LICENSE)
-
 ## 分析算法
 
 - **颜色聚类**：CIELAB k-means，像素面积加权，排除 body 级背景
@@ -155,3 +187,13 @@ URL → Playwright 抓取 → computed styles + viewport 截图
 - **稳定性分类**：基于频率+角色+位置启发式，区分永久/系统/活动/内容层级
 - **Token 命名**：CIELAB L* 映射 shade（50-900），按色相分组生成 `color-{hue}-{shade}` 命名
 - **状态补全**：基于 Token shade 偏移推断 hover/focus/disabled 状态值
+
+## 隐私与安全
+
+- **API 密钥不会存储在服务器上** — 用户提供的密钥仅在请求生命周期内传递
+- **前端 API 配置**仅保存在浏览器 `localStorage`，不会发送到任何第三方
+- **`.env` 文件已通过 `.gitignore` 排除**
+
+## 开源协议
+
+[MIT](LICENSE)
