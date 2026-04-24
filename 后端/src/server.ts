@@ -4,6 +4,8 @@ import cors from 'cors';
 import { scrapePage } from './scraper/page-scraper.js';
 import { analyzePage } from './analyzer/index.js';
 import { classifyStability } from './analyzer/stability-classifier.js';
+import { generateTokenNames } from './analyzer/token-namer.js';
+import { completeStates } from './analyzer/state-completer.js';
 import { DesignMDGenerator } from './ai/generator.js';
 import { renderPreviewHTML } from './renderer/html-renderer.js';
 import { validateDesignMD } from './types/design-md.js';
@@ -66,10 +68,15 @@ app.post('/api/extract/url', async (req, res) => {
     // Step 2.5: Classify stability
     classifyStability(analyzed);
 
+    // Step 2.6: Generate token names & complete states
+    const tokenMap = generateTokenNames(analyzed);
+    completeStates(analyzed.components, tokenMap);
+
     // Step 3: Generate DESIGN.md
     const generator = new DesignMDGenerator(config.apiKey, config.baseURL);
     const designDoc = await generator.generateFromAnalysis(analyzed, extracted.screenshots, {
       model: config.model,
+      tokenMap,
     });
 
     // Step 4: Validate
@@ -81,7 +88,7 @@ app.post('/api/extract/url', async (req, res) => {
       generatedAt: designDoc.generatedAt,
       validation,
       designMd: designDoc.rawMarkdown,
-      previewHtml: renderPreviewHTML({ ...designDoc, sourceUrl: url }),
+      previewHtml: renderPreviewHTML({ ...designDoc, sourceUrl: url }, tokenMap),
       analysis: {
         colors: {
           primary: analyzed.colors.primary,

@@ -13,11 +13,13 @@ export interface DesignMDDocument {
     agentPromptGuide: string;
   };
   rawMarkdown: string;
+  tokenMap?: import('../analyzer/token-namer.js').TokenNameMap;
 }
 
 export interface ValidationResult {
   valid: boolean;
   issues: string[];
+  warnings: string[];
 }
 
 export function validateDesignMD(markdown: string): ValidationResult {
@@ -34,6 +36,7 @@ export function validateDesignMD(markdown: string): ValidationResult {
   ];
 
   const issues: string[] = [];
+  const warnings: string[] = [];
 
   for (const section of requiredSections) {
     if (!markdown.includes(section)) {
@@ -52,5 +55,31 @@ export function validateDesignMD(markdown: string): ValidationResult {
     issues.push('Typography hierarchy table missing');
   }
 
-  return { valid: issues.length === 0, issues };
+  // Token naming soft checks (warnings, not hard failures)
+  const colorTokens = colorSection.match(/color-\w+-\d{2,3}/g);
+  if (!colorTokens || colorTokens.length < 3) {
+    warnings.push('Color section lacks systematic token naming (expected color-{hue}-{shade} patterns)');
+  }
+
+  const layoutSection = markdown.split('## 5.')[1]?.split('## 6.')[0] ?? '';
+  const spacingTokens = layoutSection.match(/spacing-\w+/g);
+  if (!spacingTokens || spacingTokens.length < 2) {
+    warnings.push('Layout section lacks spacing token naming (expected spacing-{name} patterns)');
+  }
+
+  const radiusTokens = layoutSection.match(/radius-\w+/g);
+  if (!radiusTokens || radiusTokens.length < 2) {
+    warnings.push('Layout section lacks radius token naming (expected radius-{size} patterns)');
+  }
+
+  if (typoSection.length < 100) {
+    warnings.push('Typography section is too short — guarantee rule may not have been applied');
+  }
+
+  const componentSection = markdown.split('## 4.')[1]?.split('## 5.')[0] ?? '';
+  if (!componentSection.includes('Hover') && !componentSection.includes('Disabled')) {
+    warnings.push('Component section lacks state completion (hover/disabled)');
+  }
+
+  return { valid: issues.length === 0, issues, warnings };
 }

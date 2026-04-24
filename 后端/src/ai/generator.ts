@@ -1,6 +1,7 @@
 import type { AnalyzedPageData } from '../types/analyzed.js';
 import type { ScreenshotData } from '../types/extracted.js';
 import type { DesignMDDocument } from '../types/design-md.js';
+import type { TokenNameMap } from '../analyzer/token-namer.js';
 import { AIClient } from './client.js';
 import { SYSTEM_PROMPT } from './prompts/system-prompt.js';
 import { buildURLUserPrompt } from './prompts/url-prompt.js';
@@ -15,9 +16,9 @@ export class DesignMDGenerator {
   async generateFromAnalysis(
     analysis: AnalyzedPageData,
     screenshots: ScreenshotData,
-    options?: { model?: string }
+    options?: { model?: string; tokenMap?: TokenNameMap }
   ): Promise<DesignMDDocument> {
-    const userPrompt = buildURLUserPrompt(analysis);
+    const userPrompt = buildURLUserPrompt(analysis, options?.tokenMap);
     // Only include viewport screenshot if it's small enough (<800KB base64)
     const MAX_IMAGE_SIZE = 800 * 1024;
     const viewportBase64 = screenshots.viewport.toString('base64');
@@ -30,7 +31,11 @@ export class DesignMDGenerator {
       { model: options?.model }
     );
 
-    return this.parseDesignMD(rawMarkdown);
+    const designDoc = this.parseDesignMD(rawMarkdown);
+    if (options?.tokenMap) {
+      designDoc.tokenMap = options.tokenMap;
+    }
+    return designDoc;
   }
 
   private parseDesignMD(rawMarkdown: string): DesignMDDocument {

@@ -8,10 +8,12 @@ export interface SemanticColor {
   usage: string[];
   frequency: number;
   stability?: StabilityLevel;
+  tokenName?: string;
 }
 
 export interface NeutralScaleColor extends SemanticColor {
   scalePosition: number;
+  tokenName?: string;
 }
 
 export interface AnalyzedColorPalette {
@@ -41,6 +43,7 @@ export interface TypeHierarchyEntry {
   notes: string;
   sampleText?: string;
   stability?: StabilityLevel;
+  tokenName?: string;
 }
 
 export interface AnalyzedTypography {
@@ -55,6 +58,7 @@ export interface SpacingScaleEntry {
   multiplier: number;
   usage: string[];
   stability?: StabilityLevel;
+  tokenName?: string;
 }
 
 export interface GridInfo {
@@ -69,6 +73,7 @@ export interface BorderRadiusEntry {
   value: number;
   usage: string[];
   stability?: StabilityLevel;
+  tokenName?: string;
 }
 
 export interface AnalyzedSpacing {
@@ -99,6 +104,7 @@ export interface ComponentStyle {
   states: {
     hover?: Record<string, string>;
     focus?: Record<string, string>;
+    disabled?: Record<string, string>;
   };
   sampleText?: string;
 }
@@ -117,6 +123,7 @@ export interface ShadowLevel {
   boxShadow: string;
   usage: string[];
   stability?: StabilityLevel;
+  tokenName?: string;
 }
 
 export interface AnalyzedShadows {

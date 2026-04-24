@@ -5,6 +5,8 @@ import { Command } from 'commander';
 import { scrapePage } from '../scraper/page-scraper.js';
 import { analyzePage } from '../analyzer/index.js';
 import { classifyStability } from '../analyzer/stability-classifier.js';
+import { generateTokenNames } from '../analyzer/token-namer.js';
+import { completeStates } from '../analyzer/state-completer.js';
 import { DesignMDGenerator } from '../ai/generator.js';
 import { renderPreviewHTML } from '../renderer/html-renderer.js';
 import { validateDesignMD } from '../types/design-md.js';
@@ -42,9 +44,15 @@ program
     console.log('  Analyzing design system...');
     const analyzed = analyzePage(extracted);
     classifyStability(analyzed);
+
+    // Step 2.5: Generate token names & complete states
+    const tokenMap = generateTokenNames(analyzed);
+    completeStates(analyzed.components, tokenMap);
+
     console.log(`  Colors: ${analyzed.colors.neutralScale.length} neutral + ${analyzed.colors.surface.length} surface`);
     console.log(`  Typography: ${analyzed.typography.hierarchy.length} hierarchy levels`);
     console.log(`  Components: ${analyzed.components.buttons.length} buttons, ${analyzed.components.cards.length} cards`);
+    console.log(`  Tokens: ${tokenMap.colors.size} color, ${tokenMap.spacing.size} spacing, ${tokenMap.shadows.size} shadow`);
 
     // Step 3: Generate DESIGN.md
     console.log('  Generating DESIGN.md with AI...');
@@ -54,14 +62,13 @@ program
     );
     const designDoc = await generator.generateFromAnalysis(analyzed, extracted.screenshots, {
       model: options.model,
+      tokenMap,
     });
 
     // Step 4: Validate
     const validation = validateDesignMD(designDoc.rawMarkdown);
-    if (!validation.valid) {
-      console.warn('  Validation issues:', validation.issues);
-    } else {
-      console.log('  DESIGN.md validated successfully');
+    if (validation.warnings && validation.warnings.length > 0) {
+      console.warn('  Validation warnings:', validation.warnings);
     }
 
     // Step 5: Write output
@@ -77,7 +84,7 @@ program
 
     fs.writeFileSync(
       path.join(outputDir, 'preview.html'),
-      renderPreviewHTML(designDoc),
+      renderPreviewHTML(designDoc, tokenMap),
       'utf-8'
     );
     console.log(`  Written: ${path.join(outputDir, 'preview.html')}`);

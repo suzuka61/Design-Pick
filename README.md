@@ -1,28 +1,32 @@
 # DesignPick
 
-从任意网页中提取设计系统，生成带稳定性分类的结构化 DESIGN.md 文件。
+从任意网页中提取设计系统，生成带 Token 命名和稳定性分类的结构化 DESIGN.md 文件。
 
 ## 功能
 
 输入网页 URL → 输出 9 段式 DESIGN.md 设计规范 + 可交互 preview.html 预览页面。
 
-每个设计 token 附带 4 层稳定性标注：
+**Token 命名系统**：每个设计值自动生成系统性 Token 名（如 `color-primary-500`、`spacing-md`、`radius-lg`），AI agent 可直接引用。
+
+**4 层稳定性分类**：
 - **[L1] Infrastructure** — 永久：主色、强调色、字体家族、基础间距单位
 - **[L2] System** — 重设计周期：中性色阶、组件样式、阴影、圆角
 - **[L3] Campaign** — 每次活动：低频强调色、hero 区域色
 - **[L4] Content** — 持续变化：图片衍生色（AI 使用时应忽略）
 
+**组件状态补全**：自动推断组件缺失的 hover/focus/disabled 状态，用 Token 引用表达。
+
 ## DESIGN.md 九大段落
 
 1. **Visual Theme & Atmosphere** — 设计哲学、情感调性、关键特征
-2. **Color Palette & Roles** — 语义化颜色命名 + hex 色值 + 稳定性标注
-3. **Typography Rules** — 字体家族、层级表、排版原则
-4. **Component Stylings** — Button / Card / Input / Navigation 变体与状态
-5. **Layout Principles** — 间距系统、网格、留白哲学、圆角尺度
-6. **Depth & Elevation** — 阴影层级表、阴影哲学
+2. **Color Palette & Roles** — 按 hue 分组色阶表（shade 50-900）+ Token 名 + 稳定性
+3. **Typography Rules** — 字体家族、层级表（含 Token 名）、排版原则
+4. **Component Stylings** — Button / Card / Input / Navigation 的 Rule Token 表 + 自动补全状态
+5. **Layout Principles** — Spacing Token 表、网格、圆角 Token 表
+6. **Depth & Elevation** — Shadow Token 表、阴影哲学
 7. **Do's and Don'ts** — 具体数值的设计指南
 8. **Responsive Behavior** — 断点表、触控目标、折叠策略
-9. **Agent Prompt Guide** — 颜色速查、组件 prompt 示例、稳定性使用指南
+9. **Agent Prompt Guide** — Token 速查、组件 prompt 示例、稳定性使用指南
 
 ## 技术栈
 
@@ -44,7 +48,7 @@
 ├── 后端/          # Express 后端
 │   └── src/
 │       ├── scraper/     # Playwright 网页抓取
-│       ├── analyzer/    # 颜色/字体/间距/组件/阴影/响应式/稳定性分析
+│       ├── analyzer/    # 颜色/字体/间距/组件/阴影/响应式/稳定性/Token命名/状态补全
 │       ├── ai/          # AI 提示词 + 生成
 │       ├── renderer/    # DESIGN.md → preview.html
 │       └── server.ts    # API 服务器
@@ -111,7 +115,6 @@ npm run dev            # 启动前端，端口 :3000
 ## CLI 使用
 
 ```bash
-# URL 模式
 npx extract-design url https://vercel.com -o ./output
 
 # 选项
@@ -127,7 +130,9 @@ npx extract-design url https://vercel.com -o ./output
 URL → Playwright 抓取 → computed styles + viewport 截图
    → 分析器（颜色/字体/间距/组件/阴影/响应式）
    → 稳定性分类器（L1-L4）
-   → AI API（分析数据 + 截图 + 稳定性标注 → DESIGN.md）
+   → Token 命名器（color-primary-500, spacing-md...）
+   → 状态补全器（hover/focus/disabled）
+   → AI API（分析数据 + Token 名 + 稳定性标注 → DESIGN.md）
    → 输出 DESIGN.md + preview.html
 ```
 
@@ -148,3 +153,5 @@ URL → Playwright 抓取 → computed styles + viewport 截图
 - **间距检测**：候选基础单位打分（2/4/5/8/10px），自动生成间距尺度
 - **组件检测**：基于 tag + role + class 启发式分类，按视觉差异分组变体
 - **稳定性分类**：基于频率+角色+位置启发式，区分永久/系统/活动/内容层级
+- **Token 命名**：CIELAB L* 映射 shade（50-900），按色相分组生成 `color-{hue}-{shade}` 命名
+- **状态补全**：基于 Token shade 偏移推断 hover/focus/disabled 状态值

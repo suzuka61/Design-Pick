@@ -1,4 +1,5 @@
 import type { DesignMDDocument } from '../types/design-md.js';
+import type { TokenNameMap, ColorTokenEntry } from '../analyzer/token-namer.js';
 
 // --- Data extraction from markdown sections ---
 
@@ -151,6 +152,39 @@ function renderColorSwatches(colors: { groups: { label: string; colors: ColorEnt
   `).join('\n');
 }
 
+function renderColorScaleBars(tokenMap: TokenNameMap): string {
+  // Group color tokens by hue
+  const hues = new Map<string, ColorTokenEntry[]>();
+  for (const entry of tokenMap.colors.values()) {
+    if (!hues.has(entry.hue)) hues.set(entry.hue, []);
+    hues.get(entry.hue)!.push(entry);
+  }
+
+  // Sort shades within each hue
+  for (const entries of hues.values()) {
+    entries.sort((a, b) => a.shade - b.shade);
+  }
+
+  const hueOrder = ['primary', 'accent', 'neutral', 'success', 'warning', 'error', 'info', 'link'];
+  const sortedHues = [...hues.entries()].sort((a, b) => {
+    const ai = hueOrder.indexOf(a[0]);
+    const bi = hueOrder.indexOf(b[0]);
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  });
+
+  return sortedHues.map(([hueName, entries]) => `
+    <div class="color-scale-group">
+      <div class="color-scale-label">${hueName.charAt(0).toUpperCase() + hueName.slice(1)} (color-${hueName})</div>
+      <div class="color-scale-bar">
+        ${entries.map(e => {
+          const needsBorder = e.hex.toLowerCase() === '#ffffff' || e.hex.toLowerCase() === '#fff';
+          return `<div class="color-scale-chip" style="background:${e.hex}${needsBorder ? ';border:1px solid #eceae4' : ''}" title="${e.tokenName}: ${e.hex} [${e.stability}]"><div class="color-scale-shade">${e.shade}</div><div class="color-scale-hex">${e.hex}</div></div>`;
+        }).join('\n')}
+      </div>
+    </div>
+  `).join('\n');
+}
+
 function renderTypeScale(entries: TypeEntry[]): string {
   if (entries.length === 0) return '';
   return entries.map(e => {
@@ -185,7 +219,7 @@ function renderElevationCards(levels: { name: string; shadow: string; usage: str
   ).join('\n')}</div>`;
 }
 
-export function renderPreviewHTML(doc: DesignMDDocument): string {
+export function renderPreviewHTML(doc: DesignMDDocument, tokenMap?: TokenNameMap): string {
   const sourceName = doc.sourceUrl
     ? (() => { try { return new URL(doc.sourceUrl).hostname; } catch { return doc.sourceUrl; } })()
     : 'Design System';
@@ -196,6 +230,10 @@ export function renderPreviewHTML(doc: DesignMDDocument): string {
   const spacing = extractSpacing(doc.sections.layoutPrinciples);
   const radius = extractRadius(doc.sections.layoutPrinciples);
   const shadows = extractShadowLevels(doc.sections.depthAndElevation);
+
+  // Use tokenMap for color scale bars if available
+  const colorScaleHTML = tokenMap ? renderColorScaleBars(tokenMap) : '';
+  const hasTokenColors = tokenMap && tokenMap.colors.size > 0;
 
   // Build nav links
   const navItems = [
@@ -260,6 +298,17 @@ export function renderPreviewHTML(doc: DesignMDDocument): string {
   .color-swatch-name{font-size:13px;font-weight:600;margin-bottom:2px}
   .color-swatch-hex{font-size:12px;color:var(--slate);font-family:ui-monospace,SFMono-Regular,monospace}
   .color-swatch-role{font-size:11px;color:var(--placeholder);margin-top:3px}
+
+  /* Color scale bars (token-first) */
+  .color-scale-group{margin-bottom:32px}
+  .color-scale-label{font-size:14px;font-weight:600;color:var(--slate);margin-bottom:10px}
+  .color-scale-bar{display:flex;gap:2px;border-radius:12px;overflow:hidden;border:1px solid var(--ring)}
+  .color-scale-chip{flex:1;min-width:0;padding:8px 4px 8px;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;min-height:80px}
+  .color-scale-shade{font-size:10px;font-weight:600;font-family:ui-monospace,SFMono-Regular,monospace;margin-bottom:2px;opacity:0.8}
+  .color-scale-hex{font-size:9px;font-family:ui-monospace,SFMono-Regular,monospace;opacity:0.7}
+
+  /* Token label */
+  .token-label{font-size:10px;font-weight:500;color:var(--accent);font-family:ui-monospace,SFMono-Regular,monospace;margin-top:4px;display:block}
 
   /* Typography */
   .type-sample{margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--ring)}
@@ -333,8 +382,8 @@ export function renderPreviewHTML(doc: DesignMDDocument): string {
 <section class="section" id="colors">
   <div class="section-label">01 / Colors</div>
   <h2 class="section-title">Color Palette</h2>
-  ${renderColorSwatches(colors)}
-  ${colors.groups.every(g => g.colors.length === 0) ? `<div class="content-block">${markdownToHTML(doc.sections.colorPalette)}</div>` : ''}
+  ${hasTokenColors ? colorScaleHTML : renderColorSwatches(colors)}
+  ${!hasTokenColors && colors.groups.every(g => g.colors.length === 0) ? `<div class="content-block">${markdownToHTML(doc.sections.colorPalette)}</div>` : ''}
 </section>
 
 <hr class="section-divider">
