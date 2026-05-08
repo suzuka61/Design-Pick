@@ -13,6 +13,8 @@ const STYLE_PROPS = [
   'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
   'borderWidth', 'borderRadius', 'borderStyle', 'boxShadow',
   'display', 'position', 'gap', 'overflow', 'opacity', 'cursor',
+  'transitionDuration', 'transitionTimingFunction', 'transitionProperty',
+  'outlineStyle', 'outlineWidth', 'outlineColor', 'outlineOffset',
 ];
 
 export async function extractAllStyles(page: Page): Promise<{
@@ -91,6 +93,14 @@ export async function extractAllStyles(page: Page): Promise<{
         if (childResult) children.push(childResult);
       }
 
+      // Extract ARIA and semantic attributes
+      const attributes = {};
+      for (const attr of node.attributes) {
+        if (attr.name.startsWith('aria-') || attr.name === 'role' || attr.name === 'tabindex' || attr.name === 'type' || attr.name === 'disabled' || attr.name === 'placeholder' || attr.name === 'alt' || attr.name === 'label') {
+          attributes[attr.name] = attr.value;
+        }
+      }
+
       return {
         tagName: tag,
         role: node.getAttribute('role') || undefined,
@@ -98,6 +108,7 @@ export async function extractAllStyles(page: Page): Promise<{
         classes: node.className && typeof node.className === 'string'
           ? node.className.split(/\\s+/).filter(Boolean)
           : [],
+        attributes: Object.keys(attributes).length > 0 ? attributes : undefined,
         computedStyles: cs,
         boundingBox: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
         children: children,

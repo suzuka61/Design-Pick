@@ -48,32 +48,45 @@ export class DesignMDGenerator {
 
     // Extract sections
     const sectionHeaders = [
-      '## 1. Visual Theme & Atmosphere',
-      '## 2. Color Palette & Roles',
-      '## 3. Typography Rules',
-      '## 4. Component Stylings',
-      '## 5. Layout Principles',
-      '## 6. Depth & Elevation',
-      "## 7. Do's and Don'ts",
-      '## 8. Responsive Behavior',
-      '## 9. Agent Prompt Guide',
+      '## 1. Mission',
+      '## 2. Brand Context',
+      '## 3. Visual Theme & Atmosphere',
+      '## 4. Color Palette & Roles',
+      '## 5. Typography Rules',
+      '## 6. Component Stylings',
+      '## 7. Layout Principles',
+      '## 8. Depth & Elevation',
+      '## 9. Accessibility',
+      '## 10. Motion & Transitions',
+      "## 11. Do's and Don'ts",
+      '## 12. Responsive Behavior',
+      '## 13. Anti-Patterns',
+      '## 14. QA Checklist',
+      '## 15. Agent Prompt Guide',
     ];
 
     const sectionKeys = [
-      'visualTheme', 'colorPalette', 'typography',
+      'mission', 'brand', 'visualTheme', 'colorPalette', 'typography',
       'componentStylings', 'layoutPrinciples', 'depthAndElevation',
-      'dosAndDonts', 'responsiveBehavior', 'agentPromptGuide',
+      'accessibility', 'motionAndTransitions', 'dosAndDonts',
+      'responsiveBehavior', 'antiPatterns', 'qaChecklist', 'agentPromptGuide',
     ] as const;
 
     const sections: DesignMDDocument['sections'] = {
+      mission: '',
+      brand: '',
       visualTheme: '',
       colorPalette: '',
       typography: '',
       componentStylings: '',
       layoutPrinciples: '',
       depthAndElevation: '',
+      accessibility: '',
+      motionAndTransitions: '',
       dosAndDonts: '',
       responsiveBehavior: '',
+      antiPatterns: '',
+      qaChecklist: '',
       agentPromptGuide: '',
     };
 
@@ -94,6 +107,10 @@ export class DesignMDGenerator {
 
     return {
       generatedAt: new Date().toISOString(),
+      frontmatter: {
+        name: 'design-system-extracted',
+        description: 'Creates implementation-ready design-system guidance with tokens, component behavior, and accessibility standards.',
+      },
       sections,
       rawMarkdown: md,
     };

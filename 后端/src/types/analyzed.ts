@@ -100,11 +100,22 @@ export interface ComponentStyle {
     boxShadow?: string;
     height?: number;
     minWidth?: number;
+    transitionDuration?: string;
+    transitionTiming?: string;
   };
   states: {
     hover?: Record<string, string>;
     focus?: Record<string, string>;
+    focusVisible?: Record<string, string>;
+    active?: Record<string, string>;
     disabled?: Record<string, string>;
+    loading?: Record<string, string>;
+    error?: Record<string, string>;
+  };
+  edgeCases?: {
+    longContent?: string;
+    overflow?: string;
+    emptyState?: string;
   };
   sampleText?: string;
 }
@@ -151,6 +162,25 @@ export interface VisualThemeSummary {
   darkMode: boolean;
 }
 
+export interface MotionTokens {
+  durations: { name: string; value: string; usage: string[] }[];
+  easings: { name: string; value: string; usage: string[] }[];
+  transitions: { property: string; duration: string; easing: string }[];
+}
+
+export interface AccessibilityInfo {
+  contrastRatios: { element: string; foreground: string; background: string; ratio: number; passes: boolean }[];
+  focusIndicators: string[];
+  keyboardPatterns: string[];
+  ariaUsage: string[];
+}
+
+export interface BrandContext {
+  productName: string;
+  audience: string;
+  productSurface: string[];
+}
+
 export interface AnalyzedPageData {
   colors: AnalyzedColorPalette;
   typography: AnalyzedTypography;
@@ -159,4 +189,7 @@ export interface AnalyzedPageData {
   shadows: AnalyzedShadows;
   responsive: AnalyzedResponsive;
   visualTheme: VisualThemeSummary;
+  motion: MotionTokens;
+  accessibility: AccessibilityInfo;
+  brand: BrandContext;
 }

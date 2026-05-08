@@ -2,7 +2,7 @@ import type { AnalyzedPageData } from '../../types/analyzed.js';
 import type { TokenNameMap } from '../../analyzer/token-namer.js';
 
 export function buildURLUserPrompt(analysis: AnalyzedPageData, tokenMap?: TokenNameMap): string {
-  const { colors, typography, spacing, components, shadows, responsive, visualTheme } = analysis;
+  const { colors, typography, spacing, components, shadows, responsive, visualTheme, motion, accessibility, brand } = analysis;
 
   const neutralScaleStr = colors.neutralScale.length > 0
     ? colors.neutralScale.map(c => `- ${c.role}: ${c.hex} [${c.stability ?? 'L2'}] (used in: ${c.usage.join(', ')})${c.tokenName ? ` → ${c.tokenName}` : ''}`).join('\n')
@@ -40,8 +40,13 @@ export function buildURLUserPrompt(analysis: AnalyzedPageData, tokenMap?: TokenN
     const states = [];
     if (b.states.hover) states.push(`hover: ${JSON.stringify(b.states.hover)}`);
     if (b.states.focus) states.push(`focus: ${JSON.stringify(b.states.focus)}`);
+    if (b.states.focusVisible) states.push(`focus-visible: ${JSON.stringify(b.states.focusVisible)}`);
+    if (b.states.active) states.push(`active: ${JSON.stringify(b.states.active)}`);
     if (b.states.disabled) states.push(`disabled: ${JSON.stringify(b.states.disabled)}`);
-    return `- ${b.variant}: bg=${b.styles.backgroundColor || 'transparent'} color=${b.styles.color} radius=${b.styles.borderRadius}px padding=${b.styles.padding} font=${b.styles.fontFamily} ${b.styles.fontSize}px/${b.styles.fontWeight}${states.length ? ` | states: ${states.join('; ')}` : ''}`;
+    if (b.states.loading) states.push(`loading: ${JSON.stringify(b.states.loading)}`);
+    if (b.states.error) states.push(`error: ${JSON.stringify(b.states.error)}`);
+    const edgeStr = b.edgeCases ? ` | edges: longContent=${b.edgeCases.longContent}, overflow=${b.edgeCases.overflow}, emptyState=${b.edgeCases.emptyState}` : '';
+    return `- ${b.variant}: bg=${b.styles.backgroundColor || 'transparent'} color=${b.styles.color} radius=${b.styles.borderRadius}px padding=${b.styles.padding} font=${b.styles.fontFamily} ${b.styles.fontSize}px/${b.styles.fontWeight}${b.styles.transitionDuration ? ` transition=${b.styles.transitionDuration}` : ''}${states.length ? ` | states: ${states.join('; ')}` : ''}${edgeStr}`;
   }).join('\n');
 
   const cardsStr = components.cards.map(c => `- ${c.variant}: bg=${c.styles.backgroundColor} radius=${c.styles.borderRadius}px padding=${c.styles.padding} shadow=${c.styles.boxShadow || 'none'}`).join('\n');
@@ -57,6 +62,36 @@ export function buildURLUserPrompt(analysis: AnalyzedPageData, tokenMap?: TokenN
   const breakpointsStr = responsive.breakpoints.map(b =>
     `- ${b.name}: ${b.minWidth}px${b.maxWidth ? '-' + b.maxWidth + 'px' : '+'} — ${b.description}`
   ).join('\n');
+
+  // Motion data
+  const durationsStr = motion.durations.length > 0
+    ? motion.durations.map(d => `- ${d.name}: ${d.value} — ${d.usage.join(', ')}`).join('\n')
+    : '- No durations detected';
+
+  const easingsStr = motion.easings.length > 0
+    ? motion.easings.map(e => `- ${e.name}: ${e.value} — ${e.usage.join(', ')}`).join('\n')
+    : '- No easings detected';
+
+  const transitionsStr = motion.transitions.length > 0
+    ? motion.transitions.map(t => `- ${t.property}: ${t.duration} ${t.easing}`).join('\n')
+    : '- No transitions detected';
+
+  // Accessibility data
+  const contrastStr = accessibility.contrastRatios.length > 0
+    ? accessibility.contrastRatios.map(c => `- ${c.element}: fg=${c.foreground} bg=${c.background} ratio=${c.ratio} ${c.passes ? '✅ PASS' : '❌ FAIL'}`).join('\n')
+    : '- No contrast ratios computed';
+
+  const focusStr = accessibility.focusIndicators.length > 0
+    ? accessibility.focusIndicators.map(f => `- ${f}`).join('\n')
+    : '- No focus indicators detected';
+
+  const keyboardStr = accessibility.keyboardPatterns.length > 0
+    ? accessibility.keyboardPatterns.map(k => `- ${k}`).join('\n')
+    : '- No keyboard patterns detected';
+
+  const ariaStr = accessibility.ariaUsage.length > 0
+    ? accessibility.ariaUsage.map(a => `- ${a}`).join('\n')
+    : '- No ARIA usage detected';
 
   // Build token mapping section if available
   let tokenSection = '';
@@ -123,9 +158,14 @@ export function buildURLUserPrompt(analysis: AnalyzedPageData, tokenMap?: TokenN
     }
   }
 
-  return `Analyze this webpage's design system and produce a DESIGN.md document with systematic token naming.
+  return `Analyze this webpage's design system and produce a DESIGN.md document with systematic token naming and quality gates.
 
 ## Extracted Design Data
+
+### Brand Context
+Product Name: ${brand.productName || 'Unknown — infer from design'}
+Audience: ${brand.audience || 'Unknown — infer from visual language'}
+Product Surface: ${brand.productSurface.length > 0 ? brand.productSurface.join(', ') : 'web app'}
 
 ### Visual Theme
 Philosophy: ${visualTheme.philosophy}
@@ -186,11 +226,29 @@ ${navStr || '- No navigation detected'}
 ${shadowLevelsStr || '- No shadows detected'}
 Philosophy: ${shadows.philosophy}
 
+### Motion & Transitions
+Durations:
+${durationsStr}
+Easings:
+${easingsStr}
+Transitions:
+${transitionsStr}
+
+### Accessibility
+Contrast Ratios:
+${contrastStr}
+Focus Indicators:
+${focusStr}
+Keyboard Patterns:
+${keyboardStr}
+ARIA Usage:
+${ariaStr}
+
 ### Responsive
 Breakpoints:
 ${breakpointsStr || '- Default breakpoints (no media queries detected)'}
 Touch Targets: min ${responsive.touchTargets.minSize}px, recommended ${responsive.touchTargets.recommendedSize}px
 Collapsing: ${responsive.collapsingStrategy}
 ${tokenSection}
-I have also attached screenshots of the page for visual reference. Please generate the complete 9-section DESIGN.md using the token naming system described in the system prompt. Use the pre-computed token names where provided.`;
+I have also attached screenshots of the page for visual reference. Please generate the complete 15-section DESIGN.md using the token naming system and quality gates described in the system prompt. Use the pre-computed token names where provided.`;
 }

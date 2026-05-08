@@ -39,6 +39,7 @@ export async function scrapePage(
         description: document.querySelector('meta[name="description"]')?.getAttribute('content') ?? undefined,
         themeColor: document.querySelector('meta[name="theme-color"]')?.getAttribute('content') ?? undefined,
         viewport: document.querySelector('meta[name="viewport"]')?.getAttribute('content') ?? undefined,
+        'og:site_name': document.querySelector('meta[property="og:site_name"]')?.getAttribute('content') ?? undefined,
       })),
     ]);
 

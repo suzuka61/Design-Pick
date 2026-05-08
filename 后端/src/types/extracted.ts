@@ -29,6 +29,13 @@ export interface ComputedStyles {
   overflow: string;
   opacity: string;
   cursor: string;
+  transitionDuration: string;
+  transitionTimingFunction: string;
+  transitionProperty: string;
+  outlineStyle: string;
+  outlineWidth: string;
+  outlineColor: string;
+  outlineOffset: string;
 }
 
 export interface ExtractedElement {
@@ -36,6 +43,7 @@ export interface ExtractedElement {
   role?: string;
   text?: string;
   classes: string[];
+  attributes?: Record<string, string>;
   computedStyles: ComputedStyles;
   boundingBox: { x: number; y: number; width: number; height: number };
   children: ExtractedElement[];
@@ -62,6 +70,7 @@ export interface ExtractedPageData {
     description?: string;
     themeColor?: string;
     viewport?: string;
+    'og:site_name'?: string;
   };
   body: ExtractedElement;
   screenshots: ScreenshotData;

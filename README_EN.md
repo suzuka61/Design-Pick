@@ -20,7 +20,10 @@ Extract design systems from any webpage into a DESIGN.md that AI agents can use 
 | Input | Human observation | Webpage URL |
 | Token naming | None | `color-primary-500`, `spacing-md`, `radius-lg`… |
 | Stability classification | None | L1 permanent → L4 volatile |
-| State completion | None | Auto-inferred hover/focus/disabled |
+| State completion | None | 7 states (hover/focus/focus-visible/active/disabled/loading/error) |
+| Accessibility audit | None | WCAG 2.2 AA contrast, focus-visible, ARIA, keyboard |
+| Motion tokens | None | `motion-duration-fast`, `motion-easing-standard`… |
+| Quality gates | None | 🚫 MUST / ✅ SHOULD constraint strength labels |
 | Speed | Hours | Minutes |
 
 ## Usage
@@ -28,7 +31,7 @@ Extract design systems from any webpage into a DESIGN.md that AI agents can use 
 1. Enter a webpage URL
 2. Playwright scrapes → analyzes colors/typography/spacing/components/shadows/responsive
 3. Token naming + stability classification + state completion
-4. AI generates 9-section DESIGN.md + interactive preview.html
+4. AI generates 15-section DESIGN.md + interactive preview.html
 
 ## Stability Classification
 
@@ -51,25 +54,50 @@ type-body: 16px/400/24px
 
 ## State Completion
 
-Auto-infers missing interaction states for components, expressed as token shade offsets:
+Auto-infers 7 missing interaction states for components, expressed as token shade offsets:
 
 | State | Inference logic |
 |-------|----------------|
 | Hover | shade +100 (`color-primary-500` → `color-primary-600`) |
 | Focus | outline uses primary color token |
-| Disabled | shade -300 (`color-primary-500` → `color-primary-200`) |
+| Focus-visible | 3px ring, keyboard-only (distinct from focus) |
+| Active | shade +200 + inset shadow + scale(0.98) |
+| Disabled | shade -300 + opacity 0.6 |
+| Loading | opacity 0.7 + cursor: wait |
+| Error | border → color-error-500 |
 
-## DESIGN.md 9 Sections
+## Edge Cases
 
-1. **Visual Theme & Atmosphere** — Design philosophy, emotional tone, key characteristics
-2. **Color Palette & Roles** — Hue-grouped shade scales (50-900) + token names + stability
-3. **Typography Rules** — Font families, hierarchy table (with token names), type principles
-4. **Component Stylings** — Button / Card / Input / Navigation rule token tables + auto-completed states
-5. **Layout Principles** — Spacing token table, grid, radius token table
-6. **Depth & Elevation** — Shadow token table, shadow philosophy
-7. **Do's and Don'ts** — Value-specific design guidelines
-8. **Responsive Behavior** — Breakpoint table, touch targets, collapse strategies
-9. **Agent Prompt Guide** — Token quick reference, component prompt examples, stability usage guide
+Every component gets auto-generated boundary handling:
+
+- **Long content** — 2-line truncation + hover tooltip
+- **Overflow** — Hidden overflow + scroll-on-demand
+- **Empty state** — Centered placeholder icon + descriptive text + CTA
+
+## Quality Gates
+
+Every rule is tagged with constraint strength:
+
+- 🚫 **MUST** — Non-negotiable. Violation = broken design system.
+- ✅ **SHOULD** — Strong recommendation. Deviation requires documented justification.
+
+## DESIGN.md 15 Sections
+
+1. **Mission** — Design system objective, target user experience
+2. **Brand Context** — Product name, audience, product surface (web/mobile/dashboard)
+3. **Visual Theme & Atmosphere** — Design philosophy, emotional tone, key characteristics
+4. **Color Palette & Roles** — Hue-grouped shade scales (50-900) + token names + stability
+5. **Typography Rules** — Font families, hierarchy table (with token names), type principles
+6. **Component Stylings** — Button / Card / Input / Navigation rule token tables + 7 states + edge cases
+7. **Layout Principles** — Spacing token table, grid, radius token table
+8. **Depth & Elevation** — Shadow token table, shadow philosophy
+9. **Accessibility** — WCAG 2.2 AA contrast, focus-visible, keyboard interactions, ARIA, touch targets
+10. **Motion & Transitions** — Duration/easing token tables, transition rules, prefers-reduced-motion
+11. **Do's and Don'ts** — 🚫 MUST / ✅ SHOULD tagged design guidelines
+12. **Responsive Behavior** — Breakpoint table, touch targets, collapse strategies
+13. **Anti-Patterns** — Explicitly prohibited implementations + reasoning
+14. **QA Checklist** — Acceptance checklist (checkable)
+15. **Agent Prompt Guide** — Token quick reference, component prompt examples, stability usage guide
 
 ## Tech Stack
 
@@ -172,11 +200,11 @@ npx extract-design url https://vercel.com -o ./output
 
 ```
 URL → Playwright scrape → computed styles + viewport screenshot
-   → Analyzers (color/typography/spacing/component/shadow/responsive)
+   → Analyzers (color/typography/spacing/component/shadow/responsive/motion/accessibility/brand)
    → Stability classifier (L1-L4)
-   → Token namer (color-primary-500, spacing-md...)
-   → State completer (hover/focus/disabled)
-   → AI API (analysis data + token names + stability tags → DESIGN.md)
+   → Token namer (color-primary-500, spacing-md, motion-duration-fast...)
+   → State completer (7 states: hover/focus/focus-visible/active/disabled/loading/error)
+   → AI API (analysis data + token names + stability tags → 15-section DESIGN.md)
    → Output DESIGN.md + preview.html
 ```
 
@@ -188,7 +216,9 @@ URL → Playwright scrape → computed styles + viewport screenshot
 - **Component detection**: tag + role + class heuristic classification, variant grouping by visual difference
 - **Stability classification**: frequency + role + position heuristics, distinguishing permanent/system/campaign/content tiers
 - **Token naming**: CIELAB L* maps to shade (50-900), hue-grouped `color-{hue}-{shade}` naming
-- **State completion**: infers hover/focus/disabled states from token shade offsets
+- **State completion**: 7 interaction states (hover/focus/focus-visible/active/disabled/loading/error) + edge cases
+- **Motion detection**: extracts transition-duration/timing-function, generates motion-duration/easing tokens
+- **Accessibility analysis**: WCAG contrast ratio calculation, focus-visible detection, ARIA attribute collection, keyboard accessibility
 
 ## Privacy & Security
 

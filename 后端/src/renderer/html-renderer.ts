@@ -237,14 +237,16 @@ export function renderPreviewHTML(doc: DesignMDDocument, tokenMap?: TokenNameMap
 
   // Build nav links
   const navItems = [
+    { id: 'mission', label: 'Mission' },
     { id: 'colors', label: 'Colors' },
     { id: 'typography', label: 'Typography' },
     { id: 'buttons', label: 'Buttons' },
     { id: 'spacing', label: 'Spacing' },
-    { id: 'radius', label: 'Radius' },
     { id: 'elevation', label: 'Elevation' },
-    { id: 'dos-donts', label: 'Do\'s & Don\'ts' },
-    { id: 'responsive', label: 'Responsive' },
+    { id: 'accessibility', label: 'A11y' },
+    { id: 'motion', label: 'Motion' },
+    { id: 'dos-donts', label: "Do's & Don'ts" },
+    { id: 'qa', label: 'QA' },
   ];
   const navLinks = navItems.map(n =>
     `<li><a href="#${n.id}" onclick="event.preventDefault();document.getElementById('${n.id}').scrollIntoView({behavior:'smooth',block:'start'})">${n.label}</a></li>`
@@ -356,6 +358,28 @@ export function renderPreviewHTML(doc: DesignMDDocument, tokenMap?: TokenNameMap
   .do-col li{color:#15803d}
   .dont-col li{color:#b91c1c}
 
+  .checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}
+  .checklist-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.6;padding:8px 12px;border-radius:8px;background:var(--surface)}
+  .checklist-item input[type="checkbox"]{margin-top:3px;accent-color:var(--accent)}
+
+  .must-tag{display:inline-block;background:#fef2f2;color:#991b1b;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;margin-right:4px;vertical-align:middle}
+  .should-tag{display:inline-block;background:#eff6ff;color:#1e40af;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;margin-right:4px;vertical-align:middle}
+
+  .a11y-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+  .a11y-card{padding:20px;border-radius:12px;background:var(--surface);border:1px solid var(--ring)}
+  .a11y-card h4{font-size:14px;font-weight:600;margin-bottom:8px;color:var(--black)}
+  .a11y-card ul{list-style:none;padding:0}
+  .a11y-card li{font-size:13px;line-height:1.6;margin-bottom:6px;padding-left:20px;position:relative}
+  .a11y-card li::before{content:'';position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:50%}
+  .a11y-card li.pass::before{background:#22c55e}
+  .a11y-card li.fail::before{background:#ef4444}
+
+  .motion-token-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+  .motion-token-card{padding:16px;border-radius:12px;background:var(--surface);border:1px solid var(--ring);text-align:center}
+  .motion-token-card .token-name{font-size:12px;font-weight:600;color:var(--accent);font-family:ui-monospace,SFMono-Regular,monospace;margin-bottom:4px}
+  .motion-token-card .token-value{font-size:14px;font-weight:500;color:var(--black);font-family:ui-monospace,SFMono-Regular,monospace}
+  .motion-token-card .token-usage{font-size:11px;color:var(--placeholder);margin-top:4px}
+
   .footer{padding:32px;text-align:center;border-top:1px solid var(--ring);font-size:13px;color:var(--placeholder)}
   .footer a{color:var(--accent);text-decoration:none}
 
@@ -378,9 +402,19 @@ export function renderPreviewHTML(doc: DesignMDDocument, tokenMap?: TokenNameMap
 
 <hr class="section-divider">
 
-<!-- 01 Colors -->
+<!-- 01 Mission & Brand -->
+<section class="section" id="mission">
+  <div class="section-label">01 / Mission & Brand</div>
+  <h2 class="section-title">Mission & Brand</h2>
+  <div class="content-block">${markdownToHTML(doc.sections.mission)}</div>
+  <div class="content-block" style="margin-top:24px">${markdownToHTML(doc.sections.brand)}</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- 03 Colors -->
 <section class="section" id="colors">
-  <div class="section-label">01 / Colors</div>
+  <div class="section-label">03 / Colors</div>
   <h2 class="section-title">Color Palette</h2>
   ${hasTokenColors ? colorScaleHTML : renderColorSwatches(colors)}
   ${!hasTokenColors && colors.groups.every(g => g.colors.length === 0) ? `<div class="content-block">${markdownToHTML(doc.sections.colorPalette)}</div>` : ''}
@@ -390,7 +424,7 @@ export function renderPreviewHTML(doc: DesignMDDocument, tokenMap?: TokenNameMap
 
 <!-- 02 Typography -->
 <section class="section" id="typography">
-  <div class="section-label">02 / Typography</div>
+  <div class="section-label">04 / Typography</div>
   <h2 class="section-title">Typography Scale</h2>
   ${renderTypeScale(typography)}
   ${typography.length === 0 ? `<div class="content-block">${markdownToHTML(doc.sections.typography)}</div>` : ''}
@@ -400,7 +434,7 @@ export function renderPreviewHTML(doc: DesignMDDocument, tokenMap?: TokenNameMap
 
 <!-- 03 Buttons (from component section) -->
 <section class="section" id="buttons">
-  <div class="section-label">03 / Buttons</div>
+  <div class="section-label">05 / Buttons</div>
   <h2 class="section-title">Button Variants</h2>
   ${renderButtonVariants(doc.sections.componentStylings)}
 </section>
@@ -409,7 +443,7 @@ export function renderPreviewHTML(doc: DesignMDDocument, tokenMap?: TokenNameMap
 
 <!-- 05 Spacing -->
 <section class="section" id="spacing">
-  <div class="section-label">05 / Spacing</div>
+  <div class="section-label">07 / Spacing</div>
   <h2 class="section-title">Spacing Scale</h2>
   ${renderSpacingBars(spacing)}
   ${spacing.length === 0 ? `<div class="content-block">${markdownToHTML(doc.sections.layoutPrinciples)}</div>` : ''}
@@ -429,26 +463,60 @@ export function renderPreviewHTML(doc: DesignMDDocument, tokenMap?: TokenNameMap
 
 <!-- 06 Elevation -->
 <section class="section" id="elevation">
-  <div class="section-label">06 / Elevation</div>
+  <div class="section-label">08 / Elevation</div>
   <h2 class="section-title">Depth & Elevation</h2>
   ${renderElevationCards(shadows)}
   <div class="content-block" style="margin-top:24px">${markdownToHTML(doc.sections.depthAndElevation)}</div>
 </section>
 
 <hr class="section-divider">
+<!-- 09 Accessibility -->
+  <section class="section" id="accessibility">
+    <div class="section-label">09 / Accessibility</div>
+    <h2 class="section-title">Accessibility</h2>
+    ${renderAccessibilitySection(doc.sections.accessibility)}
+  </section>
 
-<!-- 07 Do's & Don'ts -->
-<section class="section" id="dos-donts">
-  <div class="section-label">07 / Guidelines</div>
-  <h2 class="section-title">Do's and Don'ts</h2>
+  <hr class="section-divider">
+
+  <!-- 10 Motion -->
+  <section class="section" id="motion">
+    <div class="section-label">10 / Motion & Transitions</div>
+    <h2 class="section-title">Motion & Transitions</h2>
+    ${renderMotionSection(doc.sections.motionAndTransitions)}
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 11 Do's & Don'ts -->
+  <section class="section" id="dos-donts">
+    <div class="section-label">11 / Do's & Don'ts</div><h2 class="section-title">Do's and Don'ts</h2>
   ${renderDosDonts(doc.sections.dosAndDonts)}
-</section>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 13 Anti-Patterns -->
+  <section class="section" id="anti-patterns">
+    <div class="section-label">13 / Anti-Patterns</div>
+    <h2 class="section-title">Anti-Patterns</h2>
+    ${renderAntiPatternsSection(doc.sections.antiPatterns)}
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- 14 QA Checklist -->
+  <section class="section" id="qa">
+    <div class="section-label">14 / QA Checklist</div>
+    <h2 class="section-title">QA Checklist</h2>
+    ${renderQAChecklistSection(doc.sections.qaChecklist)}
+  </section>
 
 <hr class="section-divider">
 
-<!-- 08 Responsive -->
+<!-- 12 Responsive -->
 <section class="section" id="responsive">
-  <div class="section-label">08 / Responsive</div>
+  <div class="section-label">12 / Responsive</div>
   <h2 class="section-title">Responsive Behavior</h2>
   <div class="content-block">${markdownToHTML(doc.sections.responsiveBehavior)}</div>
 </section>
@@ -515,6 +583,125 @@ function renderButtonVariants(md: string): string {
 }
 
 // --- Do's & Don'ts rendering ---
+function renderAccessibilitySection(md: string): string {
+  if (!md) return '<div class="content-block">No accessibility data available.</div>';
+  const lines = md.split('\n');
+  let html = '<div class="a11y-grid">';
+
+  const subsections: Record<string, string[]> = {
+    'Contrast': [],
+    'Focus': [],
+    'Keyboard': [],
+    'ARIA': [],
+    'Touch': [],
+  };
+
+  let currentSection = '';
+  for (const line of lines) {
+    if (line.match(/contrast/i)) currentSection = 'Contrast';
+    else if (line.match(/focus/i)) currentSection = 'Focus';
+    else if (line.match(/keyboard/i)) currentSection = 'Keyboard';
+    else if (line.match(/aria/i)) currentSection = 'ARIA';
+    else if (line.match(/touch|pointer/i)) currentSection = 'Touch';
+    if (currentSection && line.trim()) {
+      subsections[currentSection]?.push(line.trim());
+    }
+  }
+
+  for (const [title, items] of Object.entries(subsections)) {
+    if (items.length === 0) continue;
+    html += `<div class="a11y-card"><h4>${title}</h4><ul>`;
+    for (const item of items) {
+      const isFail = item.includes('❌') || item.includes('FAIL') || item.toLowerCase().includes('must not');
+      const isPass = item.includes('✅') || item.includes('PASS') || item.toLowerCase().includes('must:') || item.includes('MUST:');
+      const cls = isFail ? 'fail' : isPass ? 'pass' : '';
+      html += `<li class="${cls}">${item.replace(/^[•-]\s*/, '').replace(/\*\*/g, '')}</li>`;
+    }
+    html += '</ul></div>';
+  }
+
+  html += '</div>';
+  html += `<div class="content-block">${markdownToHTML(md)}</div>`;
+  return html;
+}
+
+function renderMotionSection(md: string): string {
+  if (!md) return '<div class="content-block">No motion data available.</div>';
+
+  const durationTokens: { name: string; value: string; usage: string }[] = [];
+  const easingTokens: { name: string; value: string; usage: string }[] = [];
+
+  const lines = md.split('\n');
+  let inDuration = false;
+  let inEasing = false;
+  for (const line of lines) {
+    if (line.match(/duration/i) && line.match(/token|^\|/i)) { inDuration = true; inEasing = false; }
+    if (line.match(/easing/i) && line.match(/token|^\|/i)) { inEasing = true; inDuration = false; }
+    if (line.match(/^###|^## /)) { inDuration = false; inEasing = false; }
+
+    const tableMatch = line.match(/^\|\s*([^|]+)\s*\|\s*([^|]+)\s*\|\s*([^|]+)\s*\|/);
+    if (tableMatch && !line.match(/^-/) && !line.match(/^[\s|:-]+$/)) {
+      const name = tableMatch[1].trim();
+      const value = tableMatch[2].trim();
+      const usage = tableMatch[3].trim();
+      if (name.toLowerCase().includes('token') || name.toLowerCase().includes('name')) continue; // header row
+      if (inDuration) durationTokens.push({ name, value, usage });
+      if (inEasing) easingTokens.push({ name, value, usage });
+    }
+  }
+
+  let html = '';
+  if (durationTokens.length > 0) {
+    html += '<h4 style="font-size:14px;font-weight:600;margin-bottom:12px">Duration Tokens</h4>';
+    html += '<div class="motion-token-grid">';
+    for (const t of durationTokens) {
+      html += `<div class="motion-token-card"><div class="token-name">${t.name}</div><div class="token-value">${t.value}</div><div class="token-usage">${t.usage}</div></div>`;
+    }
+    html += '</div>';
+  }
+
+  if (easingTokens.length > 0) {
+    html += '<h4 style="font-size:14px;font-weight:600;margin-bottom:12px">Easing Tokens</h4>';
+    html += '<div class="motion-token-grid">';
+    for (const t of easingTokens) {
+      html += `<div class="motion-token-card"><div class="token-name">${t.name}</div><div class="token-value">${t.value}</div><div class="token-usage">${t.usage}</div></div>`;
+    }
+    html += '</div>';
+  }
+
+  html += `<div class="content-block">${markdownToHTML(md)}</div>`;
+  return html;
+}
+
+function renderAntiPatternsSection(md: string): string {
+  if (!md) return '<div class="content-block">No anti-patterns defined.</div>';
+  const lines = md.split('\n').filter(l => l.trim());
+  let html = '<div class="checklist-grid">';
+  for (const line of lines) {
+    const cleaned = line.replace(/^\d+\.\s*/, '').replace(/^[•-]\s*/, '').replace(/\*\*/g, '');
+    if (!cleaned || cleaned.startsWith('#')) continue;
+    const isMust = cleaned.includes('MUST NOT') || cleaned.includes('🚫');
+    html += `<div class="checklist-item" style="${isMust ? 'border-left:3px solid #ef4444' : 'border-left:3px solid #f59e0b'}">${isMust ? '<span class="must-tag">🚫 MUST NOT</span>' : '<span class="should-tag">✅ SHOULD NOT</span>'} ${cleaned.replace(/🚫 MUST NOT[:\s]*/g, '').replace(/✅ SHOULD NOT[:\s]*/g, '')}</div>`;
+  }
+  html += '</div>';
+  html += `<div class="content-block">${markdownToHTML(md)}</div>`;
+  return html;
+}
+
+function renderQAChecklistSection(md: string): string {
+  if (!md) return '<div class="content-block">No QA checklist defined.</div>';
+  const lines = md.split('\n').filter(l => l.trim());
+  let html = '<div class="checklist-grid">';
+  for (const line of lines) {
+    const cleaned = line.replace(/^-\s*\[\s*\]\s*/, '').replace(/^\d+\.\s*/, '').replace(/^[•-]\s*/, '').replace(/\*\*/g, '');
+    if (!cleaned || cleaned.startsWith('#') || cleaned.startsWith('Before')) continue;
+    html += `<div class="checklist-item"><input type="checkbox" /> ${cleaned}</div>`;
+  }
+  html += '</div>';
+  html += `<div class="content-block">${markdownToHTML(md)}</div>`;
+  return html;
+}
+
 function renderDosDonts(md: string): string {
   const dos: string[] = [];
   const donts: string[] = [];
@@ -569,6 +756,9 @@ function markdownToHTML(md: string): string {
   html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
   html = html.replace(/((?:<li>.*<\/li>\s*)+)/g, '<ul>$1</ul>');
   html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/^- \[ \] (.+)$/gm, '<li><input type="checkbox" /> $1</li>');
+  html = html.replace(/🚫 MUST:?/g, '<span class="must-tag">🚫 MUST</span>');
+  html = html.replace(/✅ SHOULD:?/g, '<span class="should-tag">✅ SHOULD</span>');
   html = html.replace(/\n\n/g, '</p><p>');
   html = html.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
   html = html.replace(/^---$/gm, '<hr>');

@@ -20,7 +20,10 @@
 | 输入 | 人工观察 | 网页 URL |
 | Token 命名 | 无 | `color-primary-500`、`spacing-md`、`radius-lg`… |
 | 稳定性分类 | 无 | L1 永久 → L4 易变 |
-| 状态补全 | 无 | 自动推断 hover/focus/disabled |
+| 状态补全 | 无 | 自动推断 7 种状态（hover/focus/focus-visible/active/disabled/loading/error） |
+| 无障碍检测 | 无 | WCAG 2.2 AA 对比度、focus-visible、ARIA、键盘交互 |
+| 动画 Token | 无 | `motion-duration-fast`、`motion-easing-standard`… |
+| 质量门 | 无 | 🚫 MUST / ✅ SHOULD 约束强度分级 |
 | 速度 | 数小时 | 数分钟 |
 
 ## 使用
@@ -28,7 +31,7 @@
 1. 输入网页 URL
 2. Playwright 抓取 → 分析颜色/字体/间距/组件/阴影/响应式
 3. Token 命名 + 稳定性分类 + 状态补全
-4. AI 生成 9 段 DESIGN.md + 可交互 preview.html
+4. AI 生成 15 段 DESIGN.md + 可交互 preview.html
 
 ## 稳定性分类
 
@@ -51,25 +54,50 @@ type-body: 16px/400/24px
 
 ## 状态补全
 
-自动推断组件缺失的交互状态，用 Token shade 偏移表达：
+自动推断组件缺失的 7 种交互状态，用 Token shade 偏移表达：
 
 | 状态 | 推断逻辑 |
 |------|----------|
 | Hover | shade +100（`color-primary-500` → `color-primary-600`） |
 | Focus | outline 用主色 token |
-| Disabled | shade -300（`color-primary-500` → `color-primary-200`） |
+| Focus-visible | 3px ring，键盘专用（区别于 focus） |
+| Active | shade +200 + inset shadow + scale(0.98) |
+| Disabled | shade -300 + opacity 0.6 |
+| Loading | opacity 0.7 + cursor: wait |
+| Error | border → color-error-500 |
 
-## DESIGN.md 九大段落
+## 边界情况
 
-1. **Visual Theme & Atmosphere** — 设计哲学、情感调性、关键特征
-2. **Color Palette & Roles** — 按 hue 分组色阶表（shade 50-900）+ Token 名 + 稳定性
-3. **Typography Rules** — 字体家族、层级表（含 Token 名）、排版原则
-4. **Component Stylings** — Button / Card / Input / Navigation 的 Rule Token 表 + 自动补全状态
-5. **Layout Principles** — Spacing Token 表、网格、圆角 Token 表
-6. **Depth & Elevation** — Shadow Token 表、阴影哲学
-7. **Do's and Don'ts** — 具体数值的设计指南
-8. **Responsive Behavior** — 断点表、触控目标、折叠策略
-9. **Agent Prompt Guide** — Token 速查、组件 prompt 示例、稳定性使用指南
+每个组件自动补充边界处理规则：
+
+- **Long content** — 2 行截断 + hover tooltip
+- **Overflow** — 隐藏溢出 + scroll-on-demand
+- **Empty state** — 居中占位图标 + 描述文字 + CTA
+
+## 质量门
+
+每条规则标注约束强度：
+
+- 🚫 **MUST** — 不可违反，违反 = 设计系统失效
+- ✅ **SHOULD** — 强烈推荐，偏离需文档说明理由
+
+## DESIGN.md 十五段
+
+1. **Mission** — 设计系统目标、面向的用户体验
+2. **Brand Context** — 产品名、受众、产品形态（web/mobile/dashboard）
+3. **Visual Theme & Atmosphere** — 设计哲学、情感调性、关键特征
+4. **Color Palette & Roles** — 按 hue 分组色阶表（shade 50-900）+ Token 名 + 稳定性
+5. **Typography Rules** — 字体家族、层级表（含 Token 名）、排版原则
+6. **Component Stylings** — Button / Card / Input / Navigation 的 Rule Token 表 + 7 状态 + 边界情况
+7. **Layout Principles** — Spacing Token 表、网格、圆角 Token 表
+8. **Depth & Elevation** — Shadow Token 表、阴影哲学
+9. **Accessibility** — WCAG 2.2 AA 对比度、focus-visible、键盘交互、ARIA、触控目标
+10. **Motion & Transitions** — Duration/edging Token 表、transition 规则、prefers-reduced-motion
+11. **Do's and Don'ts** — 🚫 MUST / ✅ SHOULD 标注的设计指南
+12. **Responsive Behavior** — 断点表、触控目标、折叠策略
+13. **Anti-Patterns** — 明确禁止的实现方式 + 理由
+14. **QA Checklist** — 验收检查清单（可勾选）
+15. **Agent Prompt Guide** — Token 速查、组件 prompt 示例、稳定性使用指南
 
 ## 技术栈
 
@@ -172,11 +200,11 @@ npx extract-design url https://vercel.com -o ./output
 
 ```
 URL → Playwright 抓取 → computed styles + viewport 截图
-   → 分析器（颜色/字体/间距/组件/阴影/响应式）
+   → 分析器（颜色/字体/间距/组件/阴影/响应式/动画/无障碍/品牌）
    → 稳定性分类器（L1-L4）
-   → Token 命名器（color-primary-500, spacing-md...）
-   → 状态补全器（hover/focus/disabled）
-   → AI API（分析数据 + Token 名 + 稳定性标注 → DESIGN.md）
+   → Token 命名器（color-primary-500, spacing-md, motion-duration-fast...）
+   → 状态补全器（7 状态：hover/focus/focus-visible/active/disabled/loading/error）
+   → AI API（分析数据 + Token 名 + 稳定性标注 → 15 段 DESIGN.md）
    → 输出 DESIGN.md + preview.html
 ```
 
@@ -188,7 +216,9 @@ URL → Playwright 抓取 → computed styles + viewport 截图
 - **组件检测**：基于 tag + role + class 启发式分类，按视觉差异分组变体
 - **稳定性分类**：基于频率+角色+位置启发式，区分永久/系统/活动/内容层级
 - **Token 命名**：CIELAB L* 映射 shade（50-900），按色相分组生成 `color-{hue}-{shade}` 命名
-- **状态补全**：基于 Token shade 偏移推断 hover/focus/disabled 状态值
+- **状态补全**：7 种交互状态（hover/focus/focus-visible/active/disabled/loading/error）+ 边界情况
+- **动画检测**：提取 transition-duration/timing-function，生成 motion-duration/easing Token
+- **无障碍分析**：WCAG 对比度计算、focus-visible 检测、ARIA 属性收集、键盘可访问性
 
 ## 隐私与安全
 
