@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "NEXT_PRIVATE_DISABLE_TURBOPACK=1 next build",
+    "build": "bash -c 'BUILDDIR=/tmp/designpick-build-$$; rm -rf \"$BUILDDIR\"; rsync -a --exclude=\"前端\" --exclude=\".next\" --exclude=\"out\" --exclude=\"node_modules/.cache\" ./ \"$BUILDDIR/\"; cd \"$BUILDDIR\" && NEXT_PRIVATE_DISABLE_TURBOPACK=1 npx next build && cp -r out \"$OLDPWD/out\"; rm -rf \"$BUILDDIR\"'",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
     "next": "16.2.4",
+    "ogl": "^1.0.11",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

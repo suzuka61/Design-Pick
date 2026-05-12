@@ -1,0 +1,575 @@
+[
+  {
+    "id": "apple",
+    "slug": "apple",
+    "name": "Apple",
+    "description": "消费科技与创新",
+    "url": "https://apple.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=apple.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://apple.com",
+    "category": "Media",
+    "tags": [
+      "media",
+      "minimal",
+      "colorful"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#1d1d1f",
+      "accentColor": "#0071e3",
+      "surfaceColor": "#fbfbfd",
+      "backgroundColor": "#ffffff",
+      "textColor": "#1d1d1f",
+      "borderColor": "#d2d2d7",
+      "fontFamilies": [
+        "SF Pro Display",
+        "SF Pro Text"
+      ],
+      "headingFont": "SF Pro Display",
+      "bodyFont": "SF Pro Text",
+      "headingSizes": "56/40/32/28/24",
+      "componentCount": 18,
+      "typographyLevels": 6,
+      "spacingScale": "4/8/12/16/24/32/48/64/96",
+      "borderRadius": "12/16/20/9999",
+      "visualTheme": "极简高端，产品展示驱动",
+      "layoutStyle": "居中单列 + 全屏产品大图",
+      "animationStyle": "滚动视差 + 渐入动画"
+    }
+  },
+  {
+    "id": "stripe",
+    "slug": "stripe",
+    "name": "Stripe",
+    "description": "在线支付基础设施",
+    "url": "https://stripe.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=stripe.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://stripe.com",
+    "category": "Fintech",
+    "tags": [
+      "fintech",
+      "developer",
+      "colorful",
+      "illustration"
+    ],
+    "source": "refero",
+    "summary": {
+      "primaryColor": "#635bff",
+      "accentColor": "#00d4ff",
+      "surfaceColor": "#f6f9fc",
+      "backgroundColor": "#ffffff",
+      "textColor": "#425466",
+      "borderColor": "#e3e8ee",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "48/36/28/24/20",
+      "componentCount": 22,
+      "typographyLevels": 7,
+      "spacingScale": "4/8/12/16/20/24/32/40/48/64",
+      "borderRadius": "4/6/8/12/9999",
+      "visualTheme": "渐变色彩丰富，开发者友好，插画驱动",
+      "layoutStyle": "网格布局 + 双栏内容区",
+      "animationStyle": "渐入上移 + 渐变色流动"
+    }
+  },
+  {
+    "id": "linear",
+    "slug": "linear.app",
+    "name": "Linear",
+    "description": "现代化团队项目管理",
+    "url": "https://linear.app",
+    "favicon": "https://www.google.com/s2/favicons?domain=linear.app&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://linear.app",
+    "category": "Productivity",
+    "tags": [
+      "productivity",
+      "dark",
+      "minimal",
+      "developer"
+    ],
+    "source": "refero",
+    "summary": {
+      "primaryColor": "#5e6ad2",
+      "accentColor": "#f9cb28",
+      "surfaceColor": "#1a1a2e",
+      "backgroundColor": "#0a0a14",
+      "textColor": "#e2e2e9",
+      "borderColor": "#2a2a3e",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "56/44/32/24/20",
+      "componentCount": 16,
+      "typographyLevels": 5,
+      "spacingScale": "2/4/8/12/16/20/24/32/48",
+      "borderRadius": "4/6/8/12",
+      "visualTheme": "暗色极简，键盘优先，开发者导向",
+      "layoutStyle": "居中内容 + 产品截图展示",
+      "animationStyle": "3D透视旋转 + 粒子效果"
+    }
+  },
+  {
+    "id": "vercel",
+    "slug": "vercel",
+    "name": "Vercel",
+    "description": "开发者平台与部署服务",
+    "url": "https://vercel.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=vercel.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://vercel.com",
+    "category": "Developer Tools",
+    "tags": [
+      "developer-tools",
+      "dark",
+      "minimal",
+      "developer"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#000000",
+      "accentColor": "#0070f3",
+      "surfaceColor": "#111111",
+      "backgroundColor": "#000000",
+      "textColor": "#ededed",
+      "borderColor": "#333333",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "52/40/32/24/20",
+      "componentCount": 12,
+      "typographyLevels": 5,
+      "spacingScale": "4/8/16/24/32/40/48/64",
+      "borderRadius": "4/8/9999",
+      "visualTheme": "暗色极简，开发者导向",
+      "layoutStyle": "全屏渐变背景 + 代码演示",
+      "animationStyle": "渐入 + 代码打字效果"
+    }
+  },
+  {
+    "id": "airbnb",
+    "slug": "airbnb",
+    "name": "Airbnb",
+    "description": "旅行与住宿市场平台",
+    "url": "https://airbnb.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=airbnb.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://airbnb.com",
+    "category": "E-commerce",
+    "tags": [
+      "e-commerce",
+      "colorful",
+      "illustration"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#ff385c",
+      "accentColor": "#00a699",
+      "surfaceColor": "#ffffff",
+      "backgroundColor": "#ffffff",
+      "textColor": "#222222",
+      "borderColor": "#dddddd",
+      "fontFamilies": [
+        "Circular",
+        "system-ui"
+      ],
+      "headingFont": "Circular",
+      "bodyFont": "Circular",
+      "headingSizes": "48/36/28/24/20",
+      "componentCount": 20,
+      "typographyLevels": 5,
+      "spacingScale": "4/8/12/16/24/32/40/48",
+      "borderRadius": "8/12/16/24/9999",
+      "visualTheme": "温暖亲切，插画驱动",
+      "layoutStyle": "卡片网格 + 全宽搜索栏",
+      "animationStyle": "滚动渐入 + 图片淡入"
+    }
+  },
+  {
+    "id": "figma",
+    "slug": "figma",
+    "name": "Figma",
+    "description": "协作设计平台",
+    "url": "https://figma.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=figma.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://figma.com",
+    "category": "Design & Creative",
+    "tags": [
+      "design-creative",
+      "colorful",
+      "illustration"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#0d0d0d",
+      "accentColor": "#a259ff",
+      "surfaceColor": "#f5f5f5",
+      "backgroundColor": "#ffffff",
+      "textColor": "#333333",
+      "borderColor": "#e5e5e5",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "56/44/32/24/20",
+      "componentCount": 24,
+      "typographyLevels": 6,
+      "spacingScale": "4/8/12/16/24/32/40/48/64",
+      "borderRadius": "6/8/12/16/9999",
+      "visualTheme": "活泼鲜明，设计工具美学",
+      "layoutStyle": "分屏产品展示 + 功能网格",
+      "animationStyle": "Lottie动画 + 滚动驱动"
+    }
+  },
+  {
+    "id": "resend",
+    "slug": "resend",
+    "name": "Resend",
+    "description": "开发者邮件 API 平台",
+    "url": "https://resend.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=resend.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://resend.com",
+    "category": "Developer Tools",
+    "tags": [
+      "developer-tools",
+      "minimal"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#000000",
+      "accentColor": "#6366f1",
+      "surfaceColor": "#fafafa",
+      "backgroundColor": "#ffffff",
+      "textColor": "#0a0a0a",
+      "borderColor": "#e5e5e5",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "48/36/28/24/20",
+      "componentCount": 16,
+      "typographyLevels": 5,
+      "spacingScale": "4/8/12/16/24/32/48/64",
+      "borderRadius": "6/8/12/9999",
+      "visualTheme": "极简黑白，开发者工具美学",
+      "layoutStyle": "居中单栏 + 代码示例区",
+      "animationStyle": "渐入 + 微交互"
+    }
+  },
+  {
+    "id": "spotify",
+    "slug": "spotify",
+    "name": "Spotify",
+    "description": "音乐流媒体平台",
+    "url": "https://spotify.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=spotify.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://spotify.com",
+    "category": "Media",
+    "tags": [
+      "media",
+      "dark",
+      "colorful"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#121212",
+      "accentColor": "#1db954",
+      "surfaceColor": "#181818",
+      "backgroundColor": "#000000",
+      "textColor": "#b3b3b3",
+      "borderColor": "#282828",
+      "fontFamilies": [
+        "Circular",
+        "system-ui"
+      ],
+      "headingFont": "Circular",
+      "bodyFont": "Circular",
+      "headingSizes": "48/36/28/24/20",
+      "componentCount": 18,
+      "typographyLevels": 6,
+      "spacingScale": "4/8/12/16/24/32/40",
+      "borderRadius": "4/8/12/9999",
+      "visualTheme": "暗色沉浸，鲜绿强调",
+      "layoutStyle": "侧边栏 + 内容网格",
+      "animationStyle": "播放动效 + 渐入"
+    }
+  },
+  {
+    "id": "bmw-m",
+    "slug": "bmw-m",
+    "name": "BMW M",
+    "description": "高性能汽车品牌",
+    "url": "https://bmw-m.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=bmw.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://www.bmw-m.com",
+    "category": "Automotive",
+    "tags": [
+      "automotive",
+      "dark",
+      "minimal"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#000000",
+      "accentColor": "#1c69d3",
+      "surfaceColor": "#1a1a1a",
+      "backgroundColor": "#000000",
+      "textColor": "#e0e0e0",
+      "borderColor": "#333333",
+      "fontFamilies": [
+        "Helvetica Neue",
+        "Arial"
+      ],
+      "headingFont": "Helvetica Neue",
+      "bodyFont": "Helvetica Neue",
+      "headingSizes": "64/48/36/28/20",
+      "componentCount": 10,
+      "typographyLevels": 4,
+      "spacingScale": "8/16/24/32/48/64/96",
+      "borderRadius": "0/4/8",
+      "visualTheme": "暗色高端，性能驱动",
+      "layoutStyle": "全屏大图 + 视频背景",
+      "animationStyle": "3D旋转 + 视差滚动"
+    }
+  },
+  {
+    "id": "sentry",
+    "slug": "sentry",
+    "name": "Sentry",
+    "description": "应用监控与错误追踪",
+    "url": "https://sentry.io",
+    "favicon": "https://www.google.com/s2/favicons?domain=sentry.io&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://sentry.io",
+    "category": "Developer Tools",
+    "tags": [
+      "developer-tools",
+      "dark-mode"
+    ],
+    "source": "refero",
+    "summary": {
+      "primaryColor": "#362d59",
+      "accentColor": "#e03e2d",
+      "surfaceColor": "#1c1634",
+      "backgroundColor": "#0c0b13",
+      "textColor": "#e8e5f0",
+      "borderColor": "#2d2647",
+      "fontFamilies": [
+        "GH Guardian",
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "GH Guardian",
+      "bodyFont": "Inter",
+      "headingSizes": "56/40/32/24/20",
+      "componentCount": 20,
+      "typographyLevels": 6,
+      "spacingScale": "4/8/16/24/32/48/64",
+      "borderRadius": "4/8/12/16",
+      "visualTheme": "暗色系紫调，开发者监控工具",
+      "layoutStyle": "居中单列 + 动态粒子背景",
+      "animationStyle": "滚动驱动 + 粒子动效"
+    }
+  },
+  {
+    "id": "notion",
+    "slug": "notion",
+    "name": "Notion",
+    "description": "一站式工作空间",
+    "url": "https://notion.so",
+    "favicon": "https://www.google.com/s2/favicons?domain=notion.so&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://notion.so",
+    "category": "Productivity",
+    "tags": [
+      "productivity",
+      "minimal",
+      "illustration"
+    ],
+    "source": "curated",
+    "summary": {
+      "primaryColor": "#000000",
+      "accentColor": "#2eaadc",
+      "surfaceColor": "#ffffff",
+      "backgroundColor": "#ffffff",
+      "textColor": "#37352f",
+      "borderColor": "#e3e2e0",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "40/32/28/24/20",
+      "componentCount": 20,
+      "typographyLevels": 6,
+      "spacingScale": "2/4/8/12/16/24/32/40",
+      "borderRadius": "4/6/8/12",
+      "visualTheme": "温暖极简，内容优先，插画点缀",
+      "layoutStyle": "居中内容 + 模板展示网格",
+      "animationStyle": "微动效 + 渐入"
+    }
+  },
+  {
+    "id": "github",
+    "slug": "github",
+    "name": "GitHub",
+    "description": "代码托管与协作平台",
+    "url": "https://github.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://github.com",
+    "category": "Developer Tools",
+    "tags": [
+      "developer-tools",
+      "dark",
+      "developer"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#0d1117",
+      "accentColor": "#58a6ff",
+      "surfaceColor": "#161b22",
+      "backgroundColor": "#0d1117",
+      "textColor": "#c9d1d9",
+      "borderColor": "#30363d",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "48/36/28/24/20",
+      "componentCount": 16,
+      "typographyLevels": 5,
+      "spacingScale": "4/8/12/16/20/24/32/40",
+      "borderRadius": "4/6/8/12",
+      "visualTheme": "暗色开发者聚焦，功能清晰",
+      "layoutStyle": "代码编辑器布局 + 侧边栏",
+      "animationStyle": "微交互 + 渐入"
+    }
+  },
+  {
+    "id": "framer",
+    "slug": "framer",
+    "name": "Framer",
+    "description": "交互设计与发布平台",
+    "url": "https://framer.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=framer.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://framer.com",
+    "category": "Design & Creative",
+    "tags": [
+      "design-creative",
+      "dark",
+      "colorful"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#0055ff",
+      "accentColor": "#0055ff",
+      "surfaceColor": "#111111",
+      "backgroundColor": "#000000",
+      "textColor": "#ffffff",
+      "borderColor": "#222222",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "56/44/32/24/20",
+      "componentCount": 18,
+      "typographyLevels": 6,
+      "spacingScale": "4/8/16/24/32/40/48/64",
+      "borderRadius": "8/12/16/9999",
+      "visualTheme": "大胆动感，设计工具展示",
+      "layoutStyle": "全屏动效 + 功能分区",
+      "animationStyle": "3D翻转 + 弹性动画"
+    }
+  },
+  {
+    "id": "discord",
+    "slug": "discord",
+    "name": "Discord",
+    "description": "语音视频与文字通讯平台",
+    "url": "https://discord.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=discord.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://discord.com",
+    "category": "SaaS",
+    "tags": [
+      "saas",
+      "dark",
+      "colorful",
+      "illustration"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#5865f2",
+      "accentColor": "#57f287",
+      "surfaceColor": "#2b2d31",
+      "backgroundColor": "#313338",
+      "textColor": "#dbdee1",
+      "borderColor": "#1e1f22",
+      "fontFamilies": [
+        "gg sans",
+        "system-ui"
+      ],
+      "headingFont": "gg sans",
+      "bodyFont": "gg sans",
+      "headingSizes": "40/32/24/20/16",
+      "componentCount": 22,
+      "typographyLevels": 6,
+      "spacingScale": "2/4/8/12/16/24/32",
+      "borderRadius": "4/8/12/16/9999",
+      "visualTheme": "活泼暗色，游戏灵感，鲜艳强调",
+      "layoutStyle": "多栏聊天布局 + 侧边导航",
+      "animationStyle": "弹性动效 + 表情浮动"
+    }
+  },
+  {
+    "id": "binance",
+    "slug": "binance",
+    "name": "Binance",
+    "description": "区块链与加密生态系统",
+    "url": "https://binance.com",
+    "favicon": "https://www.google.com/s2/favicons?domain=binance.com&sz=32",
+    "screenshot": "https://image.thum.io/get/width/1280/https://binance.com",
+    "category": "Fintech",
+    "tags": [
+      "fintech",
+      "dark",
+      "developer"
+    ],
+    "source": "getdesign.md",
+    "summary": {
+      "primaryColor": "#1e2026",
+      "accentColor": "#f0b90b",
+      "surfaceColor": "#1e2329",
+      "backgroundColor": "#181a20",
+      "textColor": "#eaecef",
+      "borderColor": "#2b3139",
+      "fontFamilies": [
+        "Inter",
+        "system-ui"
+      ],
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "headingSizes": "36/28/24/20/16",
+      "componentCount": 20,
+      "typographyLevels": 6,
+      "spacingScale": "4/8/12/16/20/24/32/40",
+      "borderRadius": "4/6/8/12",
+      "visualTheme": "暗色交易界面，金色强调",
+      "layoutStyle": "数据密集网格 + 图表区",
+      "animationStyle": "实时数据更新 + 价格闪烁"
+    }
+  }
+]
