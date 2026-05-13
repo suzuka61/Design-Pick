@@ -26,7 +26,7 @@ export function Navbar({ onToggleSettings, onToggleHistory }: NavbarProps) {
           DesignPick
         </span>
       </a>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexShrink: 0, whiteSpace: 'nowrap' }}>
         <a href="#cases" style={{
           fontFamily: 'var(--font-body)', fontSize: 'var(--text-body-sm)', fontWeight: 500,
           textTransform: 'uppercase', letterSpacing: 'var(--tracking-label)',
