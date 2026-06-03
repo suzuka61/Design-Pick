@@ -9,7 +9,7 @@
     "generate": "node scripts/generate-index.mjs",
     "dev": "npx serve public -l 3000"
   },
-  "devDependencies": {
+  "dependencies": {
     "js-yaml": "^4.1.0"
   }
 }
