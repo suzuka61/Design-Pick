@@ -1,0 +1,18 @@
+{
+  "buildCommand": "cd gallery && npm install && npm run build",
+  "outputDirectory": "gallery/public",
+  "headers": [
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/templates/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    }
+  ]
+}
