@@ -166,24 +166,47 @@ a:hover { text-decoration: underline; }
   text-decoration: none;
 }
 
-/* Card preview: iframe or monogram */
+/* Card preview: stylized thumbnail (no iframe) */
 .card-preview {
-  height: 180px;
+  height: 200px;
   overflow: hidden;
-  background: var(--bg-recessed);
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.card-preview iframe {
-  width: 400%;
-  height: 400%;
-  transform: scale(0.25);
-  transform-origin: top left;
-  border: none;
-  pointer-events: none;
+.card-preview-mono {
+  font-size: 132px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  user-select: none;
+  margin-bottom: 14px;
 }
-.card-preview-placeholder {
-  width: 100%;
-  height: 100%;
+.card-preview-foot {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  opacity: 0.55;
+}
+.card-preview-foot .swatch-row {
+  display: inline-flex;
+  gap: 3px;
+}
+.card-preview-foot .swatch-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.06);
 }
 .card-monogram {
   height: 180px;
