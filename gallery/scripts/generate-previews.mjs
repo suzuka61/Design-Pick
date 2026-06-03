@@ -12,7 +12,46 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+// Pick the typography entry with the largest fontSize — that's the "display" voice.
+function pickDisplay(typography) {
+  if (!typography) return null;
+  let best = null, bestSize = 0;
+  for (const props of Object.values(typography)) {
+    if (!props || !props.fontFamily) continue;
+    const size = parseInt(props.fontSize) || 0;
+    if (size > bestSize) { bestSize = size; best = props; }
+  }
+  return best;
+}
+
+// Pick the first typography entry — used as the "body" voice.
+function pickBody(typography) {
+  if (!typography) return null;
+  for (const props of Object.values(typography)) {
+    if (props && props.fontFamily) return props;
+  }
+  return null;
+}
+
+// Pick a button radius: prefer rounded.lg, fall back gracefully.
+function pickRadius(rounded) {
+  if (!rounded) return '8px';
+  return rounded.lg || rounded.xl || rounded.md || rounded.sm || '8px';
+}
+
 function generatePreviewHTML(d) {
+  // Hero design tokens pulled from this template's own DESIGN.md
+  const display = pickDisplay(d.typography);
+  const body = pickBody(d.typography);
+  const radius = pickRadius(d.rounded);
+  const onPrimary = (d.colors && d.colors['on-primary']) || '#ffffff';
+  const displayFont = display ? esc(display.fontFamily) : 'var(--font-d)';
+  const displaySize = (display && display.fontSize) ? esc(display.fontSize) : '48px';
+  const displayWeight = (display && display.fontWeight) ? display.fontWeight : 700;
+  const displayLH = (display && display.lineHeight) ? display.lineHeight : 1.1;
+  const displayLS = (display && display.letterSpacing !== undefined) ? esc(String(display.letterSpacing)) : '-0.02em';
+  const bodyFont = body ? esc(body.fontFamily) : 'var(--font-b)';
+
   // Color swatches from JSON
   let colorsHTML = '';
   if (d.colors && Object.keys(d.colors).length) {
@@ -93,10 +132,11 @@ function generatePreviewHTML(d) {
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
 
-.hero{padding:48px 32px 32px;text-align:center;background:linear-gradient(135deg,${d.primaryColor}0a,${d.inkColor}05)}
-.hero h1{font-family:var(--font-d);font-size:32px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
-.hero .slug{font-family:var(--font-m);font-size:12px;color:var(--ink3);margin-bottom:8px}
-.hero .desc{font-size:13px;color:var(--ink2);max-width:520px;margin:0 auto;line-height:1.7}
+.hero{padding:56px 32px 40px;text-align:center;background:linear-gradient(135deg,${d.primaryColor}0a,${d.inkColor}05)}
+.hero h1{font-family:${displayFont};font-size:${displaySize};font-weight:${displayWeight};line-height:${displayLH};letter-spacing:${displayLS};color:${d.inkColor};margin-bottom:6px}
+.hero .slug{font-family:${bodyFont};font-size:13px;color:var(--ink3);margin-bottom:10px;letter-spacing:0.3px;text-transform:uppercase}
+.hero .desc{font-family:${bodyFont};font-size:15px;color:${d.inkColor};opacity:0.7;max-width:520px;margin:0 auto 18px;line-height:1.5}
+.hero-cta{display:inline-block;background:${d.primaryColor};color:${onPrimary};border:none;border-radius:${radius};padding:10px 22px;font-family:${bodyFont};font-size:14px;font-weight:500;cursor:pointer}
 
 .section{padding:24px 32px;max-width:960px;margin:0 auto}
 .section h2{font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:0.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
@@ -137,6 +177,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:1
   <h1>${esc(d.name)}</h1>
   <div class="slug">/${esc(d.slug)}</div>
   ${d.description ? `<p class="desc">${esc(d.description)}</p>` : ''}
+  <button class="hero-cta">Get started</button>
 </div>
 
 ${colorsHTML}
