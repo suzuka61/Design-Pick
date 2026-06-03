@@ -72,15 +72,13 @@ function renderGrid(templates) {
   var html = '';
   for (var i = 0; i < templates.length; i++) {
     var t = templates[i];
-    var bg = 'linear-gradient(135deg,' + t.primaryColor + '14,' + t.inkColor + '06)';
-    var monoStyle = 'font-family:' + esc(t.fontFamily || 'var(--font-display)') + ', system-ui, -apple-system, sans-serif;color:' + t.inkColor + ';background:' + bg;
+    var fallback = 'background:linear-gradient(135deg,' + t.primaryColor + '14,' + t.inkColor + '06);color:' + t.inkColor + ';font-family:' + esc(t.fontFamily || 'var(--font-display)') + ', system-ui, -apple-system, sans-serif';
     html += '<div class="template-card" data-slug="' + t.slug + '">';
-    html += '<div class="card-preview" style="' + monoStyle + '">';
-    html += '<span class="card-preview-mono">' + monogram(t.name) + '</span>';
-    html += '<div class="card-preview-foot">';
-    html += '<span>' + esc(t.fontFamily || '') + '</span>';
-    html += '<span class="swatch-row"><span class="swatch-dot" style="background:' + t.primaryColor + '"></span><span class="swatch-dot" style="background:' + t.inkColor + '"></span></span>';
-    html += '</div></div>';
+    if (t.hasPreview) {
+      html += '<div class="card-preview" data-preview-slug="' + t.slug + '"></div>';
+    } else {
+      html += '<div class="card-preview"><div class="card-preview-placeholder" style="' + fallback + '">' + monogram(t.name) + '</div></div>';
+    }
     html += '<div class="card-body">';
     html += '<div class="card-name">' + esc(t.name) + '</div>';
     html += '<span class="card-category">' + getCategoryName(t.category) + '</span>';
@@ -92,6 +90,25 @@ function renderGrid(templates) {
     html += '</div></div></div>';
   }
   templateGrid.innerHTML = html;
+
+  // Lazy load iframes
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      for (var k = 0; k < entries.length; k++) {
+        if (entries[k].isIntersecting) {
+          var el = entries[k].target;
+          var slug = el.dataset.previewSlug;
+          if (slug && !el.querySelector('iframe')) {
+            el.innerHTML = '<iframe src="previews/' + slug + '" loading="lazy" tabindex="-1"></iframe>';
+          }
+          observer.unobserve(el);
+        }
+      }
+    }, { rootMargin: '300px' });
+
+    var previewEls = templateGrid.querySelectorAll('[data-preview-slug]');
+    for (var m = 0; m < previewEls.length; m++) observer.observe(previewEls[m]);
+  }
 
   // Click handlers
   var cards = templateGrid.querySelectorAll('.template-card');

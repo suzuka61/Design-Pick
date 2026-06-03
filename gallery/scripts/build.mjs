@@ -12,7 +12,10 @@ execSync('node scripts/sync-templates.mjs', { cwd: join(__dirname, '..'), stdio:
 console.log('\n[2/3] Generating index...');
 execSync('node scripts/generate-index.mjs', { cwd: join(__dirname, '..'), stdio: 'inherit' });
 
-console.log('\n[3/3] Generating previews...');
+console.log('\n[3/4] Generating previews...');
 execSync('node scripts/generate-previews.mjs', { cwd: join(__dirname, '..'), stdio: 'inherit' });
+
+console.log('\n[4/4] Fetching complete previews from vibeui.top...');
+execSync('node scripts/fetch-vibeui-previews.mjs', { cwd: join(__dirname, '..'), stdio: 'inherit' });
 
 console.log('\n=== Build complete ===');

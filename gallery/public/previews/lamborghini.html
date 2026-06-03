@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lamborghini Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f6f7;--surface:#fff;--ink:#1a1a1c;--ink2:#5c5c60;--ink3:#8c8c91;--border:#dddde0;--radius:6px;--font-d:'Bricolage Grotesque',sans-serif;--font-b:'Onest',sans-serif;--font-m:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+.hero{padding:56px 32px 40px;text-align:center;background:linear-gradient(135deg,#5b76fe0a,#1a1a2e05)}
+.hero h1{font-family:var(--font-d);font-size:48px;font-weight:700;line-height:1.1;letter-spacing:-0.02em;color:#1a1a2e;margin-bottom:6px}
+.hero .slug{font-family:var(--font-b);font-size:13px;color:var(--ink3);margin-bottom:10px;letter-spacing:0.3px;text-transform:uppercase}
+.hero .desc{font-family:var(--font-b);font-size:15px;color:#1a1a2e;opacity:0.7;max-width:520px;margin:0 auto 18px;line-height:1.5}
+.hero-cta{display:inline-block;background:#5b76fe;color:#ffffff;border:none;border-radius:8px;padding:10px 22px;font-family:var(--font-b);font-size:14px;font-weight:500;cursor:pointer}
+
+.section{padding:24px 32px;max-width:960px;margin:0 auto}
+.section h2{font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:0.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
+.swatch{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+.swatch-fill{height:48px}
+.swatch-info{padding:5px 8px}
+.swatch-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.swatch-hex{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+
+.type-row{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.type-row:last-child{border-bottom:none}
+.type-sample{margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.type-meta{font-family:var(--font-m);font-size:11px;color:var(--ink3)}
+
+.spacing-row{display:flex;gap:12px;flex-wrap:wrap}
+.spacing-item{text-align:center}
+.spacing-bar{background:var(--ink);opacity:0.15;height:24px;border-radius:3px;margin-bottom:4px}
+.spacing-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+
+.radius-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.radius-item{text-align:center}
+.radius-box{width:56px;height:56px;background:var(--surface);border:1px solid var(--border);margin-bottom:4px}
+.radius-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.comp-card{border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--surface)}
+.comp-name{font-family:var(--font-m);font-size:11px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.comp-props{font-size:10px;color:var(--ink3)}
+.comp-prop{margin-bottom:2px}
+.comp-key{font-weight:500;color:var(--ink2)}
+.comp-val{font-family:var(--font-m);margin-left:4px}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>Lamborghini</h1>
+  <div class="slug">/lamborghini</div>
+  
+  <button class="hero-cta">Get started</button>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>
