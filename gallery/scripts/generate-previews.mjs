@@ -165,6 +165,28 @@ async function main() {
     count++;
   }
 
+  // Update templates.json hasPreview flags now that previews exist
+  const indexPath = join(DATA_DIR, 'templates.json');
+  try {
+    const indexRaw = await readFile(indexPath, 'utf-8');
+    const index = JSON.parse(indexRaw);
+    const slugsWithPreview = new Set(jsonFiles); // they all have previews if they got generated
+    let updated = 0;
+    for (const t of index.templates) {
+      const want = slugsWithPreview.has(t.slug + '.json');
+      if (t.hasPreview !== want) {
+        t.hasPreview = want;
+        updated++;
+      }
+    }
+    if (updated) {
+      await writeFile(indexPath, JSON.stringify(index, null, 2), 'utf-8');
+      console.log(`Updated hasPreview for ${updated} templates`);
+    }
+  } catch (e) {
+    console.warn('Could not update templates.json:', e.message);
+  }
+
   console.log(`Generated ${count} preview.html files`);
 }
 
