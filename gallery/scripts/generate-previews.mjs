@@ -39,84 +39,58 @@ function pickRadius(rounded) {
   return rounded.lg || rounded.xl || rounded.md || rounded.sm || '8px';
 }
 
+function monogram(name) {
+  if (!name) return 'D';
+  const words = name.replace(/[^a-zA-Z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+  if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
+}
+
 function generatePreviewHTML(d) {
   // Hero design tokens pulled from this template's own DESIGN.md
   const display = pickDisplay(d.typography);
   const body = pickBody(d.typography);
   const radius = pickRadius(d.rounded);
-  const onPrimary = (d.colors && d.colors['on-primary']) || '#ffffff';
-  const displayFont = display ? esc(display.fontFamily) : 'var(--font-d)';
-  const displaySize = (display && display.fontSize) ? esc(display.fontSize) : '48px';
+  const colors = d.colors || {};
+  const primary = d.primaryColor || '#0066cc';
+  const ink = d.inkColor || '#1a1a1c';
+  const body2 = colors.body || ink;
+  const muted = colors.muted || colors['muted-soft'] || '#6a6a6a';
+  const canvas = colors.canvas || colors['surface-soft'] || colors.parchment || '#fafafa';
+  const surface = colors['surface-card'] || colors.surface || '#fff';
+  const border = colors['hairline'] || colors.border || colors['border-subtle'] || '#e0e0e0';
+  const onPrimary = colors['on-primary'] || colors['on-dark'] || '#fff';
+  const displayFont = display ? esc(display.fontFamily) : 'system-ui, -apple-system, sans-serif';
+  const displaySize = (display && display.fontSize) ? esc(display.fontSize) : '56px';
   const displayWeight = (display && display.fontWeight) ? display.fontWeight : 700;
-  const displayLH = (display && display.lineHeight) ? display.lineHeight : 1.1;
+  const displayLH = (display && display.lineHeight) ? display.lineHeight : 1.07;
   const displayLS = (display && display.letterSpacing !== undefined) ? esc(String(display.letterSpacing)) : '-0.02em';
-  const bodyFont = body ? esc(body.fontFamily) : 'var(--font-b)';
+  const bodyFont = body ? esc(body.fontFamily) : 'system-ui, -apple-system, sans-serif';
+  const bodySize = (body && body.fontSize) ? esc(body.fontSize) : '17px';
+  const bodyWeight = (body && body.fontWeight) ? body.fontWeight : 400;
 
-  // Color swatches from JSON
-  let colorsHTML = '';
-  if (d.colors && Object.keys(d.colors).length) {
-    colorsHTML = '<div class="section"><h2>色彩体系</h2><div class="color-grid">';
-    for (const [name, value] of Object.entries(d.colors)) {
-      if (typeof value === 'string' && value.startsWith('#')) {
-        const needsBorder = value.toLowerCase() === '#ffffff' || value.toLowerCase() === '#fff';
-        colorsHTML += `<div class="swatch"><div class="swatch-fill" style="background:${value}${needsBorder ? ';border-bottom:1px solid #ddd' : ''}"></div><div class="swatch-info"><div class="swatch-name">${esc(name)}</div><div class="swatch-hex">${value}</div></div></div>`;
-      }
-    }
-    colorsHTML += '</div></div>';
+  // Color swatches (limit to 8 most relevant)
+  const swatchEntries = Object.entries(colors).filter(([, v]) => typeof v === 'string' && v.startsWith('#')).slice(0, 12);
+  let swatchHTML = '';
+  for (const [name, value] of swatchEntries) {
+    const needsBorder = value.toLowerCase() === '#ffffff' || value.toLowerCase() === '#fff';
+    swatchHTML += `<div class="swatch"><div class="swatch-fill"${needsBorder ? ' data-light="1"' : ''} style="background:${value}"></div><div class="swatch-info"><div class="swatch-name">${esc(name)}</div><div class="swatch-hex">${value}</div></div></div>`;
   }
 
-  // Typography from JSON
+  // Typography samples: pick 3 representative entries
+  const typoEntries = Object.entries(d.typography || {}).filter(([, p]) => p && p.fontFamily).slice(0, 4);
   let typoHTML = '';
-  if (d.typography && Object.keys(d.typography).length) {
-    typoHTML = '<div class="section"><h2>排版规范</h2>';
-    for (const [name, props] of Object.entries(d.typography)) {
-      if (props && props.fontFamily) {
-        const size = parseInt(props.fontSize) || 16;
-        const weight = props.fontWeight || 400;
-        const font = props.fontFamily.split(',')[0].replace(/'/g, '').trim();
-        typoHTML += `<div class="type-row"><div class="type-sample" style="font-family:${esc(props.fontFamily)};font-size:${Math.min(size, 36)}px;font-weight:${weight}">${esc(name)}</div><div class="type-meta">${esc(font)} ${props.fontSize || ''} / ${weight}</div></div>`;
-      }
-    }
-    typoHTML += '</div>';
+  for (const [name, p] of typoEntries) {
+    const size = parseInt(p.fontSize) || 16;
+    const clampedSize = Math.min(Math.max(size, 14), 56);
+    typoHTML += `<div class="type-row"><div class="type-sample" style="font-family:${esc(p.fontFamily)};font-size:${clampedSize}px;font-weight:${p.fontWeight || 400};line-height:${p.lineHeight || 1.4}">${esc(name)} · ${esc(d.name)}</div><div class="type-meta">${esc((p.fontFamily.split(',')[0] || '').replace(/'/g, '').trim())} · ${p.fontSize || ''} · ${p.fontWeight || 400}</div></div>`;
   }
 
-  // Spacing from JSON
-  let spacingHTML = '';
-  if (d.spacing && Object.keys(d.spacing).length) {
-    spacingHTML = '<div class="section"><h2>间距</h2><div class="spacing-row">';
-    for (const [name, value] of Object.entries(d.spacing)) {
-      const px = typeof value === 'string' ? value : `${value}px`;
-      const num = parseInt(px) || 4;
-      spacingHTML += `<div class="spacing-item"><div class="spacing-bar" style="width:${Math.min(num * 3, 120)}px"></div><div class="spacing-label">${esc(name)} ${px}</div></div>`;
-    }
-    spacingHTML += '</div></div>';
-  }
-
-  // Rounded from JSON
-  let roundedHTML = '';
-  if (d.rounded && Object.keys(d.rounded).length) {
-    roundedHTML = '<div class="section"><h2>圆角</h2><div class="radius-row">';
-    for (const [name, value] of Object.entries(d.rounded)) {
-      const px = typeof value === 'string' ? value : `${value}px`;
-      roundedHTML += `<div class="radius-item"><div class="radius-box" style="border-radius:${px}"></div><div class="radius-label">${esc(name)} ${px}</div></div>`;
-    }
-    roundedHTML += '</div></div>';
-  }
-
-  // Components from JSON
-  let compHTML = '';
-  if (d.components && Object.keys(d.components).length) {
-    compHTML = '<div class="section"><h2>组件</h2><div class="comp-grid">';
-    for (const [name, props] of Object.entries(d.components)) {
-      if (typeof props !== 'object') continue;
-      compHTML += `<div class="comp-card"><div class="comp-name">${esc(name)}</div><div class="comp-props">`;
-      for (const [key, val] of Object.entries(props)) {
-        compHTML += `<div class="comp-prop"><span class="comp-key">${esc(key)}</span><span class="comp-val">${esc(String(val))}</span></div>`;
-      }
-      compHTML += '</div></div>';
-    }
-    compHTML += '</div></div>';
-  }
+  // Component buttons
+  const compBtnPrimary = `<button class="btn btn-primary" style="background:${primary};color:${onPrimary};border-radius:${radius}">Primary action</button>`;
+  const compBtnOutline = `<button class="btn btn-outline" style="color:${ink};border:1px solid ${border};border-radius:${radius}">Secondary</button>`;
+  const compBtnGhost = `<button class="btn btn-ghost" style="color:${primary};border-radius:${radius}">Learn more →</button>`;
+  const sampleCard = `<div class="card-sample" style="background:${surface};border:1px solid ${border};border-radius:${radius};padding:20px"><div class="card-sample-title" style="font-family:${bodyFont};color:${ink}">Sample card</div><div class="card-sample-desc" style="font-family:${bodyFont};color:${muted}">A short description that uses the body typeface and muted color from the design system.</div></div>`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -126,65 +100,113 @@ function generatePreviewHTML(d) {
 <title>${esc(d.name)} Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f6f7;--surface:#fff;--ink:#1a1a1c;--ink2:#5c5c60;--ink3:#8c8c91;--border:#dddde0;--radius:6px;--font-d:'Bricolage Grotesque',sans-serif;--font-b:'Onest',sans-serif;--font-m:'JetBrains Mono',monospace}
+:root{--primary:${primary};--ink:${ink};--body:${body2};--muted:${muted};--canvas:${canvas};--surface:${surface};--border:${border};--on-primary:${onPrimary};--radius:${radius};--font-d:${displayFont};--font-b:${bodyFont}}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+html,body{background:var(--canvas);color:var(--ink);font-family:var(--font-b);font-size:${bodySize};font-weight:${bodyWeight};line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
 
-.hero{padding:56px 32px 40px;text-align:center;background:linear-gradient(135deg,${d.primaryColor}0a,${d.inkColor}05)}
-.hero h1{font-family:${displayFont};font-size:${displaySize};font-weight:${displayWeight};line-height:${displayLH};letter-spacing:${displayLS};color:${d.inkColor};margin-bottom:6px}
-.hero .slug{font-family:${bodyFont};font-size:13px;color:var(--ink3);margin-bottom:10px;letter-spacing:0.3px;text-transform:uppercase}
-.hero .desc{font-family:${bodyFont};font-size:15px;color:${d.inkColor};opacity:0.7;max-width:520px;margin:0 auto 18px;line-height:1.5}
-.hero-cta{display:inline-block;background:${d.primaryColor};color:${onPrimary};border:none;border-radius:${radius};padding:10px 22px;font-family:${bodyFont};font-size:14px;font-weight:500;cursor:pointer}
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px 40px;background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--font-d);font-size:20px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:10px}
+.nav-brand .logo-mark{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--primary);color:var(--on-primary);border-radius:${radius};font-family:var(--font-d);font-size:15px;font-weight:600}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--muted);font-size:14px;font-weight:500}
+.nav-cta{background:var(--primary);color:var(--on-primary);border:none;padding:8px 18px;border-radius:${radius};font-family:var(--font-b);font-size:14px;font-weight:500;cursor:pointer}
 
-.section{padding:24px 32px;max-width:960px;margin:0 auto}
-.section h2{font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:0.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+/* HERO */
+.hero{padding:96px 40px 80px;text-align:center;background:linear-gradient(180deg,var(--canvas),var(--surface))}
+.hero h1{font-family:var(--font-d);font-size:${displaySize};font-weight:${displayWeight};line-height:${displayLH};letter-spacing:${displayLS};color:var(--ink);margin-bottom:16px}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero p{font-family:var(--font-b);font-size:19px;font-weight:400;line-height:1.5;color:var(--muted);max-width:600px;margin:0 auto 28px}
+.hero-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-buttons .btn{padding:12px 24px;font-size:15px}
 
-.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
-.swatch{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
-.swatch-fill{height:48px}
-.swatch-info{padding:5px 8px}
-.swatch-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.swatch-hex{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+/* SECTION */
+.section{padding:64px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--border)}
+.section-label{font-family:var(--font-b);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.section-title{font-family:var(--font-d);font-size:32px;font-weight:600;line-height:1.2;color:var(--ink);margin-bottom:8px;letter-spacing:-0.01em}
+.section-desc{font-family:var(--font-b);font-size:16px;color:var(--muted);max-width:600px;margin-bottom:32px}
 
-.type-row{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+/* COLORS */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.swatch{border:1px solid var(--border);border-radius:${radius};overflow:hidden;background:var(--surface)}
+.swatch-fill{height:64px}
+.swatch-fill[data-light="1"]{border-bottom:1px solid var(--border)}
+.swatch-info{padding:8px 10px}
+.swatch-name{font-size:11px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.swatch-hex{font-size:10px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
+
+/* TYPOGRAPHY */
+.type-row{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
 .type-row:last-child{border-bottom:none}
-.type-sample{margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.type-meta{font-family:var(--font-m);font-size:11px;color:var(--ink3)}
+.type-sample{margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.type-meta{font-size:11px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
 
-.spacing-row{display:flex;gap:12px;flex-wrap:wrap}
-.spacing-item{text-align:center}
-.spacing-bar{background:var(--ink);opacity:0.15;height:24px;border-radius:3px;margin-bottom:4px}
-.spacing-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+/* COMPONENTS */
+.btn{padding:10px 20px;font-family:var(--font-b);font-size:14px;font-weight:500;cursor:pointer;display:inline-block;border:none;transition:opacity 140ms ease}
+.btn:hover{opacity:0.85}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+.card-sample-title{font-family:var(--font-d);font-size:18px;font-weight:600;margin-bottom:6px}
+.card-sample-desc{font-size:14px;line-height:1.5}
 
-.radius-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.radius-item{text-align:center}
-.radius-box{width:56px;height:56px;background:var(--surface);border:1px solid var(--border);margin-bottom:4px}
-.radius-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
-
-.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.comp-card{border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--surface)}
-.comp-name{font-family:var(--font-m);font-size:11px;font-weight:500;color:var(--ink);margin-bottom:6px}
-.comp-props{font-size:10px;color:var(--ink3)}
-.comp-prop{margin-bottom:2px}
-.comp-key{font-weight:500;color:var(--ink2)}
-.comp-val{font-family:var(--font-m);margin-left:4px}
+/* FOOTER */
+.footer{padding:32px 40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
 </style>
 </head>
 <body>
-<div class="hero">
-  <h1>${esc(d.name)}</h1>
-  <div class="slug">/${esc(d.slug)}</div>
-  ${d.description ? `<p class="desc">${esc(d.description)}</p>` : ''}
-  <button class="hero-cta">Get started</button>
-</div>
 
-${colorsHTML}
-${typoHTML}
-${spacingHTML}
-${roundedHTML}
-${compHTML}
+<nav class="nav">
+  <div class="nav-brand"><span class="logo-mark">${esc(monogram(d.name))}</span>${esc(d.name)}</div>
+  <div class="nav-links">
+    <a>Products</a><a>Solutions</a><a>Pricing</a><a>Docs</a>
+  </div>
+  <button class="nav-cta">Get started</button>
+</nav>
+
+<section class="hero">
+  <h1>Design System<br><em>Inspired by ${esc(d.name)}</em></h1>
+  <p>${esc(d.description || 'A faithful, reusable design system capturing the visual language of ' + d.name + '.')}</p>
+  <div class="hero-buttons">
+    ${compBtnPrimary}
+    ${compBtnOutline}
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">01 / Color</div>
+  <div class="section-title">Color palette</div>
+  <div class="section-desc">The signature hues that define ${esc(d.name)}'s visual identity.</div>
+  <div class="color-grid">${swatchHTML}</div>
+</section>
+
+<section class="section">
+  <div class="section-label">02 / Typography</div>
+  <div class="section-title">Type scale</div>
+  <div class="section-desc">The font families and weights used across the system.</div>
+  ${typoHTML}
+</section>
+
+<section class="section">
+  <div class="section-label">03 / Components</div>
+  <div class="section-title">Buttons &amp; cards</div>
+  <div class="section-desc">Core building blocks rendered with this template's design tokens.</div>
+  <div class="btn-row">
+    ${compBtnPrimary}
+    ${compBtnOutline}
+    ${compBtnGhost}
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:8px">
+    ${sampleCard}
+    ${sampleCard}
+  </div>
+</section>
+
+<footer class="footer">
+  <span>${esc(d.name)} Design System · /${esc(d.slug)}</span>
+  <span>Source: VoltAgent/awesome-design-md</span>
+</footer>
 
 </body>
 </html>`;

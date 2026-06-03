@@ -3,68 +3,227 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wise Design System</title>
+<title>Design System Preview: Wise (Light)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f6f7;--surface:#fff;--ink:#1a1a1c;--ink2:#5c5c60;--ink3:#8c8c91;--border:#dddde0;--radius:6px;--font-d:'Bricolage Grotesque',sans-serif;--font-b:'Onest',sans-serif;--font-m:'JetBrains Mono',monospace}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  :root {
+    --white:#ffffff; --black:#0e0f0c; --green:#9fe870; --dark-green:#163300;
+    --mint:#e2f6d5; --gray:#868685; --warm-dark:#454745; --light:#e8ebe6;
+    --danger:#d03238; --warning:#ffd11a;
+    --font:'Inter',Helvetica,Arial,sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--white); color:var(--black); font-family:var(--font); font-size:18px; font-weight:400; line-height:1.44; font-feature-settings:"calt" 1; -webkit-font-smoothing:antialiased; }
 
-.hero{padding:56px 32px 40px;text-align:center;background:linear-gradient(135deg,#9fe8700a,#0e0f0c05)}
-.hero h1{font-family:Wise Sans, Inter, system-ui, -apple-system, sans-serif;font-size:126px;font-weight:900;line-height:107.1px;letter-spacing:-0.02em;color:#0e0f0c;margin-bottom:6px}
-.hero .slug{font-family:Wise Sans, Inter, system-ui, -apple-system, sans-serif;font-size:13px;color:var(--ink3);margin-bottom:10px;letter-spacing:0.3px;text-transform:uppercase}
-.hero .desc{font-family:Wise Sans, Inter, system-ui, -apple-system, sans-serif;font-size:15px;color:#0e0f0c;opacity:0.7;max-width:520px;margin:0 auto 18px;line-height:1.5}
-.hero-cta{display:inline-block;background:#9fe870;color:#0e0f0c;border:none;border-radius:16px;padding:10px 22px;font-family:Wise Sans, Inter, system-ui, -apple-system, sans-serif;font-size:14px;font-weight:500;cursor:pointer}
+  .nav { position:sticky; top:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:14px 24px; background:var(--white); border-bottom:1px solid rgba(14,15,12,0.08); }
+  .nav-brand { font-size:18px; font-weight:600; color:var(--black); text-decoration:none; }
+  .nav-links { display:flex; gap:20px; list-style:none; }
+  .nav-links a { font-size:16px; font-weight:600; color:var(--black); text-decoration:none; transition:opacity 0.15s; }
+  .nav-links a:hover { opacity:0.7; }
+  .nav-cta { display:inline-block; background:var(--green); color:var(--dark-green); padding:8px 20px; border-radius:9999px; font-size:16px; font-weight:600; text-decoration:none; transition:transform 0.2s; }
+  .nav-cta:hover { transform:scale(1.05); }
 
-.section{padding:24px 32px;max-width:960px;margin:0 auto}
-.section h2{font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:0.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .hero { padding:80px 24px 64px; text-align:left; max-width:900px; margin:0 auto; }
+  .hero h1 { font-size:80px; font-weight:900; line-height:0.85; margin-bottom:24px; }
+  .hero h1 span { color:var(--dark-green); }
+  .hero p { font-size:18px; font-weight:400; color:var(--warm-dark); max-width:500px; margin-bottom:32px; letter-spacing:0.18px; }
+  .hero-buttons { display:flex; gap:12px; flex-wrap:wrap; }
+  .btn-green { display:inline-block; background:var(--green); color:var(--dark-green); padding:12px 28px; border-radius:9999px; font-family:var(--font); font-size:18px; font-weight:600; text-decoration:none; border:none; cursor:pointer; transition:transform 0.2s; }
+  .btn-green:hover { transform:scale(1.05); }
+  .btn-green:active { transform:scale(0.95); }
+  .btn-subtle { display:inline-block; background:rgba(22,51,0,0.08); color:var(--black); padding:12px 28px; border-radius:9999px; font-family:var(--font); font-size:18px; font-weight:600; text-decoration:none; border:none; cursor:pointer; transition:transform 0.2s; }
+  .btn-subtle:hover { transform:scale(1.05); }
 
-.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
-.swatch{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
-.swatch-fill{height:48px}
-.swatch-info{padding:5px 8px}
-.swatch-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.swatch-hex{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  .section { padding:64px 24px; max-width:1100px; margin:0 auto; }
+  .section-label { font-size:12px; font-weight:600; color:var(--gray); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+  .section-title { font-size:40px; font-weight:900; line-height:0.85; margin-bottom:32px; }
+  .section-divider { border:none; border-top:1px solid rgba(14,15,12,0.08); margin:0; }
 
-.type-row{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.type-row:last-child{border-bottom:none}
-.type-sample{margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.type-meta{font-family:var(--font-m);font-size:11px;color:var(--ink3)}
+  .color-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(145px,1fr)); gap:10px; margin-bottom:20px; }
+  .color-swatch { border-radius:16px; overflow:hidden; border:1px solid rgba(14,15,12,0.12); }
+  .color-swatch-block { height:64px; width:100%; }
+  .color-swatch-info { padding:10px; }
+  .color-swatch-name { font-size:13px; font-weight:600; margin-bottom:2px; }
+  .color-swatch-hex { font-size:10px; color:var(--gray); font-family:monospace; }
+  .color-swatch-role { font-size:9px; color:var(--gray); margin-top:2px; }
+  .color-group-label { font-size:12px; font-weight:600; color:var(--warm-dark); margin:20px 0 8px; }
 
-.spacing-row{display:flex;gap:12px;flex-wrap:wrap}
-.spacing-item{text-align:center}
-.spacing-bar{background:var(--ink);opacity:0.15;height:24px;border-radius:3px;margin-bottom:4px}
-.spacing-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  .type-sample { margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid var(--light); }
+  .type-sample:last-child { border-bottom:none; }
+  .type-meta { font-size:10px; color:var(--gray); margin-top:4px; font-family:monospace; }
 
-.radius-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.radius-item{text-align:center}
-.radius-box{width:56px;height:56px;background:var(--surface);border:1px solid var(--border);margin-bottom:4px}
-.radius-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  .button-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .button-item { text-align:center; }
+  .button-label { font-size:10px; color:var(--gray); margin-top:6px; }
 
-.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.comp-card{border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--surface)}
-.comp-name{font-family:var(--font-m);font-size:11px;font-weight:500;color:var(--ink);margin-bottom:6px}
-.comp-props{font-size:10px;color:var(--ink3)}
-.comp-prop{margin-bottom:2px}
-.comp-key{font-weight:500;color:var(--ink2)}
-.comp-val{font-family:var(--font-m);margin-left:4px}
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:16px; }
+  .card { background:var(--white); border:1px solid rgba(14,15,12,0.12); border-radius:30px; padding:24px; }
+  .card h3 { font-size:22px; font-weight:600; margin-bottom:8px; letter-spacing:-0.396px; }
+  .card p { font-size:16px; color:var(--warm-dark); letter-spacing:0.08px; }
+
+  .form-group { margin-bottom:16px; max-width:400px; }
+  .form-label { display:block; font-size:14px; font-weight:600; margin-bottom:4px; }
+  .form-input { width:100%; background:var(--white); color:var(--black); border:1px solid rgba(14,15,12,0.12); padding:12px 16px; border-radius:10px; font-family:var(--font); font-size:16px; outline:none; }
+  .form-input:focus { box-shadow:rgba(14,15,12,0.12) 0px 0px 0px 1px, 0 0 0 2px var(--green); }
+  .form-input--focus { box-shadow:rgba(14,15,12,0.12) 0px 0px 0px 1px, 0 0 0 2px var(--green); }
+  .form-input--error { border-color:var(--danger); box-shadow:0 0 0 2px var(--danger); }
+  .form-textarea { width:100%; min-height:80px; background:var(--white); color:var(--black); border:1px solid rgba(14,15,12,0.12); padding:12px 16px; border-radius:10px; font-family:var(--font); font-size:16px; resize:vertical; outline:none; }
+  .form-state-label { font-size:9px; color:var(--gray); margin-top:4px; }
+
+  .spacing-row { display:flex; align-items:flex-end; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .spacing-item { text-align:center; }
+  .spacing-block { background:var(--green); border-radius:4px; margin-bottom:4px; height:24px; }
+  .spacing-value { font-size:9px; color:var(--gray); font-family:monospace; }
+
+  .radius-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .radius-item { text-align:center; }
+  .radius-box { width:52px; height:52px; background:var(--mint); border:1px solid var(--green); margin-bottom:4px; }
+  .radius-label { font-size:9px; color:var(--gray); font-family:monospace; }
+
+  .elevation-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:12px; }
+  .elevation-card { background:var(--white); border:1px solid rgba(14,15,12,0.12); border-radius:30px; padding:16px; text-align:center; }
+  .elevation-label { font-size:13px; font-weight:600; margin-bottom:4px; }
+  .elevation-desc { font-size:9px; color:var(--gray); font-family:monospace; }
+
+  .footer { padding:32px; text-align:center; background:var(--black); color:var(--gray); font-size:13px; }
+  .footer a { color:var(--green); text-decoration:underline; }
+
+  @media (max-width:576px) { .hero h1 { font-size:48px; } .nav-links { display:none; } .section { padding:48px 16px; } .card-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
-<div class="hero">
-  <h1>Wise</h1>
-  <div class="slug">/wise</div>
-  <p class="desc">An inspired interpretation of Wise's design language — a global money-transfer brand whose surface combines an unusually heavy near-black display sans (weight 900 at 64–126 px) with a vivid lime-green brand accent, sage-tinted surface neutrals, and rounded white cards on a pale green-tinted canvas; the whole system reads more like a Scandinavian fintech magazine than a bank.</p>
-  <button class="hero-cta">Get started</button>
-</div>
 
-<div class="section"><h2>色彩体系</h2><div class="color-grid"><div class="swatch"><div class="swatch-fill" style="background:#9fe870"></div><div class="swatch-info"><div class="swatch-name">primary</div><div class="swatch-hex">#9fe870</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#0e0f0c"></div><div class="swatch-info"><div class="swatch-name">on-primary</div><div class="swatch-hex">#0e0f0c</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#cdffad"></div><div class="swatch-info"><div class="swatch-name">primary-active</div><div class="swatch-hex">#cdffad</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#c5edab"></div><div class="swatch-info"><div class="swatch-name">primary-neutral</div><div class="swatch-hex">#c5edab</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#e2f6d5"></div><div class="swatch-info"><div class="swatch-name">primary-pale</div><div class="swatch-hex">#e2f6d5</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#0e0f0c"></div><div class="swatch-info"><div class="swatch-name">ink</div><div class="swatch-hex">#0e0f0c</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#163300"></div><div class="swatch-info"><div class="swatch-name">ink-deep</div><div class="swatch-hex">#163300</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#454745"></div><div class="swatch-info"><div class="swatch-name">body</div><div class="swatch-hex">#454745</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#868685"></div><div class="swatch-info"><div class="swatch-name">mute</div><div class="swatch-hex">#868685</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">canvas</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#e8ebe6"></div><div class="swatch-info"><div class="swatch-name">canvas-soft</div><div class="swatch-hex">#e8ebe6</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#2ead4b"></div><div class="swatch-info"><div class="swatch-name">positive</div><div class="swatch-hex">#2ead4b</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#054d28"></div><div class="swatch-info"><div class="swatch-name">positive-deep</div><div class="swatch-hex">#054d28</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffd11a"></div><div class="swatch-info"><div class="swatch-name">warning</div><div class="swatch-hex">#ffd11a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#b86700"></div><div class="swatch-info"><div class="swatch-name">warning-deep</div><div class="swatch-hex">#b86700</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#4a3b1c"></div><div class="swatch-info"><div class="swatch-name">warning-content</div><div class="swatch-hex">#4a3b1c</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#d03238"></div><div class="swatch-info"><div class="swatch-name">negative</div><div class="swatch-hex">#d03238</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#a72027"></div><div class="swatch-info"><div class="swatch-name">negative-deep</div><div class="swatch-hex">#a72027</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#a7000d"></div><div class="swatch-info"><div class="swatch-name">negative-darkest</div><div class="swatch-hex">#a7000d</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#320707"></div><div class="swatch-info"><div class="swatch-name">negative-bg</div><div class="swatch-hex">#320707</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffc091"></div><div class="swatch-info"><div class="swatch-name">accent-orange</div><div class="swatch-hex">#ffc091</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#38c8ff"></div><div class="swatch-info"><div class="swatch-name">accent-cyan</div><div class="swatch-hex">#38c8ff</div></div></div></div></div>
-<div class="section"><h2>排版规范</h2><div class="type-row"><div class="type-sample" style="font-family:Wise Sans, Inter, system-ui, -apple-system, sans-serif;font-size:36px;font-weight:900">display-mega</div><div class="type-meta">Wise Sans 126px / 900</div></div><div class="type-row"><div class="type-sample" style="font-family:Wise Sans, Inter, system-ui, sans-serif;font-size:36px;font-weight:900">display-xxl</div><div class="type-meta">Wise Sans 96px / 900</div></div><div class="type-row"><div class="type-sample" style="font-family:Wise Sans, Inter, system-ui, sans-serif;font-size:36px;font-weight:900">display-xl</div><div class="type-meta">Wise Sans 64px / 900</div></div><div class="type-row"><div class="type-sample" style="font-family:Wise Sans, Inter, system-ui, sans-serif;font-size:36px;font-weight:400">display-lg</div><div class="type-meta">Wise Sans 47px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Wise Sans, Inter, system-ui, sans-serif;font-size:36px;font-weight:900">display-md</div><div class="type-meta">Wise Sans 40px / 900</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:32px;font-weight:600">display-sm</div><div class="type-meta">Inter 32px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:24px;font-weight:600">display-xs</div><div class="type-meta">Inter 24px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:20px;font-weight:400">body-lg</div><div class="type-meta">Inter 20px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:16px;font-weight:400">body-md</div><div class="type-meta">Inter 16px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:16px;font-weight:600">body-md-strong</div><div class="type-meta">Inter 16px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:14px;font-weight:400">body-sm</div><div class="type-meta">Inter 14px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:14px;font-weight:600">body-sm-strong</div><div class="type-meta">Inter 14px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:12px;font-weight:400">caption</div><div class="type-meta">Inter 12px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter, system-ui, sans-serif;font-size:16px;font-weight:600">button-md</div><div class="type-meta">Inter 16px / 600</div></div></div>
-<div class="section"><h2>间距</h2><div class="spacing-row"><div class="spacing-item"><div class="spacing-bar" style="width:6px"></div><div class="spacing-label">xxs 2px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:12px"></div><div class="spacing-label">xs 4px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:24px"></div><div class="spacing-label">sm 8px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:36px"></div><div class="spacing-label">md 12px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:48px"></div><div class="spacing-label">lg 16px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:72px"></div><div class="spacing-label">xl 24px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:96px"></div><div class="spacing-label">2xl 32px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">3xl 48px</div></div></div></div>
-<div class="section"><h2>圆角</h2><div class="radius-row"><div class="radius-item"><div class="radius-box" style="border-radius:0px"></div><div class="radius-label">none 0px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">sm 8px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">md 12px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">lg 16px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:24px"></div><div class="radius-label">xl 24px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">pill 9999px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">full 9999px</div></div></div></div>
-<div class="section"><h2>组件</h2><div class="comp-grid"><div class="comp-card"><div class="comp-name">nav-bar</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-strong}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">nav-link</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-strong}</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">button-secondary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">button-tertiary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">button-icon-circular</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.sm}</span></div></div></div><div class="comp-card"><div class="comp-name">text-input</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md} {spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">card-content</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">card-feature-sage</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">card-feature-green</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary-pale}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">card-feature-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">hero-band</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-mega}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.3xl} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">hero-band-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-mega}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.3xl} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">content-band</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.3xl} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">currency-converter-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">badge-positive</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary-pale}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.positive-deep}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-strong}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xs} {spacing.md}</span></div></div></div><div class="comp-card"><div class="comp-name">badge-negative</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.negative-bg}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-strong}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xs} {spacing.md}</span></div></div></div><div class="comp-card"><div class="comp-name">footer</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.3xl} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-pricing-tier</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Default Pricing tier card. Re-uses feature-card chrome with brand canvas-soft surface.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.mute}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-pricing-tier-featured</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Featured/highlighted tier — polarity-flipped surface (dark fill + light text in light mode, light fill + dark text in dark mode).</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-product-selector</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">What's Included summary card — re-purposed for SaaS / B2B verticals (NOT a literal product gallery).</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-cart-drawer</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Subscription summary — re-purposed for SaaS / B2B (line items per add-on, not literal cart).</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div><div class="comp-prop"><span class="comp-key">item-divider</span><span class="comp-val">{colors.canvas-soft}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-app-shell-row</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Sidebar nav row inside the App Shell example. Active state uses brand primary as the indicator.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">activeIndicator</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md} {spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-data-table-cell</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Default data-table th + td chrome. Header uses mono-caps eyebrow typography; body uses body-sm.</span></div><div class="comp-prop"><span class="comp-key">headerBackground</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">headerTypography</span><span class="comp-val">{typography.caption}</span></div><div class="comp-prop"><span class="comp-key">bodyTypography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">cellPadding</span><span class="comp-val">{spacing.md} {spacing.lg}</span></div><div class="comp-prop"><span class="comp-key">rowBorder</span><span class="comp-val">{colors.canvas-soft}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-auth-form-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Sign-in / sign-up card. Re-uses feature-card chrome with text-input primitives inside.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-modal-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Modal dialog surface — same chrome as feature-card with elevated shadow.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-empty-state-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Empty-state illustration frame.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.3xl}</span></div><div class="comp-prop"><span class="comp-key">captionTypography</span><span class="comp-val">{typography.body-md}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-toast</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Toast notification surface — feature-card shape + medium shadow.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md} {spacing.lg}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div></div></div></div></div>
+<nav class="nav">
+  <a class="nav-brand" href="#">awesome-design-md</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Get Started</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System<br>Inspired by<br><span>Wise</span></h1>
+  <p>A design token catalog generated from DESIGN.md. Every color, font, and component — bold, green, and borderless.</p>
+  <div class="hero-buttons">
+    <a class="btn-green" href="#">Send Money</a>
+    <a class="btn-subtle" href="#">Learn More</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div><h2 class="section-title">Color Palette</h2>
+  <div class="color-group-label">Brand</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0e0f0c"></div><div class="color-swatch-info"><div class="color-swatch-name">Near Black</div><div class="color-swatch-hex">#0e0f0c</div><div class="color-swatch-role">Primary text</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#9fe870"></div><div class="color-swatch-info"><div class="color-swatch-name">Wise Green</div><div class="color-swatch-hex">#9fe870</div><div class="color-swatch-role">Primary CTA</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#163300"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Green</div><div class="color-swatch-hex">#163300</div><div class="color-swatch-role">Button text on green</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e2f6d5"></div><div class="color-swatch-info"><div class="color-swatch-name">Mint</div><div class="color-swatch-hex">#e2f6d5</div><div class="color-swatch-role">Soft green surface</div></div></div>
+  </div>
+  <div class="color-group-label">Semantic</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#054d28"></div><div class="color-swatch-info"><div class="color-swatch-name">Positive</div><div class="color-swatch-hex">#054d28</div><div class="color-swatch-role">Success</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#d03238"></div><div class="color-swatch-info"><div class="color-swatch-name">Danger</div><div class="color-swatch-hex">#d03238</div><div class="color-swatch-role">Error</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffd11a"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning</div><div class="color-swatch-hex">#ffd11a</div><div class="color-swatch-role">Warning</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffc091"></div><div class="color-swatch-info"><div class="color-swatch-name">Orange</div><div class="color-swatch-hex">#ffc091</div><div class="color-swatch-role">Warm accent</div></div></div>
+  </div>
+  <div class="color-group-label">Neutral</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#454745"></div><div class="color-swatch-info"><div class="color-swatch-name">Warm Dark</div><div class="color-swatch-hex">#454745</div><div class="color-swatch-role">Secondary text</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#868685"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray</div><div class="color-swatch-hex">#868685</div><div class="color-swatch-role">Muted text</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#e8ebe6"></div><div class="color-swatch-info"><div class="color-swatch-name">Light</div><div class="color-swatch-hex">#e8ebe6</div><div class="color-swatch-role">Light surface</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div><h2 class="section-title">Typography Scale</h2>
+  <div class="type-sample"><div style="font-size:80px; font-weight:900; line-height:0.85;">DISPLAY HERO</div><div class="type-meta">Display — 126px / 900 / 0.85 / Wise Sans / "calt"</div></div>
+  <div class="type-sample"><div style="font-size:40px; font-weight:900; line-height:0.85;">Section Title</div><div class="type-meta">Section — 40px / 900 / 0.85 / Wise Sans</div></div>
+  <div class="type-sample"><div style="font-size:22px; font-weight:600; line-height:1.25; letter-spacing:-0.396px;">Card Title</div><div class="type-meta">Card — 22px / 600 / 1.25 / -0.396px / Inter</div></div>
+  <div class="type-sample"><div style="font-size:18px; font-weight:400; line-height:1.44; letter-spacing:0.18px; color:var(--warm-dark);">Body — Send money abroad. Fast, cheap, transparent. No hidden fees, no bad exchange rates.</div><div class="type-meta">Body — 18px / 400 / 1.44 / +0.18px / Inter</div></div>
+  <div class="type-sample"><div style="font-size:18px; font-weight:600; line-height:1.44; letter-spacing:-0.108px;">Body Semibold — Account balance</div><div class="type-meta">Semibold — 18px / 600 / 1.44 / -0.108px / Inter</div></div>
+  <div class="type-sample"><div style="font-size:14px; font-weight:600; line-height:1.55; letter-spacing:-0.084px; color:var(--gray);">Caption — Updated 2 minutes ago</div><div class="type-meta">Caption — 14px / 600 / 1.55 / -0.084px / Inter</div></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="buttons">
+  <div class="section-label">03 / Buttons</div><h2 class="section-title">Buttons</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-green" href="#">Send Money</a><div class="button-label">Primary Green</div></div>
+    <div class="button-item"><a class="btn-subtle" href="#">Learn More</a><div class="button-label">Subtle</div></div>
+  </div>
+  <p style="font-size:13px; color:var(--gray); margin-top:16px;">Hover to see scale(1.05) grow. Click for scale(0.95) compress.</p>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">04 / Cards</div><h2 class="section-title">Cards</h2>
+  <div class="card-grid">
+    <div class="card"><h3>International Transfers</h3><p>Send money to 80+ countries at the real exchange rate. No markup, just a small, transparent fee.</p></div>
+    <div class="card" style="background:var(--mint); border-color:var(--green);"><h3>Multi-currency Account</h3><p>Hold and convert 40+ currencies. Spend abroad with the Wise card. Green accent card variant.</p></div>
+    <div class="card"><h3>Business Account</h3><p>Pay invoices, receive payments, and manage your international finances in one place.</p></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div><h2 class="section-title">Forms</h2>
+  <div class="form-group"><label class="form-label">Amount</label><input class="form-input" type="text" placeholder="1,000.00 GBP"><div class="form-state-label">Default</div></div>
+  <div class="form-group"><label class="form-label">Recipient</label><input class="form-input form-input--focus" type="text" value="John Smith"><div class="form-state-label">Focus (green ring)</div></div>
+  <div class="form-group"><label class="form-label">IBAN</label><input class="form-input form-input--error" type="text" value="invalid"><div class="form-state-label">Error</div></div>
+  <div class="form-group"><label class="form-label">Reference</label><textarea class="form-textarea" placeholder="Payment reference..."></textarea></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="section-label">06 / Spacing</div><h2 class="section-title">Spacing</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:12px"></div><div class="spacing-value">12</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:20px"></div><div class="spacing-value">20</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:24px"></div><div class="spacing-value">24</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="section-label">07 / Radius</div><h2 class="section-title">Radius</h2>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">10px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">16px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:30px"></div><div class="radius-label">30px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:40px"></div><div class="radius-label">40px</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:9999px; width:52px; height:52px;"></div><div class="radius-label">pill</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <div class="section-label">08 / Elevation</div><h2 class="section-title">Depth</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card"><div class="elevation-label">Flat</div><div class="elevation-desc">No shadow</div></div>
+    <div class="elevation-card" style="box-shadow:rgba(14,15,12,0.12) 0px 0px 0px 1px;"><div class="elevation-label">Ring</div><div class="elevation-desc">1px ring shadow</div></div>
+  </div>
+</section>
+
+<footer class="footer">Generated from <a href="https://wise.com/">wise.com</a> DESIGN.md — awesome-design-md</footer>
 
 </body>
 </html>

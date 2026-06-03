@@ -3,68 +3,810 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mistral-AI Design System</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Design System Preview: Mistral AI (Light)</title>
 <style>
-:root{--bg:#f6f6f7;--surface:#fff;--ink:#1a1a1c;--ink2:#5c5c60;--ink3:#8c8c91;--border:#dddde0;--radius:6px;--font-d:'Bricolage Grotesque',sans-serif;--font-b:'Onest',sans-serif;--font-m:'JetBrains Mono',monospace}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  :root {
+    --color-mistral-orange: #fa520f;
+    --color-flame: #fb6424;
+    --color-block-orange: #ff8105;
+    --color-sunshine-900: #ff8a00;
+    --color-sunshine-700: #ffa110;
+    --color-sunshine-500: #ffb83e;
+    --color-sunshine-300: #ffd06a;
+    --color-block-gold: #ffe295;
+    --color-bright-yellow: #ffd900;
+    --color-warm-ivory: #fffaeb;
+    --color-cream: #fff0c2;
+    --color-white: #ffffff;
+    --color-mistral-black: #1f1f1f;
+    --color-black-tint: hsl(0, 0%, 24%);
+    --color-input-border: hsl(240, 5.9%, 90%);
+    --font-primary: Arial, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Light mode */
+    --bg-page: #fffaeb;
+    --bg-card: #fff0c2;
+    --bg-nav: rgba(255, 250, 235, 0.92);
+    --text-primary: #1f1f1f;
+    --text-secondary: hsl(0, 0%, 24%);
+    --text-muted: #7f6315;
+    --border-color: rgba(127, 99, 21, 0.15);
+    --border-subtle: rgba(127, 99, 21, 0.08);
+    --section-label-color: var(--color-mistral-orange);
+    --golden-shadow: -8px 16px 39px rgba(127, 99, 21, 0.12),
+                     -33px 64px 72px rgba(127, 99, 21, 0.10),
+                     -73px 144px 97px rgba(127, 99, 21, 0.06);
+  }
 
-.hero{padding:56px 32px 40px;text-align:center;background:linear-gradient(135deg,#fa520f0a,#1f1f1f05)}
-.hero h1{font-family:PP Editorial Old;font-size:84px;font-weight:400;line-height:1.05;letter-spacing:-1.5px;color:#1f1f1f;margin-bottom:6px}
-.hero .slug{font-family:PP Editorial Old;font-size:13px;color:var(--ink3);margin-bottom:10px;letter-spacing:0.3px;text-transform:uppercase}
-.hero .desc{font-family:PP Editorial Old;font-size:15px;color:#1f1f1f;opacity:0.7;max-width:520px;margin:0 auto 18px;line-height:1.5}
-.hero-cta{display:inline-block;background:#fa520f;color:#ffffff;border:none;border-radius:12px;padding:10px 22px;font-family:PP Editorial Old;font-size:14px;font-weight:500;cursor:pointer}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.section{padding:24px 32px;max-width:960px;margin:0 auto}
-.section h2{font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:0.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
 
-.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
-.swatch{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
-.swatch-fill{height:48px}
-.swatch-info{padding:5px 8px}
-.swatch-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.swatch-hex{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: var(--bg-nav);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .nav-brand {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-brand .mistral-block {
+    display: flex;
+    gap: 2px;
+  }
+  .nav-brand .mistral-block span {
+    width: 6px;
+    height: 18px;
+    display: inline-block;
+  }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--color-mistral-orange); }
+  .nav-cta {
+    background: var(--color-mistral-black);
+    color: var(--color-white);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
 
-.type-row{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.type-row:last-child{border-bottom:none}
-.type-sample{margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.type-meta{font-family:var(--font-m);font-size:11px;color:var(--ink3)}
+  /* HERO */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 120px 40px 100px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255, 161, 16, 0.10) 0%, rgba(250, 82, 15, 0.05) 40%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-family: var(--font-primary);
+    font-size: 82px;
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -2.05px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hero h1 span { color: var(--color-mistral-orange); }
+  .hero p {
+    color: var(--text-secondary);
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; position: relative; }
 
-.spacing-row{display:flex;gap:12px;flex-wrap:wrap}
-.spacing-item{text-align:center}
-.spacing-bar{background:var(--ink);opacity:0.15;height:24px;border-radius:3px;margin-bottom:4px}
-.spacing-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* MISTRAL BLOCK IDENTITY */
+  .block-identity {
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .block-identity span {
+    width: 48px;
+    height: 12px;
+    display: inline-block;
+  }
 
-.radius-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.radius-item{text-align:center}
-.radius-box{width:56px;height:56px;background:var(--surface);border:1px solid var(--border);margin-bottom:4px}
-.radius-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* BUTTONS */
+  .btn-dark {
+    background: var(--color-mistral-black);
+    color: var(--color-white);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+  .btn-cream {
+    background: var(--color-cream);
+    color: var(--color-mistral-black);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-mistral-black);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  .btn-text {
+    background: transparent;
+    color: var(--color-mistral-black);
+    padding: 8px 0 0 0;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
-.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.comp-card{border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--surface)}
-.comp-name{font-family:var(--font-m);font-size:11px;font-weight:500;color:var(--ink);margin-bottom:6px}
-.comp-props{font-size:10px;color:var(--ink3)}
-.comp-prop{margin-bottom:2px}
-.comp-key{font-weight:500;color:var(--ink2)}
-.comp-val{font-family:var(--font-m);margin-left:4px}
+  /* SECTIONS */
+  .section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+  .section-title {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2.52px;
+    color: var(--section-label-color);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: var(--font-primary);
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: normal;
+    margin-bottom: 48px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 0 40px;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* COLOR PALETTE */
+  .color-group { margin-bottom: 40px; }
+  .color-group-title {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+  }
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .color-swatch {
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .color-swatch-block {
+    height: 80px;
+    position: relative;
+  }
+  .color-swatch-info {
+    padding: 12px;
+    background: var(--bg-card);
+  }
+  .color-swatch-name { font-size: 13px; font-weight: 400; margin-bottom: 2px; }
+  .color-swatch-hex { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; letter-spacing: 0.5px; }
+  .color-swatch-role { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border-subtle); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-sample-text { margin-bottom: 8px; }
+  .type-sample-label {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* BUTTONS SECTION */
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .button-demo { text-align: center; }
+  .button-demo-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--bg-card);
+    border-radius: 0;
+    padding: 28px;
+  }
+  .card-standard { border: none; }
+  .card-golden {
+    box-shadow: var(--golden-shadow);
+  }
+  .card-white {
+    background: var(--color-white);
+    border: 1px solid var(--border-color);
+  }
+  .card h3 {
+    font-family: var(--font-primary);
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .card p { color: var(--text-secondary); font-size: 15px; line-height: 1.63; }
+  .card-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+    color: var(--color-sunshine-700);
+    margin-bottom: 16px;
+  }
+
+  /* SPACING */
+  .spacing-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+  .spacing-item { text-align: center; }
+  .spacing-box {
+    background: rgba(250, 82, 15, 0.12);
+    border: 1px solid rgba(250, 82, 15, 0.3);
+    border-radius: 0;
+    margin-bottom: 8px;
+  }
+  .spacing-label {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* RADIUS */
+  .radius-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+  .radius-item { text-align: center; }
+  .radius-box {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    margin-bottom: 8px;
+  }
+  .radius-label {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .radius-context {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; }
+  .elevation-card {
+    background: var(--bg-card);
+    border-radius: 0;
+    padding: 28px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .elevation-flat {
+    border: none;
+    background: var(--bg-page);
+    box-shadow: none;
+  }
+  .elevation-golden {
+    box-shadow: -8px 16px 39px rgba(127, 99, 21, 0.12),
+                -33px 64px 72px rgba(127, 99, 21, 0.10),
+                -73px 144px 97px rgba(127, 99, 21, 0.06),
+                -130px 257px 131px rgba(127, 99, 21, 0.02),
+                -203px 400px 143px rgba(127, 99, 21, 0.00);
+  }
+  .elevation-name { font-size: 18px; font-weight: 400; margin-bottom: 8px; }
+  .elevation-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .elevation-level {
+    font-size: 11px;
+    color: var(--color-sunshine-700);
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+    margin-top: 16px;
+  }
+
+  /* GRADIENT STRIP */
+  .gradient-strip {
+    height: 64px;
+    margin-top: 48px;
+    background: linear-gradient(to right, #ffd900, #ffe295, #ffa110, #ff8105, #fb6424, #fa520f);
+    border-radius: 0;
+  }
+  .gradient-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav { padding: 12px 20px; }
+    .nav-links a:not(.nav-cta-wrapper) { display: none; }
+    .hero { padding: 80px 20px 60px; }
+    .hero h1 { font-size: 48px; letter-spacing: -1px; }
+    .section { padding: 60px 20px; }
+    .section-heading { font-size: 36px; }
+    .color-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .card-grid { grid-template-columns: 1fr; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .button-row { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
-<div class="hero">
-  <h1>Mistral-AI</h1>
-  <div class="slug">/mistral.ai</div>
-  <p class="desc">Mistral AI brands itself with a singular signature — atmospheric sunset gradients (mustard, orange, deep red) layered over photography of mountains, plus a horizontal &quot;sunset stripe&quot; bar that closes every page. The system pairs warm cream-yellow surfaces ({colors.cream}) with a saturated orange primary CTA ({colors.primary}) and uses an elegant near-serif voice for hero displays. Coverage spans homepage (Frontier AI hero), Le Studio product page, Coding solutions, news article surfaces, contact form, and services tier page — all anchored by the signature gradient closing band.</p>
-  <button class="hero-cta">Get started</button>
-</div>
 
-<div class="section"><h2>色彩体系</h2><div class="color-grid"><div class="swatch"><div class="swatch-fill" style="background:#fa520f"></div><div class="swatch-info"><div class="swatch-name">primary</div><div class="swatch-hex">#fa520f</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#cc3a05"></div><div class="swatch-info"><div class="swatch-name">primary-deep</div><div class="swatch-hex">#cc3a05</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">on-primary</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffd06a"></div><div class="swatch-info"><div class="swatch-name">sunshine-300</div><div class="swatch-hex">#ffd06a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffb83e"></div><div class="swatch-info"><div class="swatch-name">sunshine-500</div><div class="swatch-hex">#ffb83e</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffa110"></div><div class="swatch-info"><div class="swatch-name">sunshine-700</div><div class="swatch-hex">#ffa110</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ff8105"></div><div class="swatch-info"><div class="swatch-name">sunshine-800</div><div class="swatch-hex">#ff8105</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ff8a00"></div><div class="swatch-info"><div class="swatch-name">sunshine-900</div><div class="swatch-hex">#ff8a00</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffd900"></div><div class="swatch-info"><div class="swatch-name">yellow-saturated</div><div class="swatch-hex">#ffd900</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fff8e0"></div><div class="swatch-info"><div class="swatch-name">cream</div><div class="swatch-hex">#fff8e0</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fffaeb"></div><div class="swatch-info"><div class="swatch-name">cream-light</div><div class="swatch-hex">#fffaeb</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fff0c2"></div><div class="swatch-info"><div class="swatch-name">cream-deeper</div><div class="swatch-hex">#fff0c2</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#e6d5a8"></div><div class="swatch-info"><div class="swatch-name">beige-deep</div><div class="swatch-hex">#e6d5a8</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffe295"></div><div class="swatch-info"><div class="swatch-name">block-5</div><div class="swatch-hex">#ffe295</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffd900"></div><div class="swatch-info"><div class="swatch-name">block-6</div><div class="swatch-hex">#ffd900</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ff8105"></div><div class="swatch-info"><div class="swatch-name">block-7</div><div class="swatch-hex">#ff8105</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#1f1f1f"></div><div class="swatch-info"><div class="swatch-name">ink</div><div class="swatch-hex">#1f1f1f</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#3d3d3d"></div><div class="swatch-info"><div class="swatch-name">ink-tint</div><div class="swatch-hex">#3d3d3d</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#2c2c2c"></div><div class="swatch-info"><div class="swatch-name">charcoal</div><div class="swatch-hex">#2c2c2c</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#4a4a4a"></div><div class="swatch-info"><div class="swatch-name">slate</div><div class="swatch-hex">#4a4a4a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#6a6a6a"></div><div class="swatch-info"><div class="swatch-name">steel</div><div class="swatch-hex">#6a6a6a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#8a8a8a"></div><div class="swatch-info"><div class="swatch-name">stone</div><div class="swatch-hex">#8a8a8a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#a8a8a8"></div><div class="swatch-info"><div class="swatch-name">muted</div><div class="swatch-hex">#a8a8a8</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#e5e5e5"></div><div class="swatch-info"><div class="swatch-name">hairline</div><div class="swatch-hex">#e5e5e5</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ededed"></div><div class="swatch-info"><div class="swatch-name">hairline-soft</div><div class="swatch-hex">#ededed</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#c7c7c7"></div><div class="swatch-info"><div class="swatch-name">hairline-strong</div><div class="swatch-hex">#c7c7c7</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">canvas</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fafafa"></div><div class="swatch-info"><div class="swatch-name">surface</div><div class="swatch-hex">#fafafa</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fff8e0"></div><div class="swatch-info"><div class="swatch-name">surface-cream</div><div class="swatch-hex">#fff8e0</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fffaeb"></div><div class="swatch-info"><div class="swatch-name">surface-cream-soft</div><div class="swatch-hex">#fffaeb</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#1c1c1e"></div><div class="swatch-info"><div class="swatch-name">surface-code</div><div class="swatch-hex">#1c1c1e</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">on-dark</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#a8a8a8"></div><div class="swatch-info"><div class="swatch-name">on-dark-muted</div><div class="swatch-hex">#a8a8a8</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#1f1f1f"></div><div class="swatch-info"><div class="swatch-name">on-cream</div><div class="swatch-hex">#1f1f1f</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fff8e0"></div><div class="swatch-info"><div class="swatch-name">footer-cream</div><div class="swatch-hex">#fff8e0</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fa520f"></div><div class="swatch-info"><div class="swatch-name">link</div><div class="swatch-hex">#fa520f</div></div></div></div></div>
-<div class="section"><h2>排版规范</h2><div class="type-row"><div class="type-sample" style="font-family:PP Editorial Old;font-size:36px;font-weight:400">hero-display</div><div class="type-meta">PP Editorial Old 84px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:PP Editorial Old;font-size:36px;font-weight:400">display-lg</div><div class="type-meta">PP Editorial Old 64px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:PP Editorial Old;font-size:36px;font-weight:400">heading-1</div><div class="type-meta">PP Editorial Old 52px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:36px;font-weight:500">heading-2</div><div class="type-meta">Inter 36px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:28px;font-weight:500">heading-3</div><div class="type-meta">Inter 28px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:22px;font-weight:500">heading-4</div><div class="type-meta">Inter 22px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:18px;font-weight:500">heading-5</div><div class="type-meta">Inter 18px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:18px;font-weight:400">subtitle</div><div class="type-meta">Inter 18px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:16px;font-weight:400">body-md</div><div class="type-meta">Inter 16px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:16px;font-weight:500">body-md-medium</div><div class="type-meta">Inter 16px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:14px;font-weight:400">body-sm</div><div class="type-meta">Inter 14px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:14px;font-weight:500">body-sm-medium</div><div class="type-meta">Inter 14px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:13px;font-weight:400">caption</div><div class="type-meta">Inter 13px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:13px;font-weight:600">caption-bold</div><div class="type-meta">Inter 13px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:12px;font-weight:500">micro</div><div class="type-meta">Inter 12px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:11px;font-weight:600">micro-uppercase</div><div class="type-meta">Inter 11px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Inter;font-size:14px;font-weight:500">button-md</div><div class="type-meta">Inter 14px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:PP Editorial Old;font-size:36px;font-weight:400">stat-display</div><div class="type-meta">PP Editorial Old 56px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:JetBrains Mono;font-size:14px;font-weight:400">code-md</div><div class="type-meta">JetBrains Mono 14px / 400</div></div></div>
-<div class="section"><h2>间距</h2><div class="spacing-row"><div class="spacing-item"><div class="spacing-bar" style="width:12px"></div><div class="spacing-label">xxs 4px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:24px"></div><div class="spacing-label">xs 8px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:36px"></div><div class="spacing-label">sm 12px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:48px"></div><div class="spacing-label">md 16px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:60px"></div><div class="spacing-label">lg 20px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:72px"></div><div class="spacing-label">xl 24px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:96px"></div><div class="spacing-label">xxl 32px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">xxxl 40px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">section-sm 48px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">section 64px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">section-lg 96px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">hero 120px</div></div></div></div>
-<div class="section"><h2>圆角</h2><div class="radius-row"><div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">xs 4px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">sm 6px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">md 8px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">lg 12px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">xl 16px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:20px"></div><div class="radius-label">xxl 20px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">full 9999px</div></div></div></div>
-<div class="section"><h2>组件</h2><div class="comp-grid"><div class="comp-card"><div class="comp-name">button-primary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">10px 20px</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary-pressed</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary-deep}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary-disabled</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.hairline}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.muted}</span></div></div></div><div class="comp-card"><div class="comp-name">button-cream</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.cream}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">10px 20px</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.beige-deep}</span></div></div></div><div class="comp-card"><div class="comp-name">button-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">10px 20px</span></div></div></div><div class="comp-card"><div class="comp-name">button-secondary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">10px 20px</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-strong}</span></div></div></div><div class="comp-card"><div class="comp-name">button-on-cream</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">10px 20px</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.beige-deep}</span></div></div></div><div class="comp-card"><div class="comp-name">button-link</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-medium}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0</span></div></div></div><div class="comp-card"><div class="comp-name">card-base</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-soft}</span></div></div></div><div class="comp-card"><div class="comp-name">card-feature</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-soft}</span></div></div></div><div class="comp-card"><div class="comp-name">card-cream</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.cream}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.beige-deep}</span></div></div></div><div class="comp-card"><div class="comp-name">card-cream-soft</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-cream-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxl}</span></div></div></div><div class="comp-card"><div class="comp-name">card-feature-product</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-soft}</span></div><div class="comp-prop"><span class="comp-key">shadow</span><span class="comp-val">rgba(0, 0, 0, 0.04) 0px 4px 12px</span></div></div></div><div class="comp-card"><div class="comp-name">card-photographic</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-code}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0</span></div></div></div><div class="comp-card"><div class="comp-name">pricing-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-soft}</span></div></div></div><div class="comp-card"><div class="comp-name">pricing-card-featured</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.cream}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">2px solid {colors.primary}</span></div></div></div><div class="comp-card"><div class="comp-name">text-input</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.sm} {spacing.md}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-strong}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">44px</span></div></div></div><div class="comp-card"><div class="comp-name">text-input-focused</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">2px solid {colors.primary}</span></div></div></div><div class="comp-card"><div class="comp-name">text-area</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-strong}</span></div></div></div><div class="comp-card"><div class="comp-name">contact-form-panel</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.cream}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.beige-deep}</span></div></div></div><div class="comp-card"><div class="comp-name">pill-tab</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.steel}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-medium}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xs} {spacing.md}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline}</span></div></div></div><div class="comp-card"><div class="comp-name">pill-tab-active</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.ink}</span></div></div></div><div class="comp-card"><div class="comp-name">segmented-tab</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.steel}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-medium}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.sm} {spacing.md}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">0 0 2px transparent solid</span></div></div></div><div class="comp-card"><div class="comp-name">segmented-tab-active</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-medium}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">0 0 2px {colors.primary} solid</span></div></div></div><div class="comp-card"><div class="comp-name">badge-orange</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption-bold}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">4px 10px</span></div></div></div><div class="comp-card"><div class="comp-name">badge-cream</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.cream-deeper}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption-bold}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">4px 10px</span></div></div></div><div class="comp-card"><div class="comp-name">badge-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption-bold}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">4px 10px</span></div></div></div><div class="comp-card"><div class="comp-name">promo-banner</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-medium}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.sm} {spacing.md}</span></div></div></div><div class="comp-card"><div class="comp-name">hero-band-sunset</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.sunshine-700}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">0</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.hero}</span></div></div></div><div class="comp-card"><div class="comp-name">sunset-stripe-band</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">0</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg} 0</span></div></div></div><div class="comp-card"><div class="comp-name">cta-banner-cream</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.cream}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.section}</span></div></div></div><div class="comp-card"><div class="comp-name">code-block</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-code}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.code-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md}</span></div></div></div><div class="comp-card"><div class="comp-name">code-block-header</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-code}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark-muted}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xs} {spacing.md}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">0 0 1px rgba(255,255,255,0.08) solid</span></div></div></div><div class="comp-card"><div class="comp-name">feature-icon-tile</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.cream}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.beige-deep}</span></div></div></div><div class="comp-card"><div class="comp-name">industry-tile</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-soft}</span></div></div></div><div class="comp-card"><div class="comp-name">stat-cell</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.stat-display}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">customer-testimonial-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">1px solid {colors.hairline-soft}</span></div></div></div><div class="comp-card"><div class="comp-name">logo-wall-item</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.steel}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md-medium}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">faq-accordion-item</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div><div class="comp-prop"><span class="comp-key">border</span><span class="comp-val">0 0 1px {colors.hairline} solid</span></div></div></div><div class="comp-card"><div class="comp-name">footer-region</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.footer-cream}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.section} {spacing.xxl}</span></div></div></div><div class="comp-card"><div class="comp-name">footer-link</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xxs} 0</span></div></div></div><div class="comp-card"><div class="comp-name">app-store-badge</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption-bold}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.sm} {spacing.md}</span></div></div></div></div></div>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="mistral-block">
+      <span style="background: #ffd900;"></span>
+      <span style="background: #ffa110;"></span>
+      <span style="background: #ff8105;"></span>
+      <span style="background: #fb6424;"></span>
+      <span style="background: #fa520f;"></span>
+    </div>
+    Mistral AI
+  </div>
+  <div class="nav-links">
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#cards">Cards</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#elevation">Elevation</a>
+    <button class="nav-cta">Get Started</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="block-identity">
+    <span style="background: #ffd900;"></span>
+    <span style="background: #ffe295;"></span>
+    <span style="background: #ffa110;"></span>
+    <span style="background: #ff8105;"></span>
+    <span style="background: #fb6424;"></span>
+    <span style="background: #fa520f;"></span>
+  </div>
+  <h1>Design System Preview:<br><span>Mistral AI</span></h1>
+  <p>Warm golden tokens from the sunshine gradient design system</p>
+  <div class="hero-buttons">
+    <button class="btn-dark">Explore Tokens</button>
+    <button class="btn-cream">View Source</button>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-title">01 / Color Palette</div>
+  <h2 class="section-heading">Color Palette & Roles</h2>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Primary</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #fa520f;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Mistral Orange</div>
+          <div class="color-swatch-hex">#fa520f</div>
+          <div class="color-swatch-role">Core brand color, primary emphasis, signal fire</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #fb6424;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Mistral Flame</div>
+          <div class="color-swatch-hex">#fb6424</div>
+          <div class="color-swatch-role">Hover states, secondary brand moments</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ff8105;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Block Orange</div>
+          <div class="color-swatch-hex">#ff8105</div>
+          <div class="color-swatch-role">Gradient block system, warm pure orange</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Sunshine Spectrum</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ffd900;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Bright Yellow</div>
+          <div class="color-swatch-hex">#ffd900</div>
+          <div class="color-swatch-role">Top of block identity gradient</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ffe295;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Block Gold</div>
+          <div class="color-swatch-hex">#ffe295</div>
+          <div class="color-swatch-role">Pale gold, soft background accents</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ffd06a;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Sunshine 300</div>
+          <div class="color-swatch-hex">#ffd06a</div>
+          <div class="color-swatch-role">Subtle warm tints, secondary backgrounds</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ffb83e;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Sunshine 500</div>
+          <div class="color-swatch-hex">#ffb83e</div>
+          <div class="color-swatch-role">Medium golden, mid-level emphasis</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ffa110;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Sunshine 700</div>
+          <div class="color-swatch-hex">#ffa110</div>
+          <div class="color-swatch-role">Core sunshine accent, interactive elements</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ff8a00;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Sunshine 900</div>
+          <div class="color-swatch-hex">#ff8a00</div>
+          <div class="color-swatch-role">Deep golden amber, strong accent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Surface & Background</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #fffaeb; border: 1px solid rgba(127,99,21,0.15);"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Warm Ivory</div>
+          <div class="color-swatch-hex">#fffaeb</div>
+          <div class="color-swatch-role">Page background, lightest canvas</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #fff0c2;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Cream</div>
+          <div class="color-swatch-hex">#fff0c2</div>
+          <div class="color-swatch-role">Primary warm surface, button backgrounds</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ffffff; border: 1px solid rgba(127,99,21,0.15);"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Pure White</div>
+          <div class="color-swatch-hex">#ffffff</div>
+          <div class="color-swatch-role">Maximum contrast, popover surfaces</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #1f1f1f;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Mistral Black</div>
+          <div class="color-swatch-hex">#1f1f1f</div>
+          <div class="color-swatch-role">Dark buttons, text, dark sections</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Neutrals & Text</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #1f1f1f;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Mistral Black</div>
+          <div class="color-swatch-hex">#1f1f1f</div>
+          <div class="color-swatch-role">Primary text on light surfaces</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: hsl(0, 0%, 24%);"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Black Tint</div>
+          <div class="color-swatch-hex">hsl(0, 0%, 24%)</div>
+          <div class="color-swatch-role">Secondary text on light backgrounds</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ffffff; border: 1px solid rgba(127,99,21,0.15);"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Pure White</div>
+          <div class="color-swatch-hex">#ffffff</div>
+          <div class="color-swatch-role">Text on dark surfaces, CTA labels</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gradient Strip -->
+  <div class="gradient-strip"></div>
+  <div class="gradient-label">Mistral Block Gradient: Yellow &rarr; Gold &rarr; Amber &rarr; Orange &rarr; Flame &rarr; Mistral Orange</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-title">02 / Typography Scale</div>
+  <h2 class="section-heading">Typography Rules</h2>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 82px; font-weight: 400; line-height: 1.0; letter-spacing: -2.05px;">Display Hero</div>
+    <div class="type-sample-label">Display / Hero &mdash; 82px / 400 / 1.00 / -2.05px &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 56px; font-weight: 400; line-height: 0.95;">Section Heading</div>
+    <div class="type-sample-label">Section Heading &mdash; 56px / 400 / 0.95 / normal &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 48px; font-weight: 400; line-height: 0.95;">Sub-heading Large</div>
+    <div class="type-sample-label">Sub-heading Large &mdash; 48px / 400 / 0.95 / normal &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 32px; font-weight: 400; line-height: 1.15;">Sub-heading</div>
+    <div class="type-sample-label">Sub-heading &mdash; 32px / 400 / 1.15 / normal &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 30px; font-weight: 400; line-height: 1.20;">Card Title</div>
+    <div class="type-sample-label">Card Title &mdash; 30px / 400 / 1.20 / normal &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 24px; font-weight: 400; line-height: 1.33;">Feature Title</div>
+    <div class="type-sample-label">Feature Title &mdash; 24px / 400 / 1.33 / normal &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 16px; font-weight: 400; line-height: 1.50;">Body text for standard paragraphs, navigation links, and button labels. Arial delivers raw, unadorned clarity across all UI copy.</div>
+    <div class="type-sample-label">Body / Button &mdash; 16px / 400 / 1.50 / normal &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 16px; font-weight: 400; line-height: 1.50; text-transform: uppercase; letter-spacing: 0.5px;">UPPERCASE BUTTON LABEL</div>
+    <div class="type-sample-label">Button Uppercase &mdash; 16px / 400 / 1.50 / uppercase &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 14px; font-weight: 400; line-height: 1.43; color: var(--text-secondary);">Caption and metadata text for secondary links</div>
+    <div class="type-sample-label">Caption / Link &mdash; 14px / 400 / 1.43 / normal &mdash; Arial</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: var(--font-primary); font-size: 14px; font-weight: 400; line-height: 1.43; text-transform: uppercase; letter-spacing: 2.52px; color: var(--color-mistral-orange);">SECTION LABEL TAG</div>
+    <div class="type-sample-label">Section Label &mdash; 14px / 400 / 2.52px / uppercase &mdash; Arial</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-title">03 / Button Variants</div>
+  <h2 class="section-heading">Buttons</h2>
+
+  <div class="button-row">
+    <div class="button-demo">
+      <button class="btn-dark">GET STARTED</button>
+      <div class="button-demo-label">Dark Solid</div>
+    </div>
+    <div class="button-demo">
+      <button class="btn-cream">LEARN MORE</button>
+      <div class="button-demo-label">Cream Surface</div>
+    </div>
+    <div class="button-demo">
+      <button class="btn-ghost">SECONDARY</button>
+      <div class="button-demo-label">Ghost / Transparent</div>
+    </div>
+    <div class="button-demo">
+      <button class="btn-text">Read Article</button>
+      <div class="button-demo-label">Text / Underline</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-title">04 / Card Examples</div>
+  <h2 class="section-heading">Cards & Containers</h2>
+
+  <div class="card-grid">
+    <div class="card card-standard">
+      <div class="card-label">CREAM SURFACE</div>
+      <h3>Warm Cream Card</h3>
+      <p>Standard content card on cream background with sharp architectural corners. Containers defined by background color, not borders. The warm void breathes naturally.</p>
+    </div>
+    <div class="card card-golden">
+      <div class="card-label">GOLDEN FLOAT</div>
+      <h3>Golden Shadow Card</h3>
+      <p>Elevated card with the signature five-layer warm amber shadow system. The golden hour lighting effect makes content feel bathed in afternoon sunlight.</p>
+    </div>
+    <div class="card card-white">
+      <div class="card-label">WHITE SURFACE</div>
+      <h3>Pure White Card</h3>
+      <p>Maximum contrast card on pure white with subtle golden border. Used for popover surfaces and moments requiring the highest visual clarity.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-title">05 / Spacing Scale</div>
+  <h2 class="section-heading">Spacing System</h2>
+  <p style="color: var(--text-secondary); margin-bottom: 32px;">Base unit: 8px. Scale builds from 2px to 100px.</p>
+
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-box" style="width: 8px; height: 8px;"></div><div class="spacing-label">2px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 16px; height: 16px;"></div><div class="spacing-label">4px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 32px; height: 32px;"></div><div class="spacing-label">8px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 40px; height: 40px;"></div><div class="spacing-label">10px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 48px; height: 48px;"></div><div class="spacing-label">12px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 64px; height: 64px;"></div><div class="spacing-label">16px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 80px; height: 80px;"></div><div class="spacing-label">20px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 96px; height: 96px;"></div><div class="spacing-label">24px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 128px; height: 128px;"></div><div class="spacing-label">32px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 160px; height: 160px;"></div><div class="spacing-label">40px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 192px; height: 192px;"></div><div class="spacing-label">48px</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BORDER RADIUS -->
+<section class="section">
+  <div class="section-title">06 / Border Radius Scale</div>
+  <h2 class="section-heading">Border Radius</h2>
+  <p style="color: var(--text-secondary); margin-bottom: 32px;">Sharp, architectural geometry. Near-zero radius is the signature.</p>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius: 0px;"></div><div class="radius-label">0px</div><div class="radius-context">Sharp (default)</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 0px; background: var(--color-cream); border: 2px solid var(--color-sunshine-700);"></div><div class="radius-label">0px</div><div class="radius-context">Accent sharp</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 0px; box-shadow: var(--golden-shadow);"></div><div class="radius-label">0px</div><div class="radius-context">Elevated sharp</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-title">07 / Elevation & Depth</div>
+  <h2 class="section-heading">Depth & Elevation</h2>
+
+  <div class="elevation-grid">
+    <div class="elevation-card elevation-flat">
+      <div>
+        <div class="elevation-name">Flat</div>
+        <div class="elevation-desc">No shadow, no border. Page backgrounds and inline text blocks sitting directly on the warm ivory canvas.</div>
+      </div>
+      <div class="elevation-level">LEVEL 0</div>
+    </div>
+    <div class="elevation-card elevation-golden">
+      <div>
+        <div class="elevation-name">Golden Float</div>
+        <div class="elevation-desc">Five-layer cascading warm shadow with amber-tinted transparency. The signature golden hour lighting effect unique to Mistral.</div>
+      </div>
+      <div class="elevation-level">LEVEL 1</div>
+    </div>
+  </div>
+</section>
+
+<div style="height: 80px;"></div>
 
 </body>
 </html>

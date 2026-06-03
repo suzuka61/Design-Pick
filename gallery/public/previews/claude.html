@@ -3,68 +3,824 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Design System</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Design System Preview: Claude / Anthropic (Light)</title>
 <style>
-:root{--bg:#f6f6f7;--surface:#fff;--ink:#1a1a1c;--ink2:#5c5c60;--ink3:#8c8c91;--border:#dddde0;--radius:6px;--font-d:'Bricolage Grotesque',sans-serif;--font-b:'Onest',sans-serif;--font-m:'JetBrains Mono',monospace}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  :root {
+    /* Primary */
+    --color-near-black: #141413;
+    --color-terracotta: #c96442;
+    --color-coral: #d97757;
+    /* Secondary & Accent */
+    --color-error: #b53333;
+    --color-focus-blue: #3898ec;
+    /* Surface & Background */
+    --color-parchment: #f5f4ed;
+    --color-ivory: #faf9f5;
+    --color-white: #ffffff;
+    --color-warm-sand: #e8e6dc;
+    --color-dark-surface: #30302e;
+    --color-deep-dark: #141413;
+    /* Neutrals & Text */
+    --color-charcoal-warm: #4d4c48;
+    --color-olive-gray: #5e5d59;
+    --color-stone-gray: #87867f;
+    --color-dark-warm: #3d3d3a;
+    --color-warm-silver: #b0aea5;
+    /* Borders & Rings */
+    --color-border-cream: #f0eee6;
+    --color-border-warm: #e8e6dc;
+    --color-border-dark: #30302e;
+    --color-ring-warm: #d1cfc5;
+    --color-ring-deep: #c2c0b6;
+    /* Fonts */
+    --font-serif: Georgia, 'Times New Roman', Times, serif;
+    --font-sans: Arial, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    /* Light mode tokens */
+    --bg-page: #f5f4ed;
+    --bg-card: #faf9f5;
+    --bg-nav: rgba(245,244,237,0.92);
+    --text-primary: #141413;
+    --text-secondary: #5e5d59;
+    --text-tertiary: #87867f;
+    --border-color: #f0eee6;
+    --border-subtle: #f0eee6;
+    --section-label-color: #c96442;
+  }
 
-.hero{padding:56px 32px 40px;text-align:center;background:linear-gradient(135deg,#cc785c0a,#14141305)}
-.hero h1{font-family:Copernicus, Tiempos Headline, serif;font-size:64px;font-weight:400;line-height:1.05;letter-spacing:-1.5px;color:#141413;margin-bottom:6px}
-.hero .slug{font-family:Copernicus, Tiempos Headline, serif;font-size:13px;color:var(--ink3);margin-bottom:10px;letter-spacing:0.3px;text-transform:uppercase}
-.hero .desc{font-family:Copernicus, Tiempos Headline, serif;font-size:15px;color:#141413;opacity:0.7;max-width:520px;margin:0 auto 18px;line-height:1.5}
-.hero-cta{display:inline-block;background:#cc785c;color:#ffffff;border:none;border-radius:12px;padding:10px 22px;font-family:Copernicus, Tiempos Headline, serif;font-size:14px;font-weight:500;cursor:pointer}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.section{padding:24px 32px;max-width:960px;margin:0 auto}
-.section h2{font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:0.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.60;
+    -webkit-font-smoothing: antialiased;
+  }
 
-.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
-.swatch{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
-.swatch-fill{height:48px}
-.swatch-info{padding:5px 8px}
-.swatch-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.swatch-hex{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: var(--bg-nav);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .nav-brand {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-brand .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--color-terracotta);
+    border-radius: 8px;
+    color: var(--color-ivory);
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: var(--font-sans);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+  .nav-cta {
+    background: var(--color-terracotta);
+    color: var(--color-ivory);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: #c96442 0px 0px 0px 0px, #c96442 0px 0px 0px 1px;
+  }
 
-.type-row{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.type-row:last-child{border-bottom:none}
-.type-sample{margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.type-meta{font-family:var(--font-m);font-size:11px;color:var(--ink3)}
+  /* HERO */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 120px 40px 100px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,100,66,0.06) 0%, rgba(217,119,87,0.03) 40%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-family: var(--font-serif);
+    font-size: 64px;
+    font-weight: 500;
+    line-height: 1.10;
+    letter-spacing: normal;
+    margin-bottom: 24px;
+    position: relative;
+    color: var(--text-primary);
+  }
+  .hero h1 span { color: var(--color-terracotta); }
+  .hero p {
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 20px;
+    line-height: 1.60;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; position: relative; }
+  .btn-brand {
+    background: var(--color-terracotta);
+    color: var(--color-ivory);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: #c96442 0px 0px 0px 0px, #c96442 0px 0px 0px 1px;
+  }
+  .btn-warm-sand {
+    background: var(--color-warm-sand);
+    color: var(--color-charcoal-warm);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: #e8e6dc 0px 0px 0px 0px, #d1cfc5 0px 0px 0px 1px;
+  }
 
-.spacing-row{display:flex;gap:12px;flex-wrap:wrap}
-.spacing-item{text-align:center}
-.spacing-bar{background:var(--ink);opacity:0.15;height:24px;border-radius:3px;margin-bottom:4px}
-.spacing-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* SECTIONS */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--section-label-color);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.20;
+    letter-spacing: normal;
+    margin-bottom: 48px;
+    color: var(--text-primary);
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 0 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.radius-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.radius-item{text-align:center}
-.radius-box{width:56px;height:56px;background:var(--surface);border:1px solid var(--border);margin-bottom:4px}
-.radius-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* COLOR PALETTE */
+  .color-group { margin-bottom: 40px; }
+  .color-group-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+  }
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .color-swatch {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .color-swatch-block {
+    height: 80px;
+    position: relative;
+  }
+  .color-swatch-info {
+    padding: 12px;
+    background: var(--bg-card);
+  }
+  .color-swatch-name { font-family: var(--font-sans); font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .color-swatch-hex { font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px; }
+  .color-swatch-role { font-size: 12px; color: var(--text-tertiary); line-height: 1.4; }
 
-.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.comp-card{border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--surface)}
-.comp-name{font-family:var(--font-m);font-size:11px;font-weight:500;color:var(--ink);margin-bottom:6px}
-.comp-props{font-size:10px;color:var(--ink3)}
-.comp-prop{margin-bottom:2px}
-.comp-key{font-weight:500;color:var(--ink2)}
-.comp-val{font-family:var(--font-m);margin-left:4px}
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border-subtle); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-sample-text { margin-bottom: 8px; }
+  .type-sample-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  /* BUTTONS */
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .button-demo { text-align: center; }
+  .button-demo-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+  }
+  .btn-white {
+    background: var(--color-white);
+    color: var(--color-near-black);
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .btn-dark {
+    background: var(--color-dark-surface);
+    color: var(--color-ivory);
+    padding: 9.6px 16.8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: #30302e 0px 0px 0px 0px, #30302e 0px 0px 0px 1px;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .card-standard { border: 1px solid var(--border-color); }
+  .card-whisper {
+    border: 1px solid var(--border-color);
+    box-shadow: rgba(0,0,0,0.05) 0px 4px 24px;
+  }
+  .card-ring {
+    border: none;
+    box-shadow: 0px 0px 0px 1px var(--color-ring-warm);
+  }
+  .card h3 {
+    font-family: var(--font-serif);
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 1.20;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+  .card p { color: var(--text-secondary); font-size: 15px; line-height: 1.60; }
+  .card-label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+    color: var(--color-terracotta);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  /* SPACING */
+  .spacing-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+  .spacing-item { text-align: center; }
+  .spacing-box {
+    background: rgba(201,100,66,0.10);
+    border: 1px solid rgba(201,100,66,0.25);
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .spacing-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  /* RADIUS */
+  .radius-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+  .radius-item { text-align: center; }
+  .radius-box {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-card);
+    border: 1px solid var(--color-border-warm);
+    margin-bottom: 8px;
+  }
+  .radius-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+  .radius-context {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 24px;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .elevation-flat { border: none; background: var(--bg-page); }
+  .elevation-contained { border: 1px solid var(--color-border-cream); }
+  .elevation-ring { border: none; box-shadow: 0px 0px 0px 1px var(--color-ring-warm); }
+  .elevation-whisper { border: 1px solid var(--color-border-cream); box-shadow: rgba(0,0,0,0.05) 0px 4px 24px; }
+  .elevation-inset { border: none; box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.15); }
+  .elevation-name {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .elevation-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .elevation-level {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-terracotta);
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
+    margin-top: 12px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav { padding: 12px 20px; }
+    .nav-links a:not(.nav-cta-wrapper) { display: none; }
+    .hero { padding: 80px 20px 60px; }
+    .hero h1 { font-size: 36px; }
+    .section { padding: 60px 20px; }
+    .section-heading { font-size: 28px; }
+    .color-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .card-grid { grid-template-columns: 1fr; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .button-row { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
-<div class="hero">
-  <h1>Claude</h1>
-  <div class="slug">/claude</div>
-  <p class="desc">A warm-canvas editorial interface for Anthropic's Claude product. The system anchors on a tinted cream canvas with serif display headlines, warm coral CTAs, and dark navy product surfaces (code editor mockups, model showcase cards). Brand voltage comes from the cream/coral pairing — deliberately warm and humanist where most AI brands use cool blue + slate. Type voice runs a slab-serif display (&quot;Copernicus&quot; / Tiempos Headline) for h1/h2 and a humanist sans for body. The signature Anthropic black-radial-spike mark anchors the wordmark.</p>
-  <button class="hero-cta">Get started</button>
-</div>
 
-<div class="section"><h2>色彩体系</h2><div class="color-grid"><div class="swatch"><div class="swatch-fill" style="background:#cc785c"></div><div class="swatch-info"><div class="swatch-name">primary</div><div class="swatch-hex">#cc785c</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#a9583e"></div><div class="swatch-info"><div class="swatch-name">primary-active</div><div class="swatch-hex">#a9583e</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#e6dfd8"></div><div class="swatch-info"><div class="swatch-name">primary-disabled</div><div class="swatch-hex">#e6dfd8</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#141413"></div><div class="swatch-info"><div class="swatch-name">ink</div><div class="swatch-hex">#141413</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#3d3d3a"></div><div class="swatch-info"><div class="swatch-name">body</div><div class="swatch-hex">#3d3d3a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#252523"></div><div class="swatch-info"><div class="swatch-name">body-strong</div><div class="swatch-hex">#252523</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#6c6a64"></div><div class="swatch-info"><div class="swatch-name">muted</div><div class="swatch-hex">#6c6a64</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#8e8b82"></div><div class="swatch-info"><div class="swatch-name">muted-soft</div><div class="swatch-hex">#8e8b82</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#e6dfd8"></div><div class="swatch-info"><div class="swatch-name">hairline</div><div class="swatch-hex">#e6dfd8</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ebe6df"></div><div class="swatch-info"><div class="swatch-name">hairline-soft</div><div class="swatch-hex">#ebe6df</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#faf9f5"></div><div class="swatch-info"><div class="swatch-name">canvas</div><div class="swatch-hex">#faf9f5</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f5f0e8"></div><div class="swatch-info"><div class="swatch-name">surface-soft</div><div class="swatch-hex">#f5f0e8</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#efe9de"></div><div class="swatch-info"><div class="swatch-name">surface-card</div><div class="swatch-hex">#efe9de</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#e8e0d2"></div><div class="swatch-info"><div class="swatch-name">surface-cream-strong</div><div class="swatch-hex">#e8e0d2</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#181715"></div><div class="swatch-info"><div class="swatch-name">surface-dark</div><div class="swatch-hex">#181715</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#252320"></div><div class="swatch-info"><div class="swatch-name">surface-dark-elevated</div><div class="swatch-hex">#252320</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#1f1e1b"></div><div class="swatch-info"><div class="swatch-name">surface-dark-soft</div><div class="swatch-hex">#1f1e1b</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">on-primary</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#faf9f5"></div><div class="swatch-info"><div class="swatch-name">on-dark</div><div class="swatch-hex">#faf9f5</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#a09d96"></div><div class="swatch-info"><div class="swatch-name">on-dark-soft</div><div class="swatch-hex">#a09d96</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#5db8a6"></div><div class="swatch-info"><div class="swatch-name">accent-teal</div><div class="swatch-hex">#5db8a6</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#e8a55a"></div><div class="swatch-info"><div class="swatch-name">accent-amber</div><div class="swatch-hex">#e8a55a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#5db872"></div><div class="swatch-info"><div class="swatch-name">success</div><div class="swatch-hex">#5db872</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#d4a017"></div><div class="swatch-info"><div class="swatch-name">warning</div><div class="swatch-hex">#d4a017</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#c64545"></div><div class="swatch-info"><div class="swatch-name">error</div><div class="swatch-hex">#c64545</div></div></div></div></div>
-<div class="section"><h2>排版规范</h2><div class="type-row"><div class="type-sample" style="font-family:Copernicus, Tiempos Headline, serif;font-size:36px;font-weight:400">display-xl</div><div class="type-meta">Copernicus 64px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Copernicus, Tiempos Headline, serif;font-size:36px;font-weight:400">display-lg</div><div class="type-meta">Copernicus 48px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Copernicus, Tiempos Headline, serif;font-size:36px;font-weight:400">display-md</div><div class="type-meta">Copernicus 36px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Copernicus, Tiempos Headline, serif;font-size:28px;font-weight:400">display-sm</div><div class="type-meta">Copernicus 28px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:22px;font-weight:500">title-lg</div><div class="type-meta">StyreneB 22px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:18px;font-weight:500">title-md</div><div class="type-meta">StyreneB 18px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:16px;font-weight:500">title-sm</div><div class="type-meta">StyreneB 16px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:16px;font-weight:400">body-md</div><div class="type-meta">StyreneB 16px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:14px;font-weight:400">body-sm</div><div class="type-meta">StyreneB 14px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:13px;font-weight:500">caption</div><div class="type-meta">StyreneB 13px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:12px;font-weight:500">caption-uppercase</div><div class="type-meta">StyreneB 12px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:JetBrains Mono, ui-monospace, monospace;font-size:14px;font-weight:400">code</div><div class="type-meta">JetBrains Mono 14px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:14px;font-weight:500">button</div><div class="type-meta">StyreneB 14px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:StyreneB, Inter, sans-serif;font-size:14px;font-weight:500">nav-link</div><div class="type-meta">StyreneB 14px / 500</div></div></div>
-<div class="section"><h2>间距</h2><div class="spacing-row"><div class="spacing-item"><div class="spacing-bar" style="width:12px"></div><div class="spacing-label">xxs 4px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:24px"></div><div class="spacing-label">xs 8px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:36px"></div><div class="spacing-label">sm 12px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:48px"></div><div class="spacing-label">md 16px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:72px"></div><div class="spacing-label">lg 24px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:96px"></div><div class="spacing-label">xl 32px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">xxl 48px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">section 96px</div></div></div></div>
-<div class="section"><h2>圆角</h2><div class="radius-row"><div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">xs 4px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">sm 6px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">md 8px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">lg 12px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">xl 16px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">pill 9999px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">full 9999px</div></div></div></div>
-<div class="section"><h2>组件</h2><div class="comp-grid"><div class="comp-card"><div class="comp-name">button-primary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">12px 20px</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">40px</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary-active</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary-active}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary-disabled</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary-disabled}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.muted}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div></div></div><div class="comp-card"><div class="comp-name">button-secondary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">12px 20px</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">40px</span></div></div></div><div class="comp-card"><div class="comp-name">button-secondary-on-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark-elevated}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">12px 20px</span></div></div></div><div class="comp-card"><div class="comp-name">button-text-link</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button}</span></div></div></div><div class="comp-card"><div class="comp-name">button-icon-circular</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">size</span><span class="comp-val">36px</span></div></div></div><div class="comp-card"><div class="comp-name">text-link</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div></div></div><div class="comp-card"><div class="comp-name">top-nav</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.nav-link}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">64px</span></div></div></div><div class="comp-card"><div class="comp-name">hero-band</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">96px</span></div></div></div><div class="comp-card"><div class="comp-name">hero-illustration-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">feature-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">product-mockup-card-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">code-window-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.code}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">24px</span></div></div></div><div class="comp-card"><div class="comp-name">model-comparison-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">pricing-tier-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-lg}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">pricing-tier-card-featured</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-lg}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">callout-card-coral</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">connector-tile</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">20px</span></div></div></div><div class="comp-card"><div class="comp-name">text-input</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">10px 14px</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">40px</span></div></div></div><div class="comp-card"><div class="comp-name">text-input-focused</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div></div></div><div class="comp-card"><div class="comp-name">cookie-consent-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">24px</span></div></div></div><div class="comp-card"><div class="comp-name">category-tab</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.muted}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.nav-link}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">8px 14px</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div></div></div><div class="comp-card"><div class="comp-name">category-tab-active</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.nav-link}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div></div></div><div class="comp-card"><div class="comp-name">badge-pill</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">4px 12px</span></div></div></div><div class="comp-card"><div class="comp-name">badge-coral</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption-uppercase}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">4px 12px</span></div></div></div><div class="comp-card"><div class="comp-name">cta-band-coral</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">64px</span></div></div></div><div class="comp-card"><div class="comp-name">cta-band-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">64px</span></div></div></div><div class="comp-card"><div class="comp-name">footer</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark-soft}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">64px</span></div></div></div></div></div>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand"><span class="logo-mark">C</span> Claude</div>
+  <div class="nav-links">
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#cards">Cards</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#elevation">Elevation</a>
+    <button class="nav-cta">Try Claude</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Design System Preview:<br><span>Claude</span></h1>
+  <p>Auto-generated design token catalog from DESIGN.md</p>
+  <div class="hero-buttons">
+    <button class="btn-brand">Explore Tokens</button>
+    <button class="btn-warm-sand">View Source</button>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-title">01 / Color Palette</div>
+  <h2 class="section-heading">Color Palette & Roles</h2>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Primary</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #141413; border-bottom: 1px solid #30302e;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Anthropic Near Black</div>
+          <div class="color-swatch-hex">#141413</div>
+          <div class="color-swatch-role">Primary text, dark-theme surface</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #c96442;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Terracotta Brand</div>
+          <div class="color-swatch-hex">#c96442</div>
+          <div class="color-swatch-role">Core brand color, primary CTA buttons</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #d97757;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Coral Accent</div>
+          <div class="color-swatch-hex">#d97757</div>
+          <div class="color-swatch-role">Text accents, links on dark surfaces</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Secondary & Accent</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #b53333;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Error Crimson</div>
+          <div class="color-swatch-hex">#b53333</div>
+          <div class="color-swatch-role">Error states, warm red</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #3898ec;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Focus Blue</div>
+          <div class="color-swatch-hex">#3898ec</div>
+          <div class="color-swatch-role">Input focus rings (only cool color)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Surface & Background</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #f5f4ed; border-bottom: 1px solid #e8e6dc;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Parchment</div>
+          <div class="color-swatch-hex">#f5f4ed</div>
+          <div class="color-swatch-role">Primary page background</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #faf9f5; border-bottom: 1px solid #f0eee6;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Ivory</div>
+          <div class="color-swatch-hex">#faf9f5</div>
+          <div class="color-swatch-role">Card surfaces, elevated containers</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #ffffff; border-bottom: 1px solid #f0eee6;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Pure White</div>
+          <div class="color-swatch-hex">#ffffff</div>
+          <div class="color-swatch-role">Button surfaces, max contrast</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #e8e6dc;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Warm Sand</div>
+          <div class="color-swatch-hex">#e8e6dc</div>
+          <div class="color-swatch-role">Button backgrounds, interactive surfaces</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #30302e; border-bottom: 1px solid #4d4c48;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Dark Surface</div>
+          <div class="color-swatch-hex">#30302e</div>
+          <div class="color-swatch-role">Dark-theme containers, nav borders</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Neutrals & Text</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #4d4c48;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Charcoal Warm</div>
+          <div class="color-swatch-hex">#4d4c48</div>
+          <div class="color-swatch-role">Button text on light surfaces</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #5e5d59;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Olive Gray</div>
+          <div class="color-swatch-hex">#5e5d59</div>
+          <div class="color-swatch-role">Secondary body text</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #87867f;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Stone Gray</div>
+          <div class="color-swatch-hex">#87867f</div>
+          <div class="color-swatch-role">Tertiary text, footnotes, metadata</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #3d3d3a;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Dark Warm</div>
+          <div class="color-swatch-hex">#3d3d3a</div>
+          <div class="color-swatch-role">Dark text links, emphasized secondary</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #b0aea5;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Warm Silver</div>
+          <div class="color-swatch-hex">#b0aea5</div>
+          <div class="color-swatch-role">Text on dark surfaces</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Semantic & Borders</h3>
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #f0eee6; border-bottom: 1px solid #e8e6dc;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Border Cream</div>
+          <div class="color-swatch-hex">#f0eee6</div>
+          <div class="color-swatch-role">Standard light-theme border</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #e8e6dc;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Border Warm</div>
+          <div class="color-swatch-hex">#e8e6dc</div>
+          <div class="color-swatch-role">Prominent borders, section dividers</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #d1cfc5;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Ring Warm</div>
+          <div class="color-swatch-hex">#d1cfc5</div>
+          <div class="color-swatch-role">Button hover/focus ring shadow</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch-block" style="background: #c2c0b6;"></div>
+        <div class="color-swatch-info">
+          <div class="color-swatch-name">Ring Deep</div>
+          <div class="color-swatch-hex">#c2c0b6</div>
+          <div class="color-swatch-role">Active/pressed ring states</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-title">02 / Typography Scale</div>
+  <h2 class="section-heading">Typography Rules</h2>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Georgia, serif; font-size: 64px; font-weight: 500; line-height: 1.10;">Display Hero</div>
+    <div class="type-sample-label">Display / Hero &mdash; 64px / 500 / 1.10 / normal &mdash; Anthropic Serif (Georgia fallback)</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Georgia, serif; font-size: 52px; font-weight: 500; line-height: 1.20;">Section Heading</div>
+    <div class="type-sample-label">Section Heading &mdash; 52px / 500 / 1.20 / normal &mdash; Anthropic Serif</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Georgia, serif; font-size: 36px; font-weight: 500; line-height: 1.30;">Sub-heading Large</div>
+    <div class="type-sample-label">Sub-heading Large &mdash; 36px / 500 / 1.30 / normal &mdash; Anthropic Serif</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Georgia, serif; font-size: 32px; font-weight: 500; line-height: 1.10;">Sub-heading</div>
+    <div class="type-sample-label">Sub-heading &mdash; 32px / 500 / 1.10 / normal &mdash; Anthropic Serif</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Georgia, serif; font-size: 25px; font-weight: 500; line-height: 1.20;">Sub-heading Small</div>
+    <div class="type-sample-label">Sub-heading Small &mdash; 25px / 500 / 1.20 / normal &mdash; Anthropic Serif</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Georgia, serif; font-size: 17px; font-weight: 400; line-height: 1.60; color: var(--text-secondary);">Body serif text for editorial passages. The generous 1.60 line-height creates a literary reading experience closer to a book than a dashboard, with warm tones throughout.</div>
+    <div class="type-sample-label">Body Serif &mdash; 17px / 400 / 1.60 / normal &mdash; Anthropic Serif</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Arial, system-ui, sans-serif; font-size: 20px; font-weight: 400; line-height: 1.60;">Body Large Sans</div>
+    <div class="type-sample-label">Body Large &mdash; 20px / 400 / 1.60 / normal &mdash; Anthropic Sans (Arial fallback)</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Arial, system-ui, sans-serif; font-size: 16px; font-weight: 400; line-height: 1.60;">Standard body text for UI copy, navigation, and button labels. Anthropic Sans handles all functional text with quiet efficiency.</div>
+    <div class="type-sample-label">Body Standard &mdash; 16px / 400 / 1.60 / normal &mdash; Anthropic Sans</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Arial, system-ui, sans-serif; font-size: 14px; font-weight: 400; line-height: 1.43; color: var(--text-secondary);">Caption and metadata text for descriptions</div>
+    <div class="type-sample-label">Caption &mdash; 14px / 400 / 1.43 / normal &mdash; Anthropic Sans</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: Arial, system-ui, sans-serif; font-size: 12px; font-weight: 500; line-height: 1.60; letter-spacing: 0.12px; color: var(--text-tertiary);">LABEL TEXT</div>
+    <div class="type-sample-label">Label &mdash; 12px / 500 / 1.60 / 0.12px &mdash; Anthropic Sans</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-sample-text" style="font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 15px; font-weight: 400; line-height: 1.60; letter-spacing: -0.32px;">const response = await claude.messages.create()</div>
+    <div class="type-sample-label">Code &mdash; 15px / 400 / 1.60 / -0.32px &mdash; Anthropic Mono (SFMono fallback)</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-title">03 / Button Variants</div>
+  <h2 class="section-heading">Buttons</h2>
+
+  <div class="button-row">
+    <div class="button-demo">
+      <button style="background: #e8e6dc; color: #4d4c48; padding: 10px 12px 10px 8px; border: none; border-radius: 8px; font-size: 16px; font-family: Arial, system-ui, sans-serif; font-weight: 500; cursor: pointer; box-shadow: #e8e6dc 0px 0px 0px 0px, #d1cfc5 0px 0px 0px 1px;">Warm Sand</button>
+      <div class="button-demo-label">Warm Sand (Secondary)</div>
+    </div>
+    <div class="button-demo">
+      <button style="background: #ffffff; color: #141413; padding: 8px 16px 8px 12px; border: 1px solid #f0eee6; border-radius: 12px; font-size: 16px; font-family: Arial, system-ui, sans-serif; font-weight: 500; cursor: pointer;">White Surface</button>
+      <div class="button-demo-label">White Surface</div>
+    </div>
+    <div class="button-demo">
+      <button style="background: #30302e; color: #faf9f5; padding: 10px 12px 10px 8px; border: none; border-radius: 8px; font-size: 16px; font-family: Arial, system-ui, sans-serif; font-weight: 500; cursor: pointer; box-shadow: #30302e 0px 0px 0px 0px, #30302e 0px 0px 0px 1px;">Dark Charcoal</button>
+      <div class="button-demo-label">Dark Charcoal</div>
+    </div>
+    <div class="button-demo">
+      <button style="background: #c96442; color: #faf9f5; padding: 10px 20px; border: none; border-radius: 12px; font-size: 16px; font-family: Arial, system-ui, sans-serif; font-weight: 500; cursor: pointer; box-shadow: #c96442 0px 0px 0px 0px, #c96442 0px 0px 0px 1px;">Brand CTA</button>
+      <div class="button-demo-label">Terracotta Brand</div>
+    </div>
+    <div class="button-demo">
+      <button style="background: #141413; color: #b0aea5; padding: 9.6px 16.8px; border: 1px solid #30302e; border-radius: 12px; font-size: 16px; font-family: Arial, system-ui, sans-serif; font-weight: 500; cursor: pointer;">Dark Primary</button>
+      <div class="button-demo-label">Dark Primary</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-title">04 / Card Examples</div>
+  <h2 class="section-heading">Cards & Containers</h2>
+
+  <div class="card-grid">
+    <div class="card card-standard">
+      <div class="card-label">Standard Card</div>
+      <h3>Border Cream Contained</h3>
+      <p>Standard content card with 1px solid Border Cream and 8px radius. The default container for features and content sections on Ivory surface.</p>
+    </div>
+    <div class="card card-whisper">
+      <div class="card-label">Whisper Shadow</div>
+      <h3>Soft Elevated Card</h3>
+      <p>Elevated card with whisper-soft shadow at 0.05 opacity and 24px blur. Suggests floating rather than casting. For featured product screenshots.</p>
+    </div>
+    <div class="card card-ring">
+      <div class="card-label">Ring Shadow</div>
+      <h3>Warm Ring Halo</h3>
+      <p>Interactive card using Claude's signature ring shadow system. The 0px 0px 0px 1px pattern creates a border-like halo that is softer than a true border.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-title">05 / Spacing Scale</div>
+  <h2 class="section-heading">Spacing System</h2>
+  <p style="color: var(--text-secondary); margin-bottom: 32px; font-family: var(--font-sans);">Base unit: 8px. Scale: 3px, 4px, 6px, 8px, 10px, 12px, 16px, 20px, 24px, 30px.</p>
+
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-box" style="width: 12px; height: 12px;"></div><div class="spacing-label">3px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 16px; height: 16px;"></div><div class="spacing-label">4px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 24px; height: 24px;"></div><div class="spacing-label">6px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 32px; height: 32px;"></div><div class="spacing-label">8px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 40px; height: 40px;"></div><div class="spacing-label">10px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 48px; height: 48px;"></div><div class="spacing-label">12px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 64px; height: 64px;"></div><div class="spacing-label">16px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 80px; height: 80px;"></div><div class="spacing-label">20px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 96px; height: 96px;"></div><div class="spacing-label">24px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 120px; height: 120px;"></div><div class="spacing-label">30px</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BORDER RADIUS -->
+<section class="section">
+  <div class="section-title">06 / Border Radius Scale</div>
+  <h2 class="section-heading">Border Radius</h2>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius: 4px;"></div><div class="radius-label">4px</div><div class="radius-context">Sharp</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 6px;"></div><div class="radius-label">6px</div><div class="radius-context">Subtly rounded</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 8px;"></div><div class="radius-label">8px</div><div class="radius-context">Comfortably rounded</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 12px;"></div><div class="radius-label">12px</div><div class="radius-context">Generously rounded</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 16px;"></div><div class="radius-label">16px</div><div class="radius-context">Very rounded</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 24px;"></div><div class="radius-label">24px</div><div class="radius-context">Highly rounded</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 32px;"></div><div class="radius-label">32px</div><div class="radius-context">Maximum rounded</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-title">07 / Elevation & Depth</div>
+  <h2 class="section-heading">Depth & Elevation</h2>
+
+  <div class="elevation-grid">
+    <div class="elevation-card elevation-flat">
+      <div><div class="elevation-name">Flat</div><div class="elevation-desc">No shadow, no border. Parchment background and inline text.</div></div>
+      <div class="elevation-level">Level 0</div>
+    </div>
+    <div class="elevation-card elevation-contained">
+      <div><div class="elevation-name">Contained</div><div class="elevation-desc">1px solid Border Cream. Standard cards and sections.</div></div>
+      <div class="elevation-level">Level 1</div>
+    </div>
+    <div class="elevation-card elevation-ring">
+      <div><div class="elevation-name">Ring</div><div class="elevation-desc">0px 0px 0px 1px ring shadow using warm grays. Interactive cards, buttons, hover states.</div></div>
+      <div class="elevation-level">Level 2</div>
+    </div>
+    <div class="elevation-card elevation-whisper">
+      <div><div class="elevation-name">Whisper</div><div class="elevation-desc">rgba(0,0,0,0.05) 0px 4px 24px. Elevated feature cards, product screenshots.</div></div>
+      <div class="elevation-level">Level 3</div>
+    </div>
+    <div class="elevation-card elevation-inset">
+      <div><div class="elevation-name">Inset</div><div class="elevation-desc">inset 0px 0px 0px 1px at 15% opacity. Active/pressed button states.</div></div>
+      <div class="elevation-level">Level 4</div>
+    </div>
+  </div>
+</section>
+
+<div style="height: 80px;"></div>
 
 </body>
 </html>

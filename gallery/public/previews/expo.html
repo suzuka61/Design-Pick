@@ -3,68 +3,534 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Expo Design System</title>
+<title>Design System Preview: Expo (Light)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f6f7;--surface:#fff;--ink:#1a1a1c;--ink2:#5c5c60;--ink3:#8c8c91;--border:#dddde0;--radius:6px;--font-d:'Bricolage Grotesque',sans-serif;--font-b:'Onest',sans-serif;--font-m:'JetBrains Mono',monospace}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  :root {
+    --color-expo-black: #000000;
+    --color-near-black: #1c2024;
+    --color-link-cobalt: #0d74ce;
+    --color-legal-blue: #476cff;
+    --color-widget-sky: #47c2ff;
+    --color-preview-purple: #8145b5;
+    --color-cloud-gray: #f0f0f3;
+    --color-pure-white: #ffffff;
+    --color-widget-dark: #1a1a1a;
+    --color-banner-dark: #171717;
+    --color-slate-gray: #60646c;
+    --color-mid-slate: #555860;
+    --color-silver: #b0b4ba;
+    --color-pewter: #999999;
+    --color-light-silver: #cccccc;
+    --color-dark-slate: #363a3f;
+    --color-charcoal: #333333;
+    --color-warning: #ab6400;
+    --color-destructive: #eb8e90;
+    --color-border-lavender: #e0e1e6;
+    --color-input-border: #d9d9e0;
+    --color-focus-ring: #2547d0;
+    --font-body: 'Inter', -apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    /* Light mode */
+    --bg-page: var(--color-cloud-gray);
+    --bg-card: var(--color-pure-white);
+    --bg-nav: rgba(240,240,243,0.92);
+    --text-primary: var(--color-near-black);
+    --text-secondary: var(--color-slate-gray);
+    --text-muted: var(--color-silver);
+    --border-color: var(--color-border-lavender);
+    --border-subtle: rgba(224,225,230,0.5);
+    --section-label-color: var(--color-expo-black);
+  }
 
-.hero{padding:56px 32px 40px;text-align:center;background:linear-gradient(135deg,#0000000a,#17171705)}
-.hero h1{font-family:'Inter', -apple-system, system-ui, sans-serif;font-size:64px;font-weight:600;line-height:1.05;letter-spacing:-1.92px;color:#171717;margin-bottom:6px}
-.hero .slug{font-family:'Inter', -apple-system, system-ui, sans-serif;font-size:13px;color:var(--ink3);margin-bottom:10px;letter-spacing:0.3px;text-transform:uppercase}
-.hero .desc{font-family:'Inter', -apple-system, system-ui, sans-serif;font-size:15px;color:#171717;opacity:0.7;max-width:520px;margin:0 auto 18px;line-height:1.5}
-.hero-cta{display:inline-block;background:#000000;color:#ffffff;border:none;border-radius:12px;padding:10px 22px;font-family:'Inter', -apple-system, system-ui, sans-serif;font-size:14px;font-weight:500;cursor:pointer}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.section{padding:24px 32px;max-width:960px;margin:0 auto}
-.section h2{font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:0.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
 
-.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
-.swatch{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
-.swatch-fill{height:48px}
-.swatch-info{padding:5px 8px}
-.swatch-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.swatch-hex{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: var(--bg-nav);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .nav-brand { font-family: var(--font-body); font-size: 18px; font-weight: 700; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; color: var(--color-expo-black); }
+  .nav-brand svg { width: 24px; height: 24px; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--color-near-black); }
+  .nav-cta {
+    background: var(--color-expo-black);
+    color: var(--color-pure-white);
+    padding: 8px 20px;
+    border: none;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .nav-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--color-pure-white);
+    border: 1px solid var(--color-input-border);
+    border-radius: 9999px;
+    padding: 4px 12px 4px 8px;
+  }
+  .nav-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+  }
 
-.type-row{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.type-row:last-child{border-bottom:none}
-.type-sample{margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.type-meta{font-family:var(--font-m);font-size:11px;color:var(--ink3)}
+  /* HERO */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 120px 40px 100px;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-family: var(--font-body);
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 1.10;
+    letter-spacing: -3px;
+    margin-bottom: 24px;
+    color: var(--color-expo-black);
+    position: relative;
+  }
+  .hero p {
+    color: var(--text-secondary);
+    font-size: 18px;
+    line-height: 1.4;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; position: relative; }
+  .btn-primary-pill {
+    background: var(--color-expo-black);
+    color: var(--color-pure-white);
+    padding: 12px 28px;
+    border: none;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-standard {
+    background: var(--color-pure-white);
+    color: var(--color-near-black);
+    padding: 12px 24px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    cursor: pointer;
+  }
 
-.spacing-row{display:flex;gap:12px;flex-wrap:wrap}
-.spacing-item{text-align:center}
-.spacing-bar{background:var(--ink);opacity:0.15;height:24px;border-radius:3px;margin-bottom:4px}
-.spacing-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* SECTIONS */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 96px 40px;
+  }
+  .section-title {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.52px;
+    color: var(--section-label-color);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: var(--font-body);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.10;
+    letter-spacing: -2px;
+    margin-bottom: 48px;
+    color: var(--color-expo-black);
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 0 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.radius-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.radius-item{text-align:center}
-.radius-box{width:56px;height:56px;background:var(--surface);border:1px solid var(--border);margin-bottom:4px}
-.radius-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* COLOR PALETTE */
+  .color-group { margin-bottom: 40px; }
+  .color-group-title { font-size: 20px; font-weight: 600; line-height: 1.2; margin-bottom: 20px; color: var(--text-secondary); }
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+  .color-swatch { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
+  .color-swatch-block { height: 80px; }
+  .color-swatch-info { padding: 12px; background: var(--bg-card); }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .color-swatch-hex { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .color-swatch-role { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
 
-.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.comp-card{border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--surface)}
-.comp-name{font-family:var(--font-m);font-size:11px;font-weight:500;color:var(--ink);margin-bottom:6px}
-.comp-props{font-size:10px;color:var(--ink3)}
-.comp-prop{margin-bottom:2px}
-.comp-key{font-weight:500;color:var(--ink2)}
-.comp-val{font-family:var(--font-m);margin-left:4px}
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border-subtle); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-sample-text { margin-bottom: 8px; }
+  .type-sample-label { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+
+  /* BUTTONS */
+  .button-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+  .button-demo { text-align: center; }
+  .button-demo-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 10px; text-transform: uppercase; letter-spacing: 0.55px; }
+  .btn-dark-pill {
+    background: var(--color-expo-black);
+    color: var(--color-pure-white);
+    padding: 12px 28px;
+    border: none;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-white-standard {
+    background: var(--color-pure-white);
+    color: var(--color-near-black);
+    padding: 12px 24px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .btn-dark-rounded {
+    background: var(--color-expo-black);
+    color: var(--color-pure-white);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 32px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .card { background: var(--bg-card); border-radius: 8px; padding: 28px; }
+  .card-standard { border: 1px solid var(--border-color); }
+  .card-elevated { border: 1px solid var(--border-color); box-shadow: rgba(0,0,0,0.08) 0px 3px 6px, rgba(0,0,0,0.07) 0px 2px 4px; }
+  .card-glow { border: 1px solid var(--border-color); box-shadow: rgba(0,0,0,0.1) 0px 10px 20px, rgba(0,0,0,0.05) 0px 3px 6px; border-radius: 16px; }
+  .card h3 { font-family: var(--font-body); font-size: 20px; font-weight: 600; line-height: 1.20; letter-spacing: -0.25px; margin-bottom: 12px; color: var(--color-near-black); }
+  .card p { color: var(--text-secondary); font-size: 16px; line-height: 1.40; }
+  .card-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.55px; color: var(--color-expo-black); margin-bottom: 16px; }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: var(--color-near-black);
+    border: 1px solid var(--color-dark-slate);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.4;
+    color: #f2f2f2;
+    overflow-x: auto;
+  }
+  .code-block .keyword { color: var(--color-link-cobalt); }
+  .code-block .string { color: #22c55e; }
+  .code-block .comment { color: var(--color-pewter); }
+
+  /* SPACING */
+  .spacing-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+  .spacing-item { text-align: center; }
+  .spacing-box { background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.12); border-radius: 2px; margin-bottom: 8px; }
+  .spacing-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* RADIUS */
+  .radius-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 80px; height: 80px; background: var(--bg-card); border: 1px solid var(--border-color); margin-bottom: 8px; }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+  .radius-context { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .elevation-card { background: var(--bg-card); border-radius: 8px; padding: 24px; min-height: 140px; display: flex; flex-direction: column; justify-content: space-between; }
+  .elevation-flat { border: none; background: var(--bg-page); }
+  .elevation-surface { border: none; background: var(--bg-card); }
+  .elevation-whisper { border: 1px solid var(--border-color); box-shadow: rgba(0,0,0,0.08) 0px 3px 6px, rgba(0,0,0,0.07) 0px 2px 4px; }
+  .elevation-elevated { border: 1px solid var(--border-color); box-shadow: rgba(0,0,0,0.1) 0px 10px 20px, rgba(0,0,0,0.05) 0px 3px 6px; }
+  .elevation-modal { border: 1px solid var(--border-color); box-shadow: rgba(0,0,0,0.15) 0px 20px 40px, rgba(0,0,0,0.08) 0px 8px 16px; }
+  .elevation-name { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .elevation-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .elevation-level { font-family: var(--font-mono); font-size: 11px; color: var(--color-expo-black); text-transform: uppercase; letter-spacing: 0.55px; margin-top: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav { padding: 12px 20px; }
+    .nav-links a:not(.nav-cta-wrapper) { display: none; }
+    .nav-status { display: none; }
+    .hero { padding: 80px 20px 60px; }
+    .hero h1 { font-size: 36px; letter-spacing: -1.5px; }
+    .section { padding: 60px 20px; }
+    .section-heading { font-size: 28px; letter-spacing: -1px; }
+    .color-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .card-grid { grid-template-columns: 1fr; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .button-row { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
-<div class="hero">
-  <h1>Expo</h1>
-  <div class="slug">/expo</div>
-  <p class="desc">A React Native developer-platform whose marketing site reads like a quietly-confident infrastructure brand. The base canvas is pure white with a soft sky-blue gradient atmospheric wash behind the hero; near-black ink (`#171717`) carries body and display alike. The single brand voltage is **pure black** (`#000000`) for primary CTAs — minimal and editorial-feeling, paired with a small blue text-link accent (`#0d74ce`) reserved for inline body links. Type pairs Inter at modest weights (display 600, body 400) with JetBrains Mono on every code surface. The brand's strongest visual signature is the **device-mockup hero** — a centered MacBook + iPhone composite showing real Expo dev surfaces — over the gradient sky wash.</p>
-  <button class="hero-cta">Get started</button>
-</div>
 
-<div class="section"><h2>色彩体系</h2><div class="color-grid"><div class="swatch"><div class="swatch-fill" style="background:#000000"></div><div class="swatch-info"><div class="swatch-name">primary</div><div class="swatch-hex">#000000</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#1a1a1a"></div><div class="swatch-info"><div class="swatch-name">primary-active</div><div class="swatch-hex">#1a1a1a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#0d74ce"></div><div class="swatch-info"><div class="swatch-name">text-link</div><div class="swatch-hex">#0d74ce</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#476cff"></div><div class="swatch-info"><div class="swatch-name">text-link-secondary</div><div class="swatch-hex">#476cff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#171717"></div><div class="swatch-info"><div class="swatch-name">ink</div><div class="swatch-hex">#171717</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#60646c"></div><div class="swatch-info"><div class="swatch-name">body</div><div class="swatch-hex">#60646c</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#171717"></div><div class="swatch-info"><div class="swatch-name">body-strong</div><div class="swatch-hex">#171717</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#999999"></div><div class="swatch-info"><div class="swatch-name">muted</div><div class="swatch-hex">#999999</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#cccccc"></div><div class="swatch-info"><div class="swatch-name">muted-soft</div><div class="swatch-hex">#cccccc</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f0f0f3"></div><div class="swatch-info"><div class="swatch-name">hairline</div><div class="swatch-hex">#f0f0f3</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f5f5f7"></div><div class="swatch-info"><div class="swatch-name">hairline-soft</div><div class="swatch-hex">#f5f5f7</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#dcdee0"></div><div class="swatch-info"><div class="swatch-name">hairline-strong</div><div class="swatch-hex">#dcdee0</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">canvas</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fafafa"></div><div class="swatch-info"><div class="swatch-name">canvas-soft</div><div class="swatch-hex">#fafafa</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">surface-card</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f0f0f3"></div><div class="swatch-info"><div class="swatch-name">surface-strong</div><div class="swatch-hex">#f0f0f3</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#171717"></div><div class="swatch-info"><div class="swatch-name">surface-dark</div><div class="swatch-hex">#171717</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#1a1a1a"></div><div class="swatch-info"><div class="swatch-name">surface-dark-elevated</div><div class="swatch-hex">#1a1a1a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">on-primary</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">on-dark</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#b0b4ba"></div><div class="swatch-info"><div class="swatch-name">on-dark-soft</div><div class="swatch-hex">#b0b4ba</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#cfe7ff"></div><div class="swatch-info"><div class="swatch-name">gradient-sky-light</div><div class="swatch-hex">#cfe7ff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#a8c8e8"></div><div class="swatch-info"><div class="swatch-name">gradient-sky-mid</div><div class="swatch-hex">#a8c8e8</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ab6400"></div><div class="swatch-info"><div class="swatch-name">accent-warning</div><div class="swatch-hex">#ab6400</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#8145b5"></div><div class="swatch-info"><div class="swatch-name">accent-preview</div><div class="swatch-hex">#8145b5</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#47c2ff"></div><div class="swatch-info"><div class="swatch-name">accent-link-bright</div><div class="swatch-hex">#47c2ff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#eb8e90"></div><div class="swatch-info"><div class="swatch-name">semantic-error</div><div class="swatch-hex">#eb8e90</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#16a34a"></div><div class="swatch-info"><div class="swatch-name">semantic-success</div><div class="swatch-hex">#16a34a</div></div></div></div></div>
-<div class="section"><h2>排版规范</h2><div class="type-row"><div class="type-sample" style="font-family:'Inter', -apple-system, system-ui, sans-serif;font-size:36px;font-weight:600">display-mega</div><div class="type-meta">Inter 64px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:36px;font-weight:600">display-xl</div><div class="type-meta">Inter 48px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:36px;font-weight:600">display-lg</div><div class="type-meta">Inter 36px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:28px;font-weight:600">display-md</div><div class="type-meta">Inter 28px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:22px;font-weight:600">display-sm</div><div class="type-meta">Inter 22px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:18px;font-weight:600">title-md</div><div class="type-meta">Inter 18px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:16px;font-weight:600">title-sm</div><div class="type-meta">Inter 16px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:16px;font-weight:400">body-md</div><div class="type-meta">Inter 16px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:14px;font-weight:400">body-sm</div><div class="type-meta">Inter 14px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:13px;font-weight:400">caption</div><div class="type-meta">Inter 13px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:11px;font-weight:600">caption-uppercase</div><div class="type-meta">Inter 11px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:'JetBrains Mono', 'Fira Code', monospace;font-size:13px;font-weight:400">code</div><div class="type-meta">JetBrains Mono 13px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:14px;font-weight:500">button</div><div class="type-meta">Inter 14px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:'Inter', sans-serif;font-size:14px;font-weight:500">nav-link</div><div class="type-meta">Inter 14px / 500</div></div></div>
-<div class="section"><h2>间距</h2><div class="spacing-row"><div class="spacing-item"><div class="spacing-bar" style="width:12px"></div><div class="spacing-label">xxs 4px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:24px"></div><div class="spacing-label">xs 8px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:36px"></div><div class="spacing-label">sm 12px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:48px"></div><div class="spacing-label">base 16px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:60px"></div><div class="spacing-label">md 20px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:72px"></div><div class="spacing-label">lg 24px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:96px"></div><div class="spacing-label">xl 32px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">xxl 48px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">section 96px</div></div></div></div>
-<div class="section"><h2>圆角</h2><div class="radius-row"><div class="radius-item"><div class="radius-box" style="border-radius:0px"></div><div class="radius-label">none 0px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">xs 4px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">sm 6px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">md 8px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">lg 12px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">xl 16px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:24px"></div><div class="radius-label">xxl 24px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">pill 9999px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">full 9999px</div></div></div></div>
-<div class="section"><h2>组件</h2><div class="comp-grid"><div class="comp-card"><div class="comp-name">top-nav</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.nav-link}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">64px</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">10px 18px</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">40px</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary-active</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary-active}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div></div></div><div class="comp-card"><div class="comp-name">button-secondary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">9px 17px</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">40px</span></div></div></div><div class="comp-card"><div class="comp-name">button-tertiary-text</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.text-link}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button}</span></div></div></div><div class="comp-card"><div class="comp-name">hero-band</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-mega}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">96px</span></div></div></div><div class="comp-card"><div class="comp-name">device-mockup-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0</span></div></div></div><div class="comp-card"><div class="comp-name">feature-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">24px</span></div></div></div><div class="comp-card"><div class="comp-name">feature-card-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.title-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">24px</span></div></div></div><div class="comp-card"><div class="comp-name">workflow-step-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">20px</span></div></div></div><div class="comp-card"><div class="comp-name">workflow-step-icon</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-strong}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">size</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">code-block</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.code}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">20px</span></div></div></div><div class="comp-card"><div class="comp-name">ide-mockup-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0</span></div></div></div><div class="comp-card"><div class="comp-name">pricing-tier-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">pricing-tier-featured</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-dark}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-dark}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">text-input</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">12px 16px</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">44px</span></div></div></div><div class="comp-card"><div class="comp-name">badge-pill</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-strong}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption-uppercase}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">4px 10px</span></div></div></div><div class="comp-card"><div class="comp-name">ecosystem-tile</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">size</span><span class="comp-val">64px</span></div></div></div><div class="comp-card"><div class="comp-name">cta-band</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">96px</span></div></div></div><div class="comp-card"><div class="comp-name">testimonial-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.surface-card}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">24px</span></div></div></div><div class="comp-card"><div class="comp-name">footer-light</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">64px 48px</span></div></div></div><div class="comp-card"><div class="comp-name">footer-link</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">transparent</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div></div></div></div></div>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Expo
+  </div>
+  <div class="nav-links">
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#cards">Cards</a>
+    <a href="#spacing">Spacing</a>
+    <a href="#elevation">Elevation</a>
+    <div class="nav-status"><span class="nav-status-dot"></span> All Systems Operational</div>
+    <button class="nav-cta">Sign Up</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Design System Preview:<br>Expo</h1>
+  <p>Auto-generated design token catalog from DESIGN.md</p>
+  <div class="hero-buttons">
+    <button class="btn-primary-pill">Explore Tokens</button>
+    <button class="btn-standard">View Source</button>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- COLORS -->
+<section class="section" id="colors">
+  <div class="section-title">01 / Color Palette</div>
+  <h2 class="section-heading">Color Palette & Roles</h2>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Primary</h3>
+    <div class="color-grid">
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #000000;"></div><div class="color-swatch-info"><div class="color-swatch-name">Expo Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">Primary headlines, CTA buttons, brand anchor</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #1c2024;"></div><div class="color-swatch-info"><div class="color-swatch-name">Near Black</div><div class="color-swatch-hex">#1c2024</div><div class="color-swatch-role">Body text, softer than pure black for reading</div></div></div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Secondary & Accent</h3>
+    <div class="color-grid">
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #0d74ce;"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Cobalt</div><div class="color-swatch-hex">#0d74ce</div><div class="color-swatch-role">Standard links, interactive signals</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #476cff;"></div><div class="color-swatch-info"><div class="color-swatch-name">Legal Blue</div><div class="color-swatch-hex">#476cff</div><div class="color-swatch-role">Footer/legal links, brighter accent</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #47c2ff;"></div><div class="color-swatch-info"><div class="color-swatch-name">Widget Sky</div><div class="color-swatch-hex">#47c2ff</div><div class="color-swatch-role">Widget branding, lightest accent</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #8145b5;"></div><div class="color-swatch-info"><div class="color-swatch-name">Preview Purple</div><div class="color-swatch-hex">#8145b5</div><div class="color-swatch-role">Beta/preview feature indicators</div></div></div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Surface & Background</h3>
+    <div class="color-grid">
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #f0f0f3; border-bottom: 1px solid #e0e1e6;"></div><div class="color-swatch-info"><div class="color-swatch-name">Cloud Gray</div><div class="color-swatch-hex">#f0f0f3</div><div class="color-swatch-role">Primary page background</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #ffffff; border-bottom: 1px solid #e0e1e6;"></div><div class="color-swatch-info"><div class="color-swatch-name">Pure White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">Card surfaces, elevated containers</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #1a1a1a;"></div><div class="color-swatch-info"><div class="color-swatch-name">Widget Dark</div><div class="color-swatch-hex">#1a1a1a</div><div class="color-swatch-role">Dark theme widgets, overlays</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #171717;"></div><div class="color-swatch-info"><div class="color-swatch-name">Banner Dark</div><div class="color-swatch-hex">#171717</div><div class="color-swatch-role">Promo banners, high-contrast surfaces</div></div></div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Neutrals & Text</h3>
+    <div class="color-grid">
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #60646c;"></div><div class="color-swatch-info"><div class="color-swatch-name">Slate Gray</div><div class="color-swatch-hex">#60646c</div><div class="color-swatch-role">Secondary text (305 instances)</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #555860;"></div><div class="color-swatch-info"><div class="color-swatch-name">Mid Slate</div><div class="color-swatch-hex">#555860</div><div class="color-swatch-role">Emphasized secondary text</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #b0b4ba;"></div><div class="color-swatch-info"><div class="color-swatch-name">Silver</div><div class="color-swatch-hex">#b0b4ba</div><div class="color-swatch-role">Tertiary text, placeholders, metadata</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #363a3f;"></div><div class="color-swatch-info"><div class="color-swatch-name">Dark Slate</div><div class="color-swatch-hex">#363a3f</div><div class="color-swatch-role">Borders on dark surfaces, switch tracks</div></div></div>
+    </div>
+  </div>
+
+  <div class="color-group">
+    <h3 class="color-group-title">Semantic</h3>
+    <div class="color-grid">
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #ab6400;"></div><div class="color-swatch-info"><div class="color-swatch-name">Warning Amber</div><div class="color-swatch-hex">#ab6400</div><div class="color-swatch-role">Warning states, deep amber for seriousness</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #eb8e90;"></div><div class="color-swatch-info"><div class="color-swatch-name">Destructive Rose</div><div class="color-swatch-hex">#eb8e90</div><div class="color-swatch-role">Disabled destructive actions, gentle alarm</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #e0e1e6;"></div><div class="color-swatch-info"><div class="color-swatch-name">Border Lavender</div><div class="color-swatch-hex">#e0e1e6</div><div class="color-swatch-role">Standard card/container borders</div></div></div>
+      <div class="color-swatch"><div class="color-swatch-block" style="background: #d9d9e0;"></div><div class="color-swatch-info"><div class="color-swatch-name">Input Border</div><div class="color-swatch-hex">#d9d9e0</div><div class="color-swatch-role">Buttons, form elements, interactive borders</div></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- TYPOGRAPHY -->
+<section class="section" id="typography">
+  <div class="section-title">02 / Typography Scale</div>
+  <h2 class="section-heading">Typography Rules</h2>
+
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-body); font-size: 60px; font-weight: 700; line-height: 1.10; letter-spacing: -3px; color: var(--color-expo-black);">Display Hero</div><div class="type-sample-label">Display / Hero &mdash; 64px / 700&ndash;900 / 1.10 / -3px &mdash; Inter</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-body); font-size: 48px; font-weight: 600; line-height: 1.10; letter-spacing: -2px; color: var(--color-expo-black);">Section Heading</div><div class="type-sample-label">Section Heading &mdash; 48px / 600 / 1.10 / -2px &mdash; Inter</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-body); font-size: 20px; font-weight: 600; line-height: 1.20; letter-spacing: -0.25px;">Sub-heading</div><div class="type-sample-label">Sub-heading &mdash; 20px / 600 / 1.20 / -0.25px &mdash; Inter</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-body); font-size: 18px; font-weight: 400; line-height: 1.40; color: var(--text-secondary);">Body large text for intro paragraphs and section descriptions with comfortable reading rhythm.</div><div class="type-sample-label">Body Large &mdash; 18px / 400&ndash;500 / 1.40 / normal &mdash; Inter</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-body); font-size: 16px; font-weight: 400; line-height: 1.40;">Standard body text for paragraphs, navigation links, and button labels. Inter provides geometric precision at every weight.</div><div class="type-sample-label">Body / Button &mdash; 16px / 400&ndash;700 / 1.25&ndash;1.40 / normal &mdash; Inter</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-body); font-size: 14px; font-weight: 500; line-height: 1.40; color: var(--text-secondary);">Caption text for descriptions and metadata labels</div><div class="type-sample-label">Caption / Label &mdash; 14px / 400&ndash;600 / 1.00&ndash;1.40 / normal &mdash; Inter</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-body); font-size: 12px; font-weight: 500; line-height: 1.00; color: var(--text-muted);">Tag / Small Badge</div><div class="type-sample-label">Tag / Small &mdash; 12px / 500 / 1.00&ndash;1.60 / normal &mdash; Inter</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-mono); font-size: 16px; font-weight: 400; line-height: 1.40;">npx create-expo-app@latest my-app</div><div class="type-sample-label">Code Body &mdash; 16px / 400&ndash;600 / 1.40 / normal &mdash; JetBrains Mono</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-mono); font-size: 14px; font-weight: 400; line-height: 1.40;">import { Camera } from "expo-camera";</div><div class="type-sample-label">Code Caption &mdash; 14px / 400&ndash;600 / 1.40 / normal &mdash; JetBrains Mono</div></div>
+  <div class="type-sample"><div class="type-sample-text" style="font-family: var(--font-mono); font-size: 12px; font-weight: 400; line-height: 1.60; text-transform: uppercase; color: var(--text-muted);">REACT NATIVE</div><div class="type-sample-label">Code Small / Tag &mdash; 12px / 400 / 1.60 / uppercase &mdash; JetBrains Mono</div></div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BUTTONS -->
+<section class="section" id="buttons">
+  <div class="section-title">03 / Button Variants</div>
+  <h2 class="section-heading">Buttons</h2>
+
+  <div class="button-row">
+    <div class="button-demo"><button class="btn-dark-pill">Get Started</button><div class="button-demo-label">Primary Pill (Dark)</div></div>
+    <div class="button-demo"><button class="btn-white-standard">View Docs</button><div class="button-demo-label">Standard (White)</div></div>
+    <div class="button-demo"><button class="btn-dark-rounded">Sign Up Free</button><div class="button-demo-label">Dark Rounded (32px)</div></div>
+  </div>
+
+  <div class="code-block" style="margin-top: 40px;">
+    <span class="comment">// Get started with Expo</span><br>
+    <span class="keyword">$</span> npx create-expo-app@latest my-app
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CARDS -->
+<section class="section" id="cards">
+  <div class="section-title">04 / Card Examples</div>
+  <h2 class="section-heading">Cards & Containers</h2>
+
+  <div class="card-grid">
+    <div class="card card-standard">
+      <div class="card-label">Standard Card</div>
+      <h3>Border Lavender Container</h3>
+      <p>Standard content card with 1px Border Lavender border and 8px radius. White surface clearly lifted from Cloud Gray page background.</p>
+    </div>
+    <div class="card card-elevated">
+      <div class="card-label">Elevated (Whisper)</div>
+      <h3>Whisper Shadow Lift</h3>
+      <p>Subtle card elevation with whisper-soft shadow. Barely perceptible lift for hover states and highlighted content.</p>
+    </div>
+    <div class="card card-glow">
+      <div class="card-label">Featured (Glow)</div>
+      <h3>Standard Elevation</h3>
+      <p>Clear floating elevation with generous 16px radius. For feature showcases, product screenshots, and hero content containers.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- SPACING -->
+<section class="section" id="spacing">
+  <div class="section-title">05 / Spacing Scale</div>
+  <h2 class="section-heading">Spacing System</h2>
+  <p style="color: var(--text-secondary); margin-bottom: 32px;">Base unit: 8px. Scale builds from 1px to 144px.</p>
+
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-box" style="width: 4px; height: 4px;"></div><div class="spacing-label">1px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 8px; height: 8px;"></div><div class="spacing-label">2px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 16px; height: 16px;"></div><div class="spacing-label">4px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 32px; height: 32px;"></div><div class="spacing-label">8px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 48px; height: 48px;"></div><div class="spacing-label">12px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 64px; height: 64px;"></div><div class="spacing-label">16px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 96px; height: 96px;"></div><div class="spacing-label">24px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 128px; height: 128px;"></div><div class="spacing-label">32px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 160px; height: 160px;"></div><div class="spacing-label">40px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 192px; height: 192px;"></div><div class="spacing-label">48px</div></div>
+    <div class="spacing-item"><div class="spacing-box" style="width: 256px; height: 256px;"></div><div class="spacing-label">64px</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BORDER RADIUS -->
+<section class="section">
+  <div class="section-title">06 / Border Radius Scale</div>
+  <h2 class="section-heading">Border Radius</h2>
+
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius: 4px;"></div><div class="radius-label">4px</div><div class="radius-context">Nearly squared</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 6px;"></div><div class="radius-label">6px</div><div class="radius-context">Buttons, inputs</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 8px;"></div><div class="radius-label">8px</div><div class="radius-context">Standard cards</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 16px;"></div><div class="radius-label">16px</div><div class="radius-context">Feature panels</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 24px;"></div><div class="radius-label">24px</div><div class="radius-context">Images, videos</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 32px;"></div><div class="radius-label">32px</div><div class="radius-context">Hero CTAs</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius: 9999px;"></div><div class="radius-label">9999px</div><div class="radius-context">Pill-shaped</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ELEVATION -->
+<section class="section" id="elevation">
+  <div class="section-title">07 / Elevation & Depth</div>
+  <h2 class="section-heading">Depth & Elevation</h2>
+
+  <div class="elevation-grid">
+    <div class="elevation-card elevation-flat">
+      <div><div class="elevation-name">Flat</div><div class="elevation-desc">No shadow. Cloud Gray page background, inline text.</div></div>
+      <div class="elevation-level">Level 0</div>
+    </div>
+    <div class="elevation-card elevation-surface">
+      <div><div class="elevation-name">Surface</div><div class="elevation-desc">White bg, no shadow. Standard white cards on Cloud Gray.</div></div>
+      <div class="elevation-level">Level 1</div>
+    </div>
+    <div class="elevation-card elevation-whisper">
+      <div><div class="elevation-name">Whisper</div><div class="elevation-desc">Whisper-soft shadow. Subtle card lift, hover states.</div></div>
+      <div class="elevation-level">Level 2</div>
+    </div>
+    <div class="elevation-card elevation-elevated">
+      <div><div class="elevation-name">Elevated</div><div class="elevation-desc">Standard floating shadow. Feature showcases, screenshots.</div></div>
+      <div class="elevation-level">Level 3</div>
+    </div>
+    <div class="elevation-card elevation-modal">
+      <div><div class="elevation-name">Modal</div><div class="elevation-desc">Heavy shadow with dark overlay. Dialogs, overlays.</div></div>
+      <div class="elevation-level">Level 4</div>
+    </div>
+  </div>
+</section>
+
+<div style="height: 80px;"></div>
 
 </body>
 </html>

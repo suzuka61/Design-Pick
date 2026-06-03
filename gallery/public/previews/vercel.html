@@ -3,68 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vercel Design System</title>
+<title>Design System Preview: Vercel (Light)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f6f7;--surface:#fff;--ink:#1a1a1c;--ink2:#5c5c60;--ink3:#8c8c91;--border:#dddde0;--radius:6px;--font-d:'Bricolage Grotesque',sans-serif;--font-b:'Onest',sans-serif;--font-m:'JetBrains Mono',monospace}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  :root {
+    --black: #171717;
+    --white: #ffffff;
+    --gray-50: #fafafa;
+    --gray-100: #ebebeb;
+    --gray-400: #808080;
+    --gray-500: #666666;
+    --gray-600: #4d4d4d;
+    --link-blue: #0072f5;
+    --focus-blue: hsl(212,100%,48%);
+    --ship-red: #ff5b4f;
+    --preview-pink: #de1d8d;
+    --develop-blue: #0a72ef;
+    --console-blue: #0070f3;
+    --console-purple: #7928ca;
+    --console-pink: #eb367f;
+    --badge-bg: #ebf5ff;
+    --badge-text: #0068d6;
+    --shadow-ring: rgba(0,0,0,0.08) 0px 0px 0px 1px;
+    --shadow-ring-light: rgb(235,235,235) 0px 0px 0px 1px;
+    --shadow-subtle: rgba(0,0,0,0.04) 0px 2px 2px 0px;
+    --shadow-card: rgba(0,0,0,0.08) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 2px 0px, rgb(250,250,250) 0px 0px 0px 1px;
+    --shadow-card-full: rgba(0,0,0,0.08) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 2px 0px, rgba(0,0,0,0.04) 0px 8px 8px -8px, rgb(250,250,250) 0px 0px 0px 1px;
+    --font-sans: 'Geist', system-ui, -apple-system, Arial, sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, 'Roboto Mono', Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-sans);
+    font-size: 16px; font-weight: 400; line-height: 1.50;
+    font-feature-settings: "liga" 1;
+    -webkit-font-smoothing: antialiased;
+  }
 
-.hero{padding:56px 32px 40px;text-align:center;background:linear-gradient(135deg,#1717170a,#17171705)}
-.hero h1{font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:48px;font-weight:600;line-height:48px;letter-spacing:-2.4px;color:#171717;margin-bottom:6px}
-.hero .slug{font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:13px;color:var(--ink3);margin-bottom:10px;letter-spacing:0.3px;text-transform:uppercase}
-.hero .desc{font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:15px;color:#171717;opacity:0.7;max-width:520px;margin:0 auto 18px;line-height:1.5}
-.hero-cta{display:inline-block;background:#171717;color:#ffffff;border:none;border-radius:12px;padding:10px 22px;font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:14px;font-weight:500;cursor:pointer}
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 32px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-ring);
+  }
+  .nav-brand { font-size: 14px; font-weight: 600; color: var(--black); text-decoration: none; letter-spacing: -0.28px; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--gray-600); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--black); }
+  .nav-cta {
+    display: inline-block; background: var(--black); color: var(--white);
+    padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
 
-.section{padding:24px 32px;max-width:960px;margin:0 auto}
-.section h2{font-family:var(--font-m);font-size:11px;font-weight:500;letter-spacing:0.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  /* HERO */
+  .hero { padding: 96px 32px 80px; text-align: center; }
+  .hero h1 {
+    font-size: 48px; font-weight: 600; line-height: 1.00;
+    letter-spacing: -2.4px; color: var(--black); margin-bottom: 16px;
+  }
+  .hero p { font-size: 20px; font-weight: 400; line-height: 1.80; color: var(--gray-600); max-width: 600px; margin: 0 auto 32px; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-dark {
+    display: inline-block; background: var(--black); color: var(--white);
+    padding: 10px 20px; border-radius: 6px; border: none;
+    font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-dark:hover { opacity: 0.85; }
+  .btn-ghost {
+    display: inline-block; background: var(--white); color: var(--black);
+    padding: 10px 20px; border-radius: 6px; border: none;
+    font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    box-shadow: var(--shadow-ring-light); transition: box-shadow 0.15s;
+  }
+  .btn-ghost:hover { box-shadow: var(--shadow-ring); }
 
-.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}
-.swatch{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
-.swatch-fill{height:48px}
-.swatch-info{padding:5px 8px}
-.swatch-name{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.swatch-hex{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* SECTIONS */
+  .section { padding: 64px 32px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+  .section-title { font-size: 32px; font-weight: 600; line-height: 1.25; letter-spacing: -1.28px; margin-bottom: 32px; }
+  .section-divider { border: none; border-top: 1px solid var(--gray-100); margin: 0; }
 
-.type-row{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.type-row:last-child{border-bottom:none}
-.type-sample{margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.type-meta{font-family:var(--font-m);font-size:11px;color:var(--ink3)}
+  /* COLORS */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .color-swatch { border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-ring); }
+  .color-swatch-block { height: 72px; width: 100%; }
+  .color-swatch-info { padding: 10px 12px; }
+  .color-swatch-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; letter-spacing: -0.26px; }
+  .color-swatch-hex { font-size: 12px; color: var(--gray-500); font-family: var(--font-mono); }
+  .color-swatch-role { font-size: 11px; color: var(--gray-400); margin-top: 3px; }
+  .color-group-label { font-size: 14px; font-weight: 600; color: var(--gray-600); letter-spacing: -0.28px; margin: 24px 0 10px; }
 
-.spacing-row{display:flex;gap:12px;flex-wrap:wrap}
-.spacing-item{text-align:center}
-.spacing-bar{background:var(--ink);opacity:0.15;height:24px;border-radius:3px;margin-bottom:4px}
-.spacing-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* TYPOGRAPHY */
+  .type-sample { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--gray-100); }
+  .type-sample:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--gray-400); margin-top: 8px; }
 
-.radius-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.radius-item{text-align:center}
-.radius-box{width:56px;height:56px;background:var(--surface);border:1px solid var(--border);margin-bottom:4px}
-.radius-label{font-family:var(--font-m);font-size:10px;color:var(--ink3)}
+  /* BUTTONS */
+  .button-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .button-item { text-align: center; }
+  .button-label { font-size: 12px; font-weight: 500; color: var(--gray-400); margin-top: 8px; }
+  .btn-pill { display: inline-block; background: var(--badge-bg); color: var(--badge-text); padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 500; text-decoration: none; }
 
-.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
-.comp-card{border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--surface)}
-.comp-name{font-family:var(--font-m);font-size:11px;font-weight:500;color:var(--ink);margin-bottom:6px}
-.comp-props{font-size:10px;color:var(--ink3)}
-.comp-prop{margin-bottom:2px}
-.comp-key{font-weight:500;color:var(--ink2)}
-.comp-val{font-family:var(--font-m);margin-left:4px}
+  /* CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .card { background: var(--white); border-radius: 8px; padding: 24px; box-shadow: var(--shadow-card); transition: box-shadow 0.2s; }
+  .card:hover { box-shadow: var(--shadow-card-full); }
+  .card h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.8px; margin-bottom: 8px; }
+  .card p { font-size: 14px; color: var(--gray-600); line-height: 1.50; }
+  .card-badge { display: inline-block; font-family: var(--font-mono); font-size: 12px; font-weight: 500; text-transform: uppercase; padding: 2px 8px; border-radius: 9999px; margin-bottom: 12px; }
+
+  /* FORMS */
+  .form-group { margin-bottom: 20px; max-width: 400px; }
+  .form-label { display: block; font-size: 14px; font-weight: 500; color: var(--black); margin-bottom: 6px; }
+  .form-input {
+    width: 100%; background: var(--white); color: var(--black);
+    border: none; padding: 10px 12px; border-radius: 6px;
+    font-family: var(--font-sans); font-size: 14px; outline: none;
+    box-shadow: var(--shadow-ring); transition: box-shadow 0.15s;
+  }
+  .form-input:focus { box-shadow: 0 0 0 2px var(--focus-blue); }
+  .form-input--focus { box-shadow: 0 0 0 2px var(--focus-blue); }
+  .form-input--error { box-shadow: 0 0 0 2px var(--ship-red); }
+  .form-textarea {
+    width: 100%; min-height: 80px; background: var(--white); color: var(--black);
+    border: none; padding: 10px 12px; border-radius: 6px;
+    font-family: var(--font-sans); font-size: 14px; resize: vertical; outline: none;
+    box-shadow: var(--shadow-ring);
+  }
+  .form-state-label { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+
+  /* SPACING */
+  .spacing-row { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+  .spacing-item { text-align: center; }
+  .spacing-block { background: var(--black); border-radius: 3px; margin-bottom: 6px; height: 28px; }
+  .spacing-value { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--gray-400); }
+
+  /* RADIUS */
+  .radius-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .radius-item { text-align: center; }
+  .radius-box { width: 64px; height: 64px; background: var(--black); margin-bottom: 6px; }
+  .radius-label { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--gray-400); }
+  .radius-context { font-size: 10px; color: var(--gray-400); }
+
+  /* ELEVATION */
+  .elevation-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .elevation-card { background: var(--white); border-radius: 8px; padding: 20px; text-align: center; }
+  .elevation-label { font-size: 14px; font-weight: 600; letter-spacing: -0.28px; margin-bottom: 4px; }
+  .elevation-desc { font-family: var(--font-mono); font-size: 11px; color: var(--gray-400); }
+
+  /* FOOTER */
+  .footer { padding: 32px; text-align: center; border-top: 1px solid var(--gray-100); font-size: 13px; color: var(--gray-500); }
+  .footer a { color: var(--link-blue); text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 36px; letter-spacing: -1.8px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<div class="hero">
-  <h1>Vercel</h1>
-  <div class="slug">/vercel</div>
-  <p class="desc">An inspired interpretation of Vercel's design language — a developer-platform brand whose surface is a stark black-and-ink duet on near-white canvas, broken at hero scale by a multi-color mesh gradient (cyan / blue / magenta / amber) that acts as the entire decorative system, paired with a custom geometric sans for headlines and a monospaced caption face for technical labels.</p>
-  <button class="hero-cta">Get started</button>
-</div>
 
-<div class="section"><h2>色彩体系</h2><div class="color-grid"><div class="swatch"><div class="swatch-fill" style="background:#171717"></div><div class="swatch-info"><div class="swatch-name">primary</div><div class="swatch-hex">#171717</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">on-primary</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#171717"></div><div class="swatch-info"><div class="swatch-name">ink</div><div class="swatch-hex">#171717</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#4d4d4d"></div><div class="swatch-info"><div class="swatch-name">body</div><div class="swatch-hex">#4d4d4d</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#888888"></div><div class="swatch-info"><div class="swatch-name">mute</div><div class="swatch-hex">#888888</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ebebeb"></div><div class="swatch-info"><div class="swatch-name">hairline</div><div class="swatch-hex">#ebebeb</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#a1a1a1"></div><div class="swatch-info"><div class="swatch-name">hairline-strong</div><div class="swatch-hex">#a1a1a1</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffffff;border-bottom:1px solid #ddd"></div><div class="swatch-info"><div class="swatch-name">canvas</div><div class="swatch-hex">#ffffff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#fafafa"></div><div class="swatch-info"><div class="swatch-name">canvas-soft</div><div class="swatch-hex">#fafafa</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f5f5f5"></div><div class="swatch-info"><div class="swatch-name">canvas-soft-2</div><div class="swatch-hex">#f5f5f5</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#0070f3"></div><div class="swatch-info"><div class="swatch-name">link</div><div class="swatch-hex">#0070f3</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#0761d1"></div><div class="swatch-info"><div class="swatch-name">link-deep</div><div class="swatch-hex">#0761d1</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#d3e5ff"></div><div class="swatch-info"><div class="swatch-name">link-bg-soft</div><div class="swatch-hex">#d3e5ff</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#0070f3"></div><div class="swatch-info"><div class="swatch-name">success</div><div class="swatch-hex">#0070f3</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ee0000"></div><div class="swatch-info"><div class="swatch-name">error</div><div class="swatch-hex">#ee0000</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f7d4d6"></div><div class="swatch-info"><div class="swatch-name">error-soft</div><div class="swatch-hex">#f7d4d6</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#c50000"></div><div class="swatch-info"><div class="swatch-name">error-deep</div><div class="swatch-hex">#c50000</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f5a623"></div><div class="swatch-info"><div class="swatch-name">warning</div><div class="swatch-hex">#f5a623</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ffefcf"></div><div class="swatch-info"><div class="swatch-name">warning-soft</div><div class="swatch-hex">#ffefcf</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ab570a"></div><div class="swatch-info"><div class="swatch-name">warning-deep</div><div class="swatch-hex">#ab570a</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#7928ca"></div><div class="swatch-info"><div class="swatch-name">violet</div><div class="swatch-hex">#7928ca</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#d8ccf1"></div><div class="swatch-info"><div class="swatch-name">violet-soft</div><div class="swatch-hex">#d8ccf1</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#4c2889"></div><div class="swatch-info"><div class="swatch-name">violet-deep</div><div class="swatch-hex">#4c2889</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#50e3c2"></div><div class="swatch-info"><div class="swatch-name">cyan</div><div class="swatch-hex">#50e3c2</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#aaffec"></div><div class="swatch-info"><div class="swatch-name">cyan-soft</div><div class="swatch-hex">#aaffec</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#29bc9b"></div><div class="swatch-info"><div class="swatch-name">cyan-deep</div><div class="swatch-hex">#29bc9b</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ff0080"></div><div class="swatch-info"><div class="swatch-name">highlight-pink</div><div class="swatch-hex">#ff0080</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#eb367f"></div><div class="swatch-info"><div class="swatch-name">highlight-magenta</div><div class="swatch-hex">#eb367f</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#007cf0"></div><div class="swatch-info"><div class="swatch-name">gradient-develop-start</div><div class="swatch-hex">#007cf0</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#00dfd8"></div><div class="swatch-info"><div class="swatch-name">gradient-develop-end</div><div class="swatch-hex">#00dfd8</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#7928ca"></div><div class="swatch-info"><div class="swatch-name">gradient-preview-start</div><div class="swatch-hex">#7928ca</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ff0080"></div><div class="swatch-info"><div class="swatch-name">gradient-preview-end</div><div class="swatch-hex">#ff0080</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#ff4d4d"></div><div class="swatch-info"><div class="swatch-name">gradient-ship-start</div><div class="swatch-hex">#ff4d4d</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f9cb28"></div><div class="swatch-info"><div class="swatch-name">gradient-ship-end</div><div class="swatch-hex">#f9cb28</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#171717"></div><div class="swatch-info"><div class="swatch-name">selection-bg</div><div class="swatch-hex">#171717</div></div></div><div class="swatch"><div class="swatch-fill" style="background:#f2f2f2"></div><div class="swatch-info"><div class="swatch-name">selection-fg</div><div class="swatch-hex">#f2f2f2</div></div></div></div></div>
-<div class="section"><h2>排版规范</h2><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:36px;font-weight:600">display-xl</div><div class="type-meta">Geist 48px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:32px;font-weight:600">display-lg</div><div class="type-meta">Geist 32px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:24px;font-weight:600">display-md</div><div class="type-meta">Geist 24px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:20px;font-weight:600">display-sm</div><div class="type-meta">Geist 20px / 600</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:18px;font-weight:400">body-lg</div><div class="type-meta">Geist 18px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:16px;font-weight:400">body-md</div><div class="type-meta">Geist 16px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:16px;font-weight:500">body-md-strong</div><div class="type-meta">Geist 16px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:14px;font-weight:400">body-sm</div><div class="type-meta">Geist 14px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:14px;font-weight:500">body-sm-strong</div><div class="type-meta">Geist 14px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:12px;font-weight:400">caption</div><div class="type-meta">Geist 12px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;font-size:12px;font-weight:400">caption-mono</div><div class="type-meta">Geist Mono 12px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;font-size:13px;font-weight:400">code</div><div class="type-meta">Geist Mono 13px / 400</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:14px;font-weight:500">button-md</div><div class="type-meta">Geist 14px / 500</div></div><div class="type-row"><div class="type-sample" style="font-family:Geist, Inter, system-ui, -apple-system, sans-serif;font-size:16px;font-weight:500">button-lg</div><div class="type-meta">Geist 16px / 500</div></div></div>
-<div class="section"><h2>间距</h2><div class="spacing-row"><div class="spacing-item"><div class="spacing-bar" style="width:12px"></div><div class="spacing-label">xxs 4px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:24px"></div><div class="spacing-label">xs 8px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:36px"></div><div class="spacing-label">sm 12px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:48px"></div><div class="spacing-label">md 16px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:72px"></div><div class="spacing-label">lg 24px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:96px"></div><div class="spacing-label">xl 32px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">2xl 40px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">3xl 48px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">4xl 64px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">5xl 96px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">6xl 128px</div></div><div class="spacing-item"><div class="spacing-bar" style="width:120px"></div><div class="spacing-label">section 192px</div></div></div></div>
-<div class="section"><h2>圆角</h2><div class="radius-row"><div class="radius-item"><div class="radius-box" style="border-radius:0px"></div><div class="radius-label">none 0px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">xs 4px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">sm 6px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">md 8px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">lg 12px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">xl 16px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:64px"></div><div class="radius-label">pill-sm 64px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:100px"></div><div class="radius-label">pill 100px</div></div><div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">full 9999px</div></div></div></div>
-<div class="section"><h2>组件</h2><div class="comp-grid"><div class="comp-card"><div class="comp-name">nav-bar</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">64px</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.sm} {spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">nav-link</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xs} {spacing.sm}</span></div></div></div><div class="comp-card"><div class="comp-name">nav-cta-signup</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-strong}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.xs}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">28px</span></div></div></div><div class="comp-card"><div class="comp-name">nav-cta-login</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-strong}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.xs}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">28px</span></div></div></div><div class="comp-card"><div class="comp-name">nav-cta-ask-ai</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.hairline}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm-strong}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.xs}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">28px</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-lg}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.sm}</span></div></div></div><div class="comp-card"><div class="comp-name">button-secondary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-lg}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.sm}</span></div></div></div><div class="comp-card"><div class="comp-name">button-primary-sm</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.xs}</span></div></div></div><div class="comp-card"><div class="comp-name">button-secondary-sm</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.button-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.xs}</span></div></div></div><div class="comp-card"><div class="comp-name">tab-ghost</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.pill-sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.md}</span></div></div></div><div class="comp-card"><div class="comp-name">icon-button-circular</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.hairline}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div></div></div><div class="comp-card"><div class="comp-name">card-marketing</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">card-marketing-large</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">card-soft</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">template-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.md}</span></div></div></div><div class="comp-card"><div class="comp-name">code-editor-mockup</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.code}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">form-input</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.hairline}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.sm}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">40px</span></div></div></div><div class="comp-card"><div class="comp-name">form-input-sm</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.hairline}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.sm}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">32px</span></div></div></div><div class="comp-card"><div class="comp-name">form-input-lg</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.hairline}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.sm}</span></div><div class="comp-prop"><span class="comp-key">height</span><span class="comp-val">48px</span></div></div></div><div class="comp-card"><div class="comp-name">badge-secondary</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.caption}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">0px {spacing.xs}</span></div></div></div><div class="comp-card"><div class="comp-name">pricing-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">pricing-card-featured</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">logo-strip</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg} {spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">hero-band</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-xl}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.4xl} {spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">feature-mesh-band</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.5xl} {spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">showcase-band-light</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.5xl} {spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">showcase-band-dark</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.display-lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.5xl} {spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">footer</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.4xl} {spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">link-inline</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.link}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-md}</span></div></div></div><div class="comp-card"><div class="comp-name">banner-marketing</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.body}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.full}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xs} {spacing.sm}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-pricing-tier</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Default tier card. Mirrors pricing-card chrome on canvas-soft surface with a hairline border.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">borderColor</span><span class="comp-val">{colors.hairline}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-pricing-tier-featured</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Featured tier — polarity-flipped to ink primary with white text and white CTA.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.ink}</span></div><div class="comp-prop"><span class="comp-key">textColor</span><span class="comp-val">{colors.on-primary}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-product-selector</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">What's Included summary card — repurposed for the brand's GPU / inference / Pro feature tiers.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-cart-drawer</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Subscription summary — line items per add-on (NOT a literal e-commerce cart).</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.lg}</span></div><div class="comp-prop"><span class="comp-key">item-divider</span><span class="comp-val">{colors.hairline}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-app-shell-row</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Sidebar nav row. Active state uses brand primary as a left-edge indicator bar.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">activeIndicator</span><span class="comp-val">{colors.primary}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.sm}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xs} {spacing.sm}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-data-table-cell</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Mirrors the brand's table chrome. Header uses caption-mono uppercase mono; body uses body-sm.</span></div><div class="comp-prop"><span class="comp-key">headerBackground</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">headerTypography</span><span class="comp-val">{typography.caption-mono}</span></div><div class="comp-prop"><span class="comp-key">bodyTypography</span><span class="comp-val">{typography.body-sm}</span></div><div class="comp-prop"><span class="comp-key">cellPadding</span><span class="comp-val">{spacing.xs} {spacing.sm}</span></div><div class="comp-prop"><span class="comp-key">rowBorder</span><span class="comp-val">{colors.hairline}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-auth-form-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Sign-in / sign-up card. Mirrors card-marketing-large chrome with form-input primitives inside.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-modal-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Modal dialog surface — same chrome as card-marketing-large with Level 5 modal shadow.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.xl}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-empty-state-card</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Empty-state illustration frame. Generous padding on canvas-soft.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas-soft}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.lg}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.3xl}</span></div><div class="comp-prop"><span class="comp-key">captionTypography</span><span class="comp-val">{typography.body-md}</span></div></div></div><div class="comp-card"><div class="comp-name">ex-toast</div><div class="comp-props"><div class="comp-prop"><span class="comp-key">description</span><span class="comp-val">Toast notification surface — flat-cornered card-marketing chrome with Level 4 shadow.</span></div><div class="comp-prop"><span class="comp-key">backgroundColor</span><span class="comp-val">{colors.canvas}</span></div><div class="comp-prop"><span class="comp-key">rounded</span><span class="comp-val">{rounded.md}</span></div><div class="comp-prop"><span class="comp-key">padding</span><span class="comp-val">{spacing.sm} {spacing.md}</span></div><div class="comp-prop"><span class="comp-key">typography</span><span class="comp-val">{typography.body-sm}</span></div></div></div></div></div>
+<nav class="nav">
+  <a class="nav-brand" href="#">awesome-design-md</a>
+  <ul class="nav-links">
+    <li><a href="#colors">Colors</a></li>
+    <li><a href="#typography">Typography</a></li>
+    <li><a href="#buttons">Buttons</a></li>
+    <li><a href="#cards">Cards</a></li>
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#spacing">Spacing</a></li>
+  </ul>
+  <a class="nav-cta" href="#">Start Deploying</a>
+</nav>
+
+<section class="hero">
+  <h1>Design System<br>Inspired by Vercel</h1>
+  <p>A design token catalog generated from DESIGN.md. Every color, font, component, and spacing value — visualized.</p>
+  <div class="hero-buttons">
+    <a class="btn-dark" href="#">Start Deploying</a>
+    <a class="btn-ghost" href="#">View Documentation</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="colors">
+  <div class="section-label">01 / Colors</div>
+  <h2 class="section-title">Color Palette</h2>
+
+  <div class="color-group-label">Primary</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#171717"></div><div class="color-swatch-info"><div class="color-swatch-name">Vercel Black</div><div class="color-swatch-hex">#171717</div><div class="color-swatch-role">Primary text, headings</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ffffff; border-bottom:1px solid #ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Pure White</div><div class="color-swatch-hex">#ffffff</div><div class="color-swatch-role">Page background</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#000000"></div><div class="color-swatch-info"><div class="color-swatch-name">True Black</div><div class="color-swatch-hex">#000000</div><div class="color-swatch-role">Console text default</div></div></div>
+  </div>
+
+  <div class="color-group-label">Workflow Accents</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0a72ef"></div><div class="color-swatch-info"><div class="color-swatch-name">Develop Blue</div><div class="color-swatch-hex">#0a72ef</div><div class="color-swatch-role">Development workflow</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#de1d8d"></div><div class="color-swatch-info"><div class="color-swatch-name">Preview Pink</div><div class="color-swatch-hex">#de1d8d</div><div class="color-swatch-role">Preview deployments</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ff5b4f"></div><div class="color-swatch-info"><div class="color-swatch-name">Ship Red</div><div class="color-swatch-hex">#ff5b4f</div><div class="color-swatch-role">Ship to production</div></div></div>
+  </div>
+
+  <div class="color-group-label">Console Colors</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0070f3"></div><div class="color-swatch-info"><div class="color-swatch-name">Console Blue</div><div class="color-swatch-hex">#0070f3</div><div class="color-swatch-role">Syntax blue</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#7928ca"></div><div class="color-swatch-info"><div class="color-swatch-name">Console Purple</div><div class="color-swatch-hex">#7928ca</div><div class="color-swatch-role">Syntax purple</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#eb367f"></div><div class="color-swatch-info"><div class="color-swatch-name">Console Pink</div><div class="color-swatch-hex">#eb367f</div><div class="color-swatch-role">Syntax pink</div></div></div>
+  </div>
+
+  <div class="color-group-label">Neutral Scale</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#4d4d4d"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 600</div><div class="color-swatch-hex">#4d4d4d</div><div class="color-swatch-role">Secondary text</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#666666"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 500</div><div class="color-swatch-hex">#666666</div><div class="color-swatch-role">Tertiary text</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#808080"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 400</div><div class="color-swatch-hex">#808080</div><div class="color-swatch-role">Placeholders</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 100</div><div class="color-swatch-hex">#ebebeb</div><div class="color-swatch-role">Borders, dividers</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#fafafa; border-bottom:1px solid #ebebeb"></div><div class="color-swatch-info"><div class="color-swatch-name">Gray 50</div><div class="color-swatch-hex">#fafafa</div><div class="color-swatch-role">Subtle surface tint</div></div></div>
+  </div>
+
+  <div class="color-group-label">Interactive</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#0072f5"></div><div class="color-swatch-info"><div class="color-swatch-name">Link Blue</div><div class="color-swatch-hex">#0072f5</div><div class="color-swatch-role">Links</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:hsl(212,100%,48%)"></div><div class="color-swatch-info"><div class="color-swatch-name">Focus Blue</div><div class="color-swatch-hex">hsl(212,100%,48%)</div><div class="color-swatch-role">Focus ring</div></div></div>
+    <div class="color-swatch"><div class="color-swatch-block" style="background:#ebf5ff"></div><div class="color-swatch-info"><div class="color-swatch-name">Badge Bg</div><div class="color-swatch-hex">#ebf5ff</div><div class="color-swatch-role">Pill badge surface</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="typography">
+  <div class="section-label">02 / Typography</div>
+  <h2 class="section-title">Typography Scale</h2>
+
+  <div class="type-sample"><div style="font-size:48px; font-weight:600; line-height:1.00; letter-spacing:-2.4px;">Display Hero</div><div class="type-meta">Display Hero — 48px / 600 / 1.00 / -2.4px / Geist</div></div>
+  <div class="type-sample"><div style="font-size:40px; font-weight:600; line-height:1.20; letter-spacing:-2.4px;">Section Heading</div><div class="type-meta">Section Heading — 40px / 600 / 1.20 / -2.4px / Geist</div></div>
+  <div class="type-sample"><div style="font-size:32px; font-weight:600; line-height:1.25; letter-spacing:-1.28px;">Sub-heading Large</div><div class="type-meta">Sub-heading — 32px / 600 / 1.25 / -1.28px / Geist</div></div>
+  <div class="type-sample"><div style="font-size:24px; font-weight:600; line-height:1.33; letter-spacing:-0.96px;">Card Title</div><div class="type-meta">Card Title — 24px / 600 / 1.33 / -0.96px / Geist</div></div>
+  <div class="type-sample"><div style="font-size:24px; font-weight:500; line-height:1.33; letter-spacing:-0.96px;">Card Title Light</div><div class="type-meta">Card Title Light — 24px / 500 / 1.33 / -0.96px / Geist</div></div>
+  <div class="type-sample"><div style="font-size:20px; font-weight:400; line-height:1.80;">Body Large — Build and deploy on the AI Cloud. Vercel provides tools for developers to ship fast.</div><div class="type-meta">Body Large — 20px / 400 / 1.80 / normal / Geist</div></div>
+  <div class="type-sample"><div style="font-size:16px; font-weight:500; line-height:1.50;">Body Medium — Navigation and emphasized text</div><div class="type-meta">Body Medium — 16px / 500 / 1.50 / Geist</div></div>
+  <div class="type-sample"><div style="font-size:16px; font-weight:600; line-height:1.50; letter-spacing:-0.32px;">Body Semibold — Active states</div><div class="type-meta">Body Semibold — 16px / 600 / 1.50 / -0.32px / Geist</div></div>
+  <div class="type-sample"><div style="font-size:14px; font-weight:500; line-height:1.43;">Button / Link</div><div class="type-meta">Button / Link — 14px / 500 / 1.43 / Geist</div></div>
+  <div class="type-sample"><div style="font-size:12px; font-weight:500; line-height:1.33;">Caption — Metadata and small labels</div><div class="type-meta">Caption — 12px / 500 / 1.33 / Geist</div></div>
+  <div class="type-sample"><div style="font-family:var(--font-mono); font-size:16px; font-weight:400; line-height:1.50;">const app = await deploy('next-app');</div><div class="type-meta">Mono Body — 16px / 400 / 1.50 / Geist Mono</div></div>
+  <div class="type-sample"><div style="font-family:var(--font-mono); font-size:12px; font-weight:500; line-height:1.00; text-transform:uppercase;">DEPLOYMENT STATUS</div><div class="type-meta">Mono Label — 12px / 500 / uppercase / Geist Mono</div></div>
+  <div class="type-sample"><div style="font-size:7px; font-weight:700; line-height:1.00; text-transform:uppercase; background:var(--badge-bg); color:var(--badge-text); display:inline-block; padding:2px 6px; border-radius:9999px;">NEW</div><div class="type-meta">Micro Badge — 7px / 700 / uppercase / Geist</div></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="buttons">
+  <div class="section-label">03 / Buttons</div>
+  <h2 class="section-title">Button Variants</h2>
+  <div class="button-row">
+    <div class="button-item"><a class="btn-dark" href="#">Start Deploying</a><div class="button-label">Primary Dark</div></div>
+    <div class="button-item"><a class="btn-ghost" href="#">Documentation</a><div class="button-label">Ghost / Shadow</div></div>
+    <div class="button-item"><a class="btn-pill" href="#">AI Optimized</a><div class="button-label">Pill Badge</div></div>
+    <div class="button-item"><span style="display:inline-block; background:var(--develop-blue); color:#fff; padding:4px 10px; border-radius:9999px; font-size:12px; font-weight:500;">Develop</span><div class="button-label">Workflow Pill</div></div>
+    <div class="button-item"><span style="display:inline-block; background:var(--preview-pink); color:#fff; padding:4px 10px; border-radius:9999px; font-size:12px; font-weight:500;">Preview</span><div class="button-label">Workflow Pill</div></div>
+    <div class="button-item"><span style="display:inline-block; background:var(--ship-red); color:#fff; padding:4px 10px; border-radius:9999px; font-size:12px; font-weight:500;">Ship</span><div class="button-label">Workflow Pill</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="cards">
+  <div class="section-label">04 / Cards</div>
+  <h2 class="section-title">Card Examples</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-badge" style="background:var(--badge-bg); color:var(--badge-text);">Framework</div>
+      <h3>Next.js Integration</h3>
+      <p>Zero-config deployments for Next.js applications. Automatic optimizations, edge rendering, and instant rollbacks.</p>
+    </div>
+    <div class="card" style="box-shadow: var(--shadow-card-full);">
+      <div class="card-badge" style="background:rgba(255,91,79,0.1); color:var(--ship-red);">Elevated</div>
+      <h3>Edge Functions</h3>
+      <p>Run serverless functions at the edge with sub-millisecond cold starts. Card shown with full shadow stack.</p>
+    </div>
+    <div class="card">
+      <div class="card-badge" style="background:rgba(10,114,239,0.1); color:var(--develop-blue);">AI</div>
+      <h3>v0 by Vercel</h3>
+      <p>Generate UI with AI. Describe what you want and v0 creates the code using shadcn/ui and Tailwind CSS.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="forms">
+  <div class="section-label">05 / Forms</div>
+  <h2 class="section-title">Form Elements</h2>
+  <div class="form-group"><label class="form-label">Project Name</label><input class="form-input" type="text" placeholder="my-next-app"><div class="form-state-label">Default (shadow-border)</div></div>
+  <div class="form-group"><label class="form-label">Repository</label><input class="form-input form-input--focus" type="text" value="vercel/next.js"><div class="form-state-label">Focus (blue ring)</div></div>
+  <div class="form-group"><label class="form-label">Domain</label><input class="form-input form-input--error" type="text" value="invalid domain"><div class="form-state-label">Error (red ring)</div></div>
+  <div class="form-group"><label class="form-label">Environment Variables</label><textarea class="form-textarea" placeholder="KEY=value"></textarea></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="spacing">
+  <div class="section-label">06 / Spacing</div>
+  <h2 class="section-title">Spacing Scale</h2>
+  <div class="spacing-row">
+    <div class="spacing-item"><div class="spacing-block" style="width:2px"></div><div class="spacing-value">2</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:4px"></div><div class="spacing-value">4</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:6px"></div><div class="spacing-value">6</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:8px"></div><div class="spacing-value">8</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:12px"></div><div class="spacing-value">12</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:16px"></div><div class="spacing-value">16</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:32px"></div><div class="spacing-value">32</div></div>
+    <div class="spacing-item"><div class="spacing-block" style="width:40px"></div><div class="spacing-value">40</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="radius">
+  <div class="section-label">07 / Radius</div>
+  <h2 class="section-title">Border Radius Scale</h2>
+  <div class="radius-row">
+    <div class="radius-item"><div class="radius-box" style="border-radius:2px"></div><div class="radius-label">2px</div><div class="radius-context">Code spans</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px</div><div class="radius-context">Small</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">6px</div><div class="radius-context">Buttons</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">8px</div><div class="radius-context">Cards</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">12px</div><div class="radius-context">Images</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:64px"></div><div class="radius-label">64px</div><div class="radius-context">Tabs</div></div>
+    <div class="radius-item"><div class="radius-box" style="border-radius:9999px"></div><div class="radius-label">9999px</div><div class="radius-context">Badges</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="elevation">
+  <div class="section-label">08 / Elevation</div>
+  <h2 class="section-title">Elevation &amp; Depth</h2>
+  <div class="elevation-grid">
+    <div class="elevation-card" style="border: 1px solid var(--gray-100);"><div class="elevation-label">Level 0: Flat</div><div class="elevation-desc">No shadow</div></div>
+    <div class="elevation-card" style="box-shadow: rgba(0,0,0,0.08) 0px 0px 0px 1px;"><div class="elevation-label">Level 1: Ring</div><div class="elevation-desc">Shadow-as-border</div></div>
+    <div class="elevation-card" style="box-shadow: rgb(235,235,235) 0px 0px 0px 1px;"><div class="elevation-label">Level 1b: Light Ring</div><div class="elevation-desc">Lighter ring</div></div>
+    <div class="elevation-card" style="box-shadow: var(--shadow-card);"><div class="elevation-label">Level 2: Card</div><div class="elevation-desc">Ring + subtle lift</div></div>
+    <div class="elevation-card" style="box-shadow: var(--shadow-card-full);"><div class="elevation-label">Level 3: Full Card</div><div class="elevation-desc">Ring + lift + ambient + glow</div></div>
+    <div class="elevation-card" style="box-shadow: 0 0 0 2px hsl(212,100%,48%);"><div class="elevation-label">Focus</div><div class="elevation-desc">Accessibility ring</div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  Generated from <a href="https://vercel.com/">vercel.com</a> DESIGN.md — awesome-design-md
+</footer>
 
 </body>
 </html>
