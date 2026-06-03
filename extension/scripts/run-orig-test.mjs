@@ -1,0 +1,10 @@
+import { build } from 'esbuild';
+import { mkdtempSync } from 'fs';
+import { tmpdir } from 'os';
+import { join, resolve, dirname } from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const root = resolve(__dirname, '..');
+const tmp = mkdtempSync(join(tmpdir(), 'dp-'));
+await build({ entryPoints:[resolve(root,'scripts/test-pipeline.ts')],bundle:true,format:'esm',platform:'node',target:'node20',outfile:join(tmp,'t.mjs'),logLevel:'error' });
+await import(pathToFileURL(join(tmp,'t.mjs')).href);

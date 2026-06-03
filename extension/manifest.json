@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "DesignPick",
+  "version": "1.0.0",
+  "description": "从任意网页提取设计系统，生成 DESIGN.md",
+  "permissions": ["activeTab", "sidePanel", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+  "action": {
+    "default_title": "提取设计系统"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

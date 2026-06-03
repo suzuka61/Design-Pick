@@ -1,0 +1,15 @@
+{
+  "name": "designpick-gallery",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "sync": "node scripts/sync-templates.mjs",
+    "generate": "node scripts/generate-index.mjs",
+    "dev": "npx serve public -l 3000"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

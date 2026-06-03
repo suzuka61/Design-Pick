@@ -1,0 +1,26 @@
+{
+  "categories": [
+    { "id": "ai-llm", "name": "AI & LLM", "nameZh": "AI 与大模型" },
+    { "id": "developer-tools", "name": "Developer Tools", "nameZh": "开发者工具" },
+    { "id": "backend-devops", "name": "Backend & DevOps", "nameZh": "后端与运维" },
+    { "id": "productivity-saas", "name": "Productivity & SaaS", "nameZh": "效率与 SaaS" },
+    { "id": "design-creative", "name": "Design & Creative", "nameZh": "设计与创意" },
+    { "id": "fintech-crypto", "name": "Fintech & Crypto", "nameZh": "金融与加密" },
+    { "id": "ecommerce-retail", "name": "E-commerce", "nameZh": "电商与零售" },
+    { "id": "media-consumer", "name": "Media & Consumer", "nameZh": "媒体与消费" },
+    { "id": "automotive", "name": "Automotive", "nameZh": "汽车" },
+    { "id": "retro", "name": "Retro", "nameZh": "复古" }
+  ],
+  "slugs": {
+    "ai-llm": ["claude", "cohere", "elevenlabs", "minimax", "mistral.ai", "ollama", "opencode.ai", "replicate", "runwayml", "together.ai", "voltagent", "x.ai"],
+    "developer-tools": ["cursor", "expo", "lovable", "raycast", "superhuman", "vercel", "warp"],
+    "backend-devops": ["clickhouse", "composio", "hashicorp", "mongodb", "posthog", "sanity", "sentry", "supabase"],
+    "productivity-saas": ["cal", "intercom", "linear.app", "mintlify", "notion", "resend", "zapier"],
+    "design-creative": ["airtable", "clay", "figma", "framer", "miro", "webflow"],
+    "fintech-crypto": ["binance", "coinbase", "kraken", "mastercard", "revolut", "stripe", "wise"],
+    "ecommerce-retail": ["airbnb", "meta", "nike", "shopify", "starbucks"],
+    "media-consumer": ["apple", "hp", "ibm", "nvidia", "pinterest", "playstation", "spacex", "spotify", "theverge", "uber", "vodafone", "wired", "slack"],
+    "automotive": ["bmw", "bmw-m", "bugatti", "ferrari", "lamborghini", "renault", "tesla"],
+    "retro": ["dell-1996"]
+  }
+}
