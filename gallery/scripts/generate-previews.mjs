@@ -212,6 +212,20 @@ a{color:inherit;text-decoration:none}
 </html>`;
 }
 
+// Slugs whose previews we have a hand-curated copy of (formerly fetched from
+// vibeui.top). generate-previews.mjs will skip these to avoid overwriting the
+// curated files with its simpler template.
+const CURATED_SLUGS = new Set([
+  'airbnb', 'airtable', 'apple', 'bmw', 'cal', 'claude', 'clay', 'clickhouse',
+  'cohere', 'coinbase', 'composio', 'cursor', 'elevenlabs', 'expo', 'figma',
+  'framer', 'hashicorp', 'ibm', 'intercom', 'kraken', 'linear.app', 'lovable',
+  'minimax', 'mintlify', 'miro', 'mistral.ai', 'mongodb', 'notion', 'nvidia',
+  'ollama', 'opencode.ai', 'pinterest', 'posthog', 'raycast', 'replicate',
+  'resend', 'revolut', 'runwayml', 'sanity', 'sentry', 'spacex', 'spotify',
+  'stripe', 'supabase', 'superhuman', 'together.ai', 'uber', 'vercel',
+  'voltagent', 'warp', 'webflow', 'wise', 'x.ai', 'zapier',
+]);
+
 async function main() {
   await mkdir(PREVIEWS_DIR, { recursive: true });
 
@@ -221,6 +235,7 @@ async function main() {
   let count = 0;
   for (const file of jsonFiles) {
     const slug = file.replace('.json', '');
+    if (CURATED_SLUGS.has(slug)) continue; // keep the curated preview as-is
     const content = await readFile(join(DATA_DIR, file), 'utf-8');
     const data = JSON.parse(content);
     const html = generatePreviewHTML(data);
