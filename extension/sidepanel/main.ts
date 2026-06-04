@@ -12,7 +12,9 @@ const errorEl = document.getElementById('error') as HTMLDivElement;
 const resultEl = document.getElementById('result') as HTMLDivElement;
 const overviewGrid = document.getElementById('overviewGrid')!;
 const tabMd = document.getElementById('tabMd')!;
+const tabPrompt = document.getElementById('tabPrompt')!;
 const tabPreview = document.getElementById('tabPreview')!;
+const copyPromptBtn = document.getElementById('copyPrompt')!;
 const tabContent = document.getElementById('tabContent')!;
 const mdContent = document.getElementById('mdContent')!;
 const downloadMdBtn = document.getElementById('downloadMd')!;
@@ -27,6 +29,7 @@ const galleryBtn = document.getElementById('galleryBtn') as HTMLButtonElement;
 
 // --- State ---
 let designMd = '';
+let agentPromptXml = '';
 let previewHtml = '';
 let activeTab = 'md';
 let currentStep = -1; // -1 = not started
@@ -86,15 +89,18 @@ function showResult(overview: any) {
 }
 
 function renderActiveTab() {
+  tabMd.classList.toggle('active', activeTab === 'md');
+  tabPrompt.classList.toggle('active', activeTab === 'prompt');
+  tabPreview.classList.toggle('active', activeTab === 'preview');
   if (activeTab === 'md') {
-    tabMd.classList.add('active');
-    tabPreview.classList.remove('active');
     tabContent.innerHTML = `<pre>${escapeHtml(designMd)}</pre>`;
+  } else if (activeTab === 'prompt') {
+    tabContent.innerHTML = `<pre>${escapeHtml(agentPromptXml)}</pre>`;
+    copyPromptBtn.style.display = '';
   } else {
-    tabMd.classList.remove('active');
-    tabPreview.classList.add('active');
     tabContent.innerHTML = `<iframe srcdoc="${escapeAttr(previewHtml)}" style="width:100%;height:380px;border:none"></iframe>`;
   }
+  copyPromptBtn.style.display = activeTab === 'prompt' ? '' : 'none';
 }
 
 function escapeHtml(s: string): string {
@@ -130,6 +136,7 @@ extractBtn.addEventListener('click', async () => {
   resultEl.classList.remove('visible');
   progressEl.classList.remove('visible');
   designMd = '';
+  agentPromptXml = '';
   previewHtml = '';
 
   try {
@@ -159,6 +166,7 @@ extractBtn.addEventListener('click', async () => {
     if (response.type !== 'EXTRACT_COMPLETE') throw new Error('异常响应: ' + (response.type || '无'));
 
     designMd = response.result.designMd;
+    agentPromptXml = response.result.agentPromptXml || '';
     previewHtml = response.result.previewHtml;
     showResult(response.result.overview);
   } catch (e: any) {
@@ -171,6 +179,7 @@ extractBtn.addEventListener('click', async () => {
 
 // Tabs
 tabMd.addEventListener('click', () => { activeTab = 'md'; renderActiveTab(); });
+tabPrompt.addEventListener('click', () => { activeTab = 'prompt'; renderActiveTab(); });
 tabPreview.addEventListener('click', () => {
   // Open preview in a new tab instead of iframe
   if (previewHtml) {
@@ -184,6 +193,25 @@ tabPreview.addEventListener('click', () => {
 // Downloads
 downloadMdBtn.addEventListener('click', () => download(designMd, 'DESIGN.md', 'text/markdown'));
 downloadHtmlBtn.addEventListener('click', () => download(previewHtml, 'design-preview.html', 'text/html'));
+
+// Copy prompt
+copyPromptBtn.addEventListener('click', () => {
+  if (!agentPromptXml) return;
+  navigator.clipboard.writeText(agentPromptXml).then(() => {
+    copyPromptBtn.textContent = '已复制 ✓';
+    setTimeout(() => { copyPromptBtn.textContent = '复制 Prompt'; }, 1500);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = agentPromptXml;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    copyPromptBtn.textContent = '已复制 ✓';
+    setTimeout(() => { copyPromptBtn.textContent = '复制 Prompt'; }, 1500);
+  });
+});
 
 // Settings
 settingsToggle.addEventListener('click', () => {
@@ -203,7 +231,7 @@ saveSettingsBtn.addEventListener('click', () => {
 });
 
 // Gallery
-const GALLERY_URL = 'https://designpick-gallery.vercel.app';
+const GALLERY_URL = 'https://design-pick-ergo.vercel.app';
 
 galleryBtn.addEventListener('click', () => {
   window.open(GALLERY_URL, '_blank');

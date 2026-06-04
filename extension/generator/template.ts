@@ -28,16 +28,18 @@ export function generateDesignMD(
     responsiveBehavior: generateResponsive(analysis),
     antiPatterns: generateAntiPatterns(constraints, analysis),
     qaChecklist: generateQAChecklist(),
-    agentPromptGuide: generateAgentGuide(analysis, tokenMap),
+    agentPromptGuide: generateAgentGuide(analysis, tokenMap, constraints, mapping),
   };
 
-  const rawMarkdown = Object.entries(sections)
+  const rawMarkdown = `> 🤖 AI Agent：请阅读第 15 节「Agent Prompt Guide」中的 XML 指令，以此作为你的工作方式。\n\n` + Object.entries(sections)
     .map(([key, content], i) => `## ${i + 1}. ${sectionTitle(key)}\n\n${content}`)
     .join('\n\n');
 
   const sourceName = sourceUrl
     ? (() => { try { return new URL(sourceUrl).hostname; } catch { return sourceUrl; } })()
     : 'Design System';
+
+  const agentPromptXml = buildAgentPromptXml(analysis, tokenMap, constraints, mapping);
 
   return {
     sourceUrl,
@@ -48,6 +50,7 @@ export function generateDesignMD(
     },
     sections,
     rawMarkdown,
+    agentPromptXml,
   };
 }
 
@@ -435,44 +438,267 @@ function generateQAChecklist(): string {
   return `- [ ] All interactive elements have 7 states: default, hover, focus, focus-visible, active, disabled, loading/error\n- [ ] No raw hex values — all colors reference semantic tokens\n- [ ] All spacing uses spacing-{name} tokens, not arbitrary pixel values\n- [ ] Typography follows the hierarchy table — no ad-hoc font-size/weight combos\n- [ ] Focus-visible ring visible on all interactive elements (3px solid color-primary-500)\n- [ ] Text contrast meets WCAG AA (4.5:1 for normal text, 3:1 for large text)\n- [ ] Touch targets are at least 44×44px\n- [ ] Animations respect prefers-reduced-motion\n- [ ] Empty states, long content, and overflow have defined handling\n- [ ] Border-radius consistent per component type (buttons = radius-md, cards = radius-lg)\n- [ ] Error states use color-error-500, not arbitrary reds\n- [ ] No 🚫 MUST rule is violated`;
 }
 
-function generateAgentGuide(a: AnalyzedPageData, tokenMap: TokenNameMap): string {
-  let md = `### Token Quick Reference\n\`\`\`\n`;
+/**
+ * DESIGN.md section 15 — the full XML prompt that agents consume directly.
+ * When the user gives the .md file to an AI, it reads this section as instructions.
+ */
+function generateAgentGuide(
+  a: AnalyzedPageData,
+  tokenMap: TokenNameMap,
+  constraints: ExtractedConstraints,
+  mapping: TokenMapping,
+): string {
+  const xml = buildAgentPromptXml(a, tokenMap, constraints, mapping);
+  return `将此文件直接交给 AI 助手（Claude、Cursor、Copilot 等），AI 会从下方 XML 读取设计系统指令。你只需描述想要的页面或组件即可。\n\n\`\`\`xml\n${xml}\n\`\`\``;
+}
 
-  // Key tokens
-  const primary = a.colors.primary;
-  md += `color-primary-500: ${primary.hex} [L1]\n`;
-  md += `color-accent-500: ${a.colors.accent.hex} [L1]\n`;
-
-  // Theme-aware neutral lookup
+/**
+ * Standalone XML prompt for AI assistants — the real payload.
+ * Users copy this directly into Claude / Cursor / Copilot.
+ */
+export function buildAgentPromptXml(
+  a: AnalyzedPageData,
+  _tokenMap: TokenNameMap,
+  constraints: ExtractedConstraints,
+  _mapping: TokenMapping,
+): string {
   const isDark = a.colors.bodyBackground?.isDark ?? false;
+  const bgHex = a.colors.bodyBackground?.hex ?? (isDark ? '#000000' : '#ffffff');
+  const textHex = a.colors.bodyBackground?.textHex ?? (isDark ? '#ffffff' : '#1a1a2e');
+  const primaryHex = a.colors.primary.hex;
+  const accentHex = a.colors.accent.hex;
+  const productName = a.brand.productName || 'Extracted Design System';
+
+  let xml = '';
+
+  // ── <role> ──
+  xml += `<role>\n`;
+  xml += `You are an expert frontend engineer, UI/UX designer, visual design specialist, and typography expert. Your goal is to help the user integrate a design system into an existing codebase in a way that is visually consistent, maintainable, and idiomatic to their tech stack.\n\n`;
+  xml += `Before proposing or writing any code, first build a clear mental model of the current system:\n`;
+  xml += `- Identify the tech stack (e.g. React, Next.js, Vue, Tailwind, shadcn/ui, etc.).\n`;
+  xml += `- Understand the existing design tokens (colors, spacing, typography, radii, shadows), global styles, and utility patterns.\n`;
+  xml += `- Review the current component architecture and naming conventions.\n`;
+  xml += `- Note any constraints (legacy CSS, design library in use, performance or bundle-size considerations).\n\n`;
+  xml += `Ask the user focused questions to understand their goals. Do they want:\n`;
+  xml += `- a specific component or page redesigned in the new style,\n`;
+  xml += `- existing components refactored to the new system, or\n`;
+  xml += `- new pages/features built entirely in the new style?\n\n`;
+  xml += `Once you understand the context and scope, do the following:\n`;
+  xml += `- Propose a concise implementation plan that follows best practices, prioritizing:\n`;
+  xml += `  - centralizing design tokens,\n`;
+  xml += `  - reusability and composability of components,\n`;
+  xml += `  - minimizing duplication and one-off styles,\n`;
+  xml += `  - long-term maintainability and clear naming.\n`;
+  xml += `- When writing code, match the user's existing patterns (folder structure, naming, styling approach, and component patterns).\n`;
+  xml += `- Explain your reasoning briefly as you go, so the user understands *why* you're making certain architectural or design choices.\n\n`;
+  xml += `Always aim to:\n`;
+  xml += `- Preserve or improve accessibility.\n`;
+  xml += `- Maintain visual consistency with the provided design system.\n`;
+  xml += `- Leave the codebase in a cleaner, more coherent state than you found it.\n`;
+  xml += `- Ensure layouts are responsive and usable across devices.\n`;
+  xml += `- Make deliberate, creative design choices (layout, motion, interaction details, and typography) that express the design system's personality instead of producing a generic or boilerplate UI.\n`;
+  xml += `</role>\n\n`;
+
+  // ── <design-system> ──
+  xml += `<design-system>\n`;
+  xml += `# Design Style: ${productName}\n\n`;
+
+  // 1. Design Philosophy
+  xml += `## 1. Design Philosophy\n`;
+  xml += `${a.visualTheme.philosophy}\n\n`;
+  xml += `**Vibe**: ${a.visualTheme.emotionalTone.join(', ')}\n\n`;
+  xml += `**Key Characteristics**:\n`;
+  for (const ch of a.visualTheme.keyCharacteristics) {
+    xml += `- **${ch}**\n`;
+  }
+  xml += `\n`;
+
+  // 2. Color Token System
+  xml += `## 2. Color Token System\n\n`;
+  xml += `| Token | Hex | Role |\n|-------|-----|------|\n`;
+  xml += `| color-primary-500 | ${primaryHex} | Primary brand color |\n`;
+  xml += `| color-accent-500 | ${accentHex} | Accent / secondary emphasis |\n`;
   const bgShade = isDark ? 900 : 50;
   const textShade = isDark ? 50 : 900;
-  const bgHex = a.colors.bodyBackground?.hex ?? (isDark ? '#000000' : '#ffffff');
-  const textHex = isDark ? '#ffffff' : '#1a1a2e';
-  md += `color-neutral-${bgShade}: ${bgHex} [L1]  (background)\n`;
-  md += `color-neutral-${textShade}: ${textHex} [L1] (text)\n`;
-  md += `spacing-sm: ${a.spacing.baseUnit}px [L1]\n`;
-  md += `spacing-md: ${a.spacing.baseUnit * 2}px [L1]\n`;
-  md += `radius-md: ${a.spacing.borderRadiusScale.find(r => r.name === 'md')?.value || 8}px [L2]\n`;
-  md += `type-body: ${a.typography.hierarchy.find(h => h.role === 'Body')?.size || 16}px/${a.typography.hierarchy.find(h => h.role === 'Body')?.weight || 400}/${a.typography.hierarchy.find(h => h.role === 'Body')?.lineHeight || 24}px [L1]\n`;
-  md += `\`\`\`\n\n`;
+  xml += `| color-neutral-${bgShade} | ${bgHex} | Canvas / background |\n`;
+  xml += `| color-neutral-${textShade} | ${textHex} | Primary text |\n`;
+  if (a.colors.neutralScale?.length) {
+    for (const s of a.colors.neutralScale) {
+      xml += `| color-neutral-${s.scalePosition} | ${s.hex} | ${s.role || 'neutral'} |\n`;
+    }
+  }
+  if (isDark && a.colors.surface?.length) {
+    xml += `\n### Surface Ladder (Dark Mode)\n\n`;
+    xml += `Use a stepped surface ladder for hierarchy: canvas → surface-1 → surface-2 → surface-3.\n\n`;
+    xml += `| Level | Hex | Usage |\n|-------|-----|-------|\n`;
+    for (const s of a.colors.surface) {
+      xml += `| ${s.name} | ${s.hex} | ${s.role || ''} |\n`;
+    }
+  }
+  xml += `\n`;
 
-  md += `### Stability Guide\n`;
-  md += `- Use [L1] values as the foundation — they define the brand identity\n`;
-  md += `- Use [L2] values for system-level consistency — they persist across redesigns\n`;
-  md += `- [L3] values are campaign-specific — replace freely\n`;
-  md += `- [L4] values are volatile — do not rely on them\n\n`;
+  // 3. Typography
+  xml += `## 3. Typography\n\n`;
+  const bodyFont = a.typography.fontFamilies?.find(f => f.category === 'sans-serif') || a.typography.fontFamilies?.[0];
+  const displayFont = a.typography.fontFamilies?.find(f => f.category === 'display') || bodyFont;
+  const monoFont = a.typography.fontFamilies?.find(f => f.category === 'monospace');
+  if (displayFont) xml += `**Display Font**: ${displayFont.name}, fallbacks: ${displayFont.fallbacks.join(', ')}\n`;
+  if (bodyFont && bodyFont !== displayFont) xml += `**Body Font**: ${bodyFont.name}, fallbacks: ${bodyFont.fallbacks.join(', ')}\n`;
+  if (monoFont) xml += `**Mono Font**: ${monoFont.name}, fallbacks: ${monoFont.fallbacks.join(', ')}\n`;
+  xml += `\n`;
+  if (a.typography.hierarchy?.length) {
+    xml += `| Role | Size | Weight | Line Height | Letter Spacing |\n|------|------|--------|-------------|----------------|\n`;
+    for (const h of a.typography.hierarchy) {
+      xml += `| ${h.role} | ${h.size}px | ${h.weight} | ${h.lineHeight}px | ${h.letterSpacing}em |\n`;
+    }
+  }
+  if (a.typography.principles?.length) {
+    xml += `\n### Principles\n`;
+    for (const p of a.typography.principles) {
+      xml += `- ${p}\n`;
+    }
+  }
+  xml += `\n`;
 
-  md += `### Example Component Prompts\n`;
-  md += `- "Create a primary button: background color-primary-500, text color-neutral-50, border-radius radius-md, padding spacing-sm spacing-md, font type-body weight 500"\n`;
-  md += `- "Design a card: background color-neutral-50, border-radius radius-lg, shadow shadow-low, padding spacing-lg"\n\n`;
+  // 4. Spacing & Radius
+  xml += `## 4. Spacing & Radius\n\n`;
+  xml += `**Base Unit**: ${a.spacing.baseUnit}px\n\n`;
+  if (a.spacing.scale?.length) {
+    xml += `| Token | Value | Usage |\n|-------|-------|-------|\n`;
+    for (const s of a.spacing.scale) {
+      xml += `| spacing-${s.name} | ${s.value}px | ${s.usage.join(', ')} |\n`;
+    }
+  } else {
+    xml += `| Token | Value | Usage |\n|-------|-------|-------|\n`;
+    xml += `| spacing-xs | ${a.spacing.baseUnit}px | Tight gaps |\n`;
+    xml += `| spacing-sm | ${a.spacing.baseUnit * 2}px | Component padding |\n`;
+    xml += `| spacing-md | ${a.spacing.baseUnit * 3}px | Section gaps |\n`;
+    xml += `| spacing-lg | ${a.spacing.baseUnit * 4}px | Section padding |\n`;
+    xml += `| spacing-xl | ${a.spacing.baseUnit * 6}px | Large section padding |\n`;
+  }
+  xml += `\n`;
+  if (a.spacing.borderRadiusScale?.length) {
+    xml += `| Radius Token | Value | Usage |\n|-------------|-------|-------|\n`;
+    for (const r of a.spacing.borderRadiusScale) {
+      xml += `| radius-${r.name} | ${r.value}px | ${r.usage.join(', ')} |\n`;
+    }
+    xml += `\n`;
+  }
 
-  md += `### Iteration Guide\n`;
-  md += `1. Always reference token names — never hardcode values\n`;
-  md += `2. To change a color, modify the token definition (e.g., color-primary-500) not individual usages\n`;
-  md += `3. Use shade offsets for state variants (hover = shade +100, disabled = shade -300)\n`;
+  // 5. Component Stylings
+  xml += `## 5. Component Stylings\n\n`;
+  if (a.components.buttons?.length) {
+    xml += `### Buttons\n`;
+    for (const btn of a.components.buttons) {
+      xml += `**${btn.variant}** — `;
+      const parts: string[] = [];
+      if (btn.styles.backgroundColor) parts.push(`background ${btn.styles.backgroundColor}`);
+      if (btn.styles.color) parts.push(`text ${btn.styles.color}`);
+      if (btn.styles.borderRadius !== undefined) parts.push(`radius ${btn.styles.borderRadius}px`);
+      if (btn.styles.padding) parts.push(`padding ${btn.styles.padding}`);
+      if (btn.styles.borderWidth) parts.push(`border ${btn.styles.borderWidth}`);
+      xml += parts.join(', ') + '.\n';
+      if (btn.states?.hover) xml += `  - Hover: ${formatStateChanges(btn.states.hover)}\n`;
+      if (btn.states?.focusVisible) xml += `  - Focus: ${formatStateChanges(btn.states.focusVisible)}\n`;
+    }
+    xml += `\n`;
+  }
+  if (a.components.cards?.length) {
+    xml += `### Cards\n`;
+    for (const card of a.components.cards) {
+      xml += `**${card.variant}** — `;
+      const parts: string[] = [];
+      if (card.styles.backgroundColor) parts.push(`background ${card.styles.backgroundColor}`);
+      if (card.styles.borderRadius !== undefined) parts.push(`radius ${card.styles.borderRadius}px`);
+      if (card.styles.padding) parts.push(`padding ${card.styles.padding}`);
+      if (card.styles.boxShadow) parts.push(`shadow ${card.styles.boxShadow}`);
+      xml += parts.join(', ') + '.\n';
+    }
+    xml += `\n`;
+  }
+  if (a.components.inputs?.length) {
+    xml += `### Inputs\n`;
+    for (const inp of a.components.inputs) {
+      xml += `**${inp.variant}** — `;
+      const parts: string[] = [];
+      if (inp.styles.backgroundColor) parts.push(`background ${inp.styles.backgroundColor}`);
+      if (inp.styles.borderRadius !== undefined) parts.push(`radius ${inp.styles.borderRadius}px`);
+      if (inp.styles.padding) parts.push(`padding ${inp.styles.padding}`);
+      xml += parts.join(', ') + '.\n';
+    }
+    xml += `\n`;
+  }
+  if (a.components.navigation?.length) {
+    xml += `### Navigation\n`;
+    for (const nav of a.components.navigation) {
+      xml += `**${nav.variant}** — `;
+      const parts: string[] = [];
+      if (nav.styles.backgroundColor) parts.push(`background ${nav.styles.backgroundColor}`);
+      if (nav.styles.height) parts.push(`height ${nav.styles.height}px`);
+      xml += parts.join(', ') + '.\n';
+    }
+    xml += `\n`;
+  }
 
-  return md;
+  // 6. Shadows & Elevation
+  if (a.shadows?.levels?.length) {
+    xml += `## 6. Shadows & Elevation\n\n`;
+    xml += `${a.shadows.philosophy}\n\n`;
+    for (const level of a.shadows.levels) {
+      xml += `- **${level.name}**: \`${level.boxShadow}\` — ${level.usage.join(', ')}\n`;
+    }
+    xml += `\n`;
+  }
+
+  // 7. Non-Genericness (the killer section)
+  xml += `## 7. Non-Genericness (Bold Choices)\n\n`;
+  xml += `**This design MUST NOT look like generic Tailwind or Bootstrap. The following are mandatory:**\n\n`;
+  const mandatoryRules: string[] = [];
+  // From extracted constraints
+  for (const c of constraints.donts) {
+    if (c.confidence >= 0.85) {
+      mandatoryRules.push(`- **${c.rule}** — ${c.evidence}`);
+    }
+  }
+  // Design-specific non-genericness rules
+  if (isDark) {
+    mandatoryRules.push(`- **Dark Canvas is Mandatory**: Background must remain \`${bgHex}\`. Do not ship a light-mode variant.`);
+  }
+  mandatoryRules.push(`- **Primary Color is Scarce**: \`${primaryHex}\` is reserved for brand mark, primary CTA, focus rings, and link emphasis — never as section background or decorative fill.`);
+  if (accentHex !== primaryHex) {
+    mandatoryRules.push(`- **Accent Color \`${accentHex}\` is for Secondary Emphasis Only**: badges, tags, secondary highlights — never competes with primary.`);
+  }
+  mandatoryRules.push(`- **No Atmospheric Gradients**: Do not add spotlight effects, mesh gradients, or glass morphism unless the original source uses them.`);
+  mandatoryRules.push(`- **Respect the Token System**: Every color, spacing, and radius value must reference a token. No hardcoded hex values or arbitrary pixel values.`);
+  if (a.spacing.baseUnit) {
+    mandatoryRules.push(`- **Spacing Must Be a Multiple of ${a.spacing.baseUnit}px**: Use the spacing token scale. If a gap doesn't fit, extend the scale rather than inserting an arbitrary value.`);
+  }
+  // From extracted dos — promote high-confidence ones as mandatory
+  for (const c of constraints.dos) {
+    if (c.confidence >= 0.9) {
+      mandatoryRules.push(`- **${c.rule}** — ${c.evidence}`);
+    }
+  }
+  xml += mandatoryRules.join('\n');
+  xml += `\n\n`;
+
+  // 8. Responsive Behavior
+  xml += `## 8. Responsive Behavior\n\n`;
+  if (a.responsive.breakpoints?.length) {
+    xml += `| Breakpoint | Min Width | Description |\n|------------|-----------|-------------|\n`;
+    for (const b of a.responsive.breakpoints) {
+      xml += `| ${b.name} | ${b.minWidth}px | ${b.description} |\n`;
+    }
+    xml += `\n`;
+  }
+  if (a.responsive.touchTargets) {
+    xml += `- Minimum touch target: ${a.responsive.touchTargets.minSize}px\n`;
+    xml += `- Recommended touch target: ${a.responsive.touchTargets.recommendedSize}px\n\n`;
+  }
+
+  xml += `</design-system>\n`;
+
+  return xml;
 }
 
 // --- Helpers ---

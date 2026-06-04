@@ -23,6 +23,8 @@ export interface DesignMDDocument {
     agentPromptGuide: string;
   };
   rawMarkdown: string;
+  /** Standalone XML prompt for AI assistants — can be copied directly. */
+  agentPromptXml: string;
 }
 
 export interface ValidationResult {

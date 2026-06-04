@@ -168,6 +168,7 @@ async function handleExtractRequest(tabId: number, sendResponse: (response: any)
       type: 'EXTRACT_COMPLETE',
       result: {
         designMd: doc.rawMarkdown,
+        agentPromptXml: doc.agentPromptXml,
         previewHtml,
         overview,
       },
